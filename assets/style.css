@@ -1,0 +1,14 @@
+.even-smaller-text {
+    font-size: 18px; /* Adjust the font size as needed */
+}
+@media screen and (max-width: 800px) {
+    .smaller-text {
+        font-size: 12px; /* Adjust the font size as needed */
+    }
+    .even-smaller-text {
+        font-size: 10px; /* Adjust the font size as needed */
+    }
+}
+.right-align {
+    text-align: right;
+}
