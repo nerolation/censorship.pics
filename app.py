@@ -38,7 +38,6 @@ def get_latest_slot_stats(df_censorship, df_entity, category):
     latest_data = agg_df[agg_df['timestamp'] == agg_df['timestamp'].max()]
     total_slots = latest_data['slot'].sum()
     latest_data.loc[:,('percentage')] = (latest_data['slot'] / total_slots) * 100
-    print(latest_data)
     return latest_data
     
   
@@ -47,9 +46,9 @@ def get_latest_slot_stats(df_censorship, df_entity, category):
 def prepare_data():
     df_censorship = pd.read_csv("censorship_stats.csv").replace("Unknown", "Unknown/missed")
     
-    df_relays_over_time = pd.read_csv("relays_over_time")
-    df_builders_over_time = pd.read_csv("builders_over_time")
-    df_validators_over_time = pd.read_csv("validators_over_time_censorship")
+    df_relays_over_time = pd.read_csv("relays_over_time.csv")
+    df_builders_over_time = pd.read_csv("builders_over_time.csv")
+    df_validators_over_time = pd.read_csv("validators_over_time_censorship.csv")
     
     dfs_over_time = [
         (df_relays_over_time, "relay"),
