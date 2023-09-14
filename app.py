@@ -83,6 +83,7 @@ def update_censorship_bars_layout(width=801):
         title='',
         plot_bgcolor="#ffffff",
         height=650,
+        margin=dict(l=40, r=0, t=80, b=20),
         xaxis1=dict(showticklabels=False),  # Hide x-axis labels for first subplot
         xaxis2=dict(showticklabels=False),  # Hide x-axis labels for second subplot
         xaxis3=dict(showticklabels=False),  # Hide x-axis labels for third subplot
@@ -160,9 +161,21 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
                     y=idx,
                     xref=xref,
                     yref=f'y{idx + 1}',
-                    text=f'<span style="font-size: 24px;font-weight:bold;">{annotation_text}</span>',
+                    text=f'<span style="font-weight:bold;">{annotation_text}</span>',
                     showarrow=False,
                     font=dict(size=18, color="white")
+                )
+            )
+            annotations.append(
+                dict(
+                    x=stack_position + row['percentage'] / 2,
+                    y=idx,
+                    xref=xref,
+                    yref=f'y{idx + 1}',
+                    text=f'<span style="font-weight:bold;">{annotation_text}</span>',
+                    showarrow=False,
+                    font=dict(size=10, color="white"),
+                    visible=False
                 )
             )
 
@@ -194,8 +207,6 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
 
     fig['layout']['annotations'] += tuple(annotations)
 
-    for i in fig.layout.annotations[0:3]:
-        i.font.size = 24
     fig.update_layout(**update_censorship_bars_layout())
     return fig
 
@@ -233,16 +244,23 @@ def update_layout_censorship_over_last_month(width=801):
         #title_xanchor="left",
         #title_yanchor="auto",
         
-        margin={"l":100, "t":100},
+        margin=dict(l=20, r=20, t=100, b=20),
         font=dict(
             family="Courier New, monospace",
             size=18,  # Set the font size here
             color=BLACK
         ),
+        legend=dict(
+            x=1,
+            xanchor='right',
+            y=1,
+            yanchor='top',
+            bgcolor='rgba(255, 255, 255, 0.7)'
+        ),
         paper_bgcolor='#eee',
         plot_bgcolor='#ffffff',
         #yaxis=dict(fixedrange =True),
-        autosize=True, 
+        #autosize=True, 
         height=580,
         #width=width,
         updatemenus=[
@@ -253,7 +271,8 @@ def update_layout_censorship_over_last_month(width=801):
                 xanchor="center",
                 y=1.1,
                 yanchor="top",
-                buttons=buttons
+                buttons=buttons,
+                font=dict(size= 16)
             )
         ],
         xaxis=dict(
@@ -549,14 +568,14 @@ app.layout = html.Div(
                         ),
                         width={"size": 6, "order": 1}
                     ),
-                    #dbc.Col(
-                    #    html.H5(
-                    #        ['Built using ', html.A('blockprint', href='https://github.com/sigp/blockprint', target='_blank')],
-                    #        className="mb-4 even-smaller-text text-right",
-                    #        style={'textAlign': 'right'}
-                    #    ),
-                    #    width={"size": 6, "order": 2}
-                    #)
+                    dbc.Col(
+                        html.H5(
+                            ['Check out ', html.A('tornado-warning.info', href='https://tornado-warning.info', target='_blank'), " for more stats"],
+                            className="mb-4 even-smaller-text text-right",
+                            style={'textAlign': 'right', "margin-right": "2vw"}
+                        ),
+                        width={"size": 6, "order": 2}
+                    )
                 ])
             ]),
             #dbc.Row(
@@ -601,7 +620,6 @@ app.layout = html.Div(
             dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4")),
 
 
-            # Additional Components
             dbc.Row(dcc.Interval(id='window-size-trigger', interval=1000, n_intervals=0, max_intervals=1)),
             dcc.Store(id='window-size-store',data={'width': 800})
         ],
@@ -635,6 +653,22 @@ def update_layout2(window_size_data):
         raise dash.exceptions.PreventUpdate
     width = window_size_data['width']
     fig_bars.update_layout(**update_censorship_bars_layout(width))
+    if width <= 800:
+        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
+            if ix % 2 != 0 and "%" in i.text:
+                i.visible = True
+            elif "%" in i.text:
+                i.visible=False
+        for i in fig_bars.layout.annotations[-2:]:
+            i.font.size = 12
+    else:
+        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
+            if ix % 2 == 0 and "%" in i.text:
+                i.visible = True
+            elif "%" in i.text:
+                i.visible=False
+        for i in fig_bars.layout.annotations[-2:]:
+            i.font.size = 18
     return fig_bars
 
 
@@ -647,6 +681,9 @@ def update_layout1(window_size_data):
         raise dash.exceptions.PreventUpdate
     width = window_size_data['width']
     fig_over_months.update_layout(**update_layout_censorship_over_last_month(width))
+    if width <= 800:
+        for i in fig_over_months.layout.updatemenus:
+            i.font.size = 10
     return fig_over_months
 
 
