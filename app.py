@@ -78,12 +78,23 @@ def prepare_data():
 #########################################################
 
 def update_censorship_bars_layout(width=801):
+    if width <= 800:
+        font_size = 12
+        shape_delta_x = 0.02
+        shape_delta_y = 0.01
+    else:
+        font_size = 18
+        shape_delta_x = 0
+        shape_delta_y = 0
+        
     return dict(
         barmode='stack',
         title='',
         plot_bgcolor="#ffffff",
         height=650,
         margin=dict(l=40, r=0, t=80, b=20),
+        yaxis=dict(fixedrange =True),
+        xaxis=dict(fixedrange =True),
         xaxis1=dict(showticklabels=False),  # Hide x-axis labels for first subplot
         xaxis2=dict(showticklabels=False),  # Hide x-axis labels for second subplot
         xaxis3=dict(showticklabels=False),  # Hide x-axis labels for third subplot
@@ -91,14 +102,19 @@ def update_censorship_bars_layout(width=801):
         yaxis2=dict(showticklabels=False),  # Hide y-axis labels for second subplot
         yaxis3=dict(showticklabels=False),
         showlegend=False,
+        hoverlabel=dict(
+            bgcolor="white",
+            font_size=font_size,
+            font_family="Ubuntu Mono"
+        ),
         shapes=[
             # Red box for 'censoring'
             dict(
                 type='rect',
                 x0=0.95,
-                x1=0.93,
+                x1=0.93-shape_delta_x,
                 y0=1.1,
-                y1=1.14,
+                y1=1.14-shape_delta_y,
                 xref='paper',
                 yref='paper',
                 fillcolor='#d07070',
@@ -109,9 +125,9 @@ def update_censorship_bars_layout(width=801):
             dict(
                 type='rect',
                 x0=0.95,
-                x1=0.93,
+                x1=0.93-shape_delta_x,
                 y0=1.02,
-                y1=1.06,
+                y1=1.06-shape_delta_y,
                 xref='paper',
                 yref='paper',
                 fillcolor='#80bf80',
@@ -127,7 +143,7 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
         '<span style="font-size: 24px;font-weight:bold;">Relays</span>', 
         '<span style="font-size: 24px;font-weight:bold;">Builders</span>',
         '<span style="font-size: 24px;font-weight:bold;">Validators</span>'
-    ), vertical_spacing=0.2)
+    ), vertical_spacing=0.15)
 
     annotations = []
 
@@ -208,11 +224,19 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
     fig['layout']['annotations'] += tuple(annotations)
 
     fig.update_layout(**update_censorship_bars_layout())
+    
+    for trace in fig.data:
+        trace.hovertemplate = "<b>%{fullData.name}:</b> %{x:.2f}%<extra></extra>"
     return fig
 
 #########################################################
 fig1_len, fig2_len, fig3_len = [1]*3
 def update_layout_censorship_over_last_month(width=801):
+    if width <= 800:
+        font_size = 12
+    else:
+        font_size = 18
+        
     buttons = [
         dict(label="Show Relays",
              method="update",
@@ -238,16 +262,16 @@ def update_layout_censorship_over_last_month(width=801):
         yaxis_title="% of total slots",
         #yaxis_range = [0,100],
         #legend_title="Relay Provider",
-       hovermode = "x unified",
+        hovermode = "x unified",
         
                   hoverlabel=dict(font=dict(color=BLACK, size=16)),
         #title_xanchor="left",
         #title_yanchor="auto",
         
-        margin=dict(l=20, r=20, t=100, b=20),
+        margin=dict(l=20, r=20, t=120, b=20),
         font=dict(
             family="Courier New, monospace",
-            size=18,  # Set the font size here
+            size=font_size,  # Set the font size here
             color=BLACK
         ),
         legend=dict(
@@ -272,18 +296,18 @@ def update_layout_censorship_over_last_month(width=801):
                 y=1.1,
                 yanchor="top",
                 buttons=buttons,
-                font=dict(size= 16)
+                font=dict(size= font_size)
             )
         ],
         xaxis=dict(
-                showgrid=True, gridwidth=1, gridcolor=BLACK_ALPHA.format(0.2),tickfont=dict(size=18),
+                showgrid=True, gridwidth=1, gridcolor=BLACK_ALPHA.format(0.2),tickfont=dict(size=font_size),
                 
                 
             type="date"
         ),
         yaxis=dict(
-                showgrid=True, gridwidth=1, gridcolor=BLACK_ALPHA.format(0.2),tickfont=dict(size=18),
-            title_font=dict(size=20), range=[0,100]
+                showgrid=True, gridwidth=1, gridcolor=BLACK_ALPHA.format(0.2),tickfont=dict(size=font_size),
+            title_font=dict(size=font_size+2), range=[0,100]
         ),  
     )
 
