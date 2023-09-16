@@ -50,9 +50,9 @@ def prepare_data():
     df_relays_over_time = pd.read_csv("relays_over_time.csv")
     df_builders_over_time = pd.read_csv("builders_over_time.csv")
     df_validators_over_time = pd.read_csv("validators_over_time_censorship.csv")
-    df_relay = pd.read_csv("relay_stats.csv")
-    df_builder = pd.read_csv("builder_stats.csv")
-    df_validator = pd.read_csv("validator_stats.csv")
+    df_relay = pd.read_csv("relay_stats.csv").sort_values("all_blocks", ascending=False)
+    df_builder = pd.read_csv("builder_stats.csv").sort_values("all_blocks", ascending=False)
+    df_validator = pd.read_csv("validator_stats.csv").sort_values("all_blocks", ascending=False)
     df_builder["builder"] = df_builder["builder"].apply(lambda x: x[0:10]+"..." if x.startswith("0x") else x)
     
     
@@ -101,7 +101,7 @@ def update_censorship_bars_layout(width=801):
         title='',
         plot_bgcolor="#ffffff",
         height=650,
-        margin=dict(l=40, r=0, t=80, b=20),
+        margin=dict(l=40, r=0, t=90, b=20),
         xaxis1=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for first subplot
         xaxis2=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for second subplot
         xaxis3=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for third subplot
@@ -270,12 +270,11 @@ def update_layout_censorship_over_last_month(width=801):
         #yaxis_range = [0,100],
         #legend_title="Relay Provider",
         hovermode = "x unified",
-        
-                  hoverlabel=dict(font=dict(color=BLACK, size=16)),
+        hoverlabel=dict(font=dict(color=BLACK, size=16)),
         #title_xanchor="left",
         #title_yanchor="auto",
         
-        margin=dict(l=20, r=20, t=0, b=20),
+        margin=dict(l=20, r=20, t=100, b=20),
         font=dict(
             family="Courier New, monospace",
             size=font_size,  # Set the font size here
@@ -307,14 +306,21 @@ def update_layout_censorship_over_last_month(width=801):
             )
         ],
         xaxis=dict(
-                showgrid=True, gridwidth=1, gridcolor=BLACK_ALPHA.format(0.2),tickfont=dict(size=font_size),
-                
-                
+            showgrid=True, 
+            gridwidth=1, 
+            gridcolor=BLACK_ALPHA.format(0.2),
+            tickfont=dict(size=font_size),
+            fixedrange =True,    
             type="date"
         ),
         yaxis=dict(
-                showgrid=True, gridwidth=1, gridcolor=BLACK_ALPHA.format(0.2),tickfont=dict(size=font_size),
-            title_font=dict(size=font_size+2), range=[0,100]
+            showgrid=True, 
+            gridwidth=1, 
+            gridcolor=BLACK_ALPHA.format(0.2),
+            tickfont=dict(size=font_size),
+            title_font=dict(size=font_size+2), 
+            range=[0,100],
+            fixedrange =True
         ),  
     )
 
@@ -434,8 +440,10 @@ def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_buil
 def comparison_chart_layout(width=801):
     if width <= 800:
         font_size = 12
+        hoverlabel_size = 12
     else:
         font_size = 18
+        hoverlabel_size = 20
     
     visible_validator = [True]*validator_bar_count + [False]*relay_bar_count + [False]*builder_bar_count + [True]*validator_arrow_count + [False]*relay_arrow_count + [False]*builder_arrow_count
 
@@ -449,19 +457,20 @@ def comparison_chart_layout(width=801):
             showline=False,
             showticklabels=False,
             zeroline=False,
+            fixedrange =True,
             range=[0, 1]
         ),
         yaxis=dict(
             showline=False,
             showticklabels=True,
+            fixedrange =True,
             tickfont=dict(size=font_size),
             tickvals=y_positions_validator,  # This should be the default view
             ticktext=validator_names  # This should be the default view
         ),
         hovermode="closest",
         hoverlabel=dict(
-            bgcolor="black",
-            font_size=font_size,
+            font_size=hoverlabel_size,
             font_family="Ubuntu Mono"
         ),
         height=2500,
@@ -601,17 +610,13 @@ def comparison_chart():
                     ),
                     hovertemplate=f"<b>{val:.2f}% non-censored blocks</b><extra></extra>",
                     hoverlabel=dict(
-                        font=dict(size=16, color="white"),  # Increase size of hoverlabel
+                        font=dict(color="white"),  # Increase size of hoverlabel
                         bgcolor=corresponding_bar_color  # Set hover label background color to match scaled_value
                     ),
                     visible=(entity_ix == 0),
                     showlegend=False
                 )
             )
-
-
-
-
 
     # Customize layout
     fig.update_layout(
@@ -781,10 +786,26 @@ app.layout = html.Div(
                         html.H5(
                             ['Check out ', html.A('tornado-warning.info', href='https://tornado-warning.info', target='_blank'), " for more stats"],
                             className="mb-4 even-smaller-text text-right",
-                            style={'textAlign': 'right', "margin-right": "2vw"}
+                            style={'textAlign': 'right', "margin-right": "2vw", "margin-bottom": "0px"}
                         ),
                         width={"size": 6, "order": 2}
                     )
+                ]),
+                dbc.Row([
+                    dbc.Col(
+                        html.H5(
+                            ['Underlying data from the past 30 days'],
+                            className="mb-4 even-smaller-text",
+                            style={'textAlign': 'left',  "margin-top": "0px"}
+                        ),
+                        width={"size": 6, "order": 1}
+                    ),
+                    dbc.Col(html.H5(
+                            [''],
+                            className="mb-4 even-smaller-text",
+                            style={'textAlign': 'left',  "margin-top": "0px"}
+                        ),
+                        width={"size": 6, "order": 1})
                 ])
             ]),
             #dbc.Row(
