@@ -573,6 +573,7 @@ def comparison_chart_layout(width=801):
     
 
 def comparison_chart():
+    global relay_values, builder_values, validator_values
     benchmark_value = 5.0  # New benchmark value
     fig = go.Figure()
     # Create gradient bars
@@ -614,29 +615,31 @@ def comparison_chart():
 
     # Add arrows for each entity
     scaled_values_relay = [max(min(val / benchmark_value, 0.99), 0.01) for val in relay_values]
-    scaled_values_builder = [max(min(val / benchmark_value, 0.99), 0.01) for val in builder_values]
+    scaled_values_builder = [max(min(val / 7, 0.99), 0.01) for val in builder_values]
     scaled_values_validator = [max(min(val / benchmark_value, 0.99), 0.01) for val in validator_values]
 
 
-    def adjust_based_on_second_list(first_list, second_list, decrement=0.01, max_adjusting = 0.03):
-        last_value_second_list = None  # Initialize with None so the first element doesn't match
+    def adjust_based_on_second_list(scaled_values, values, decrement=0.01, max_adjusting = 0.03):
+        # Check for input validity
+        if len(scaled_values) != len(values):
+            print("Both lists should have the same length.")
+            return
 
-        for ix, current_value_second_list in reversed(list(enumerate(second_list))):
-            if last_value_second_list is not None and current_value_second_list < last_value_second_list:
-                first_list[ix] = max(
-                    first_list[ix] - decrement - min(
-                        (last_value_second_list-current_value_second_list)/100, max_adjusting
-                    ), 0.01
-                )
-                decrement += 0.02  # Increment the decrement for the next iteration
+        # Loop over each element in scaled_values_relay
+        for i, value1 in enumerate(scaled_values):
+            # Nested loop for comparison
+            for j, value2 in enumerate(scaled_values):
+                # Check for equality but exclude self-comparison
+                if value1 == value2 and values[i] < values[j]:
+                    # Deduct value in relay_values at index i by decrement, but no more than max_adjusting
+                    scaled_values[i] = max(scaled_values[i] - decrement, 0.01)
+        return scaled_values, values
 
-            last_value_second_list = current_value_second_list
 
 
-    #adjust_based_on_second_list(scaled_values_relay, relay_values)
-    #adjust_based_on_second_list(scaled_values_builder, builder_values)
-    #adjust_based_on_second_list(scaled_values_validator, validator_values, 0.001, 0.001)
-
+    scaled_values_relay, relay_values = adjust_based_on_second_list(scaled_values_relay, relay_values)
+    scaled_values_builder, builder_values = adjust_based_on_second_list(scaled_values_builder, builder_values)
+    scaled_values_validator, validator_values = adjust_based_on_second_list(scaled_values_validator, validator_values, 0.001, 0.001)
 
 
     arrow_offset = -0.3  # Offset to slightly move the arrows up
@@ -800,7 +803,7 @@ app.layout = html.Div(
                 dbc.Row([
                     dbc.Col(
                         html.H5(
-                            ['Built with 🖤 by', html.A('Toni Wahrstätter', href='https://twitter.com/nero_eth', target='_blank'), html.Br(), 'Underlying data from the past 30 days'],
+                            ['Built with 🖤 by ', html.A('Toni Wahrstätter', href='https://twitter.com/nero_eth', target='_blank'), html.Br(), 'Underlying data from the past 30 days'],
                             className="mb-4 even-smaller-text" # Apply the class
                         ),
                         width={"size": 6, "order": 1}
@@ -862,8 +865,16 @@ app.layout = html.Div(
             dcc.Store(id='window-size-store',data={'width': 800})
         ],
         fluid=True,
+             style={"max-width": "960px"}
     )],
-    id='main-div'  # This ID is used in the callback to update the style
+    id='main-div',
+    style={
+                "display": "flex",
+                "flex-direction": "column",
+                "justify-content": "center",
+                "align-items": "center",
+                "min-height": "100vh"
+            }
 )
 
 
@@ -880,7 +891,19 @@ app.layout = html.Div(
 #    window_width = window_size_data['width']
 #    return table_styles(window_width)
 
+@app.callback(
+    Output('main-div', 'style'),
+    Input('window-size-store', 'data')
+)
+def update_main_div_style(window_size_data):
+    if window_size_data is None:
+        raise dash.exceptions.PreventUpdate
 
+    window_width = window_size_data['width']
+    if window_width > 800:
+        return {'margin-right': '110px', 'margin-left': '110px'}
+    else:
+        return {}
 
 @app.callback(
     Output('graph1', 'figure'),
