@@ -506,8 +506,8 @@ def comparison_chart_layout(width=801):
 
     visible_builder = [False]*validator_bar_count + [False]*relay_bar_count + [True]*builder_bar_count + [False]*validator_arrow_count + [False]*relay_arrow_count + [True]*builder_arrow_count
     return dict(
-        #title="Sanction Meter Gauge",
-        margin=dict(l=20, r=20, t=100, b=20),
+        #title="Overview of the last 30 days (Lido split up in its node operators)",
+        margin=dict(l=20, r=20, t=60, b=20),
         xaxis=dict(
             showline=False,
             showticklabels=False,
@@ -542,8 +542,11 @@ def comparison_chart_layout(width=801):
         updatemenus=[
             dict(
                 type="buttons",
-                x=0.7,
-                y=1.01,
+                bgcolor= 'white',
+                #x=0.7,
+                xanchor="left",
+                yanchor="top",
+                y=1.05,
                 direction="right",
                 font=dict(size=font_size),
                 buttons=[
@@ -551,19 +554,19 @@ def comparison_chart_layout(width=801):
                          method="update",
                          args=[{"visible": visible_validator},
                                {"yaxis.tickvals": y_positions_validator, "yaxis.ticktext": validator_names, "height":2500,
-                               "yaxis.range": [min(y_positions_validator)-1, max(y_positions_validator)+1], "margin.t":0
+                               "yaxis.range": [min(y_positions_validator)-1, max(y_positions_validator)+1],
                                }]),
                     dict(label="Show Relays",
                          method="update",
                          args=[{"visible": visible_relay},
-                               {"yaxis.tickvals": y_positions_relay, "yaxis.ticktext": relay_names, "height":700,
-                               "yaxis.range": [min(y_positions_relay)-1, max(y_positions_relay)+1],"margin.t":50
+                               {"yaxis.tickvals": y_positions_relay, "yaxis.ticktext": relay_names, "height":430,
+                               "yaxis.range": [min(y_positions_relay)-1, max(y_positions_relay)+1]
                                }]),
                     dict(label="Show Builders",
                          method="update",
                          args=[{"visible": visible_builder},
                                {"yaxis.tickvals": y_positions_builder, "yaxis.ticktext": builder_names, "height":1500,
-                               "yaxis.range": [min(y_positions_builder)-1, max(y_positions_builder)+1], "margin.t":50
+                               "yaxis.range": [min(y_positions_builder)-1, max(y_positions_builder)+1],
                                }]),
                     
                 ]
