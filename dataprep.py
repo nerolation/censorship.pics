@@ -65,11 +65,11 @@ df.to_csv("validators_over_time_censorship.csv", index=False)
 
 query = """SELECT AA.relay, IFNULL(BB.blocks, 0) non_censored_blocks, AA.blocks all_blocks, IFNULL(BB.blocks/AA.blocks* 100, 0)  share 
 FROM (
-  SELECT * FROM `ethereum-data-nero.eth.9_tornado_relay_stats` 
+  SELECT distinct relay, blocks  FROM `ethereum-data-nero.eth.9_tornado_relay_stats` 
   WHERE frame = "all_blocks_30d" 
 ) AS AA
 LEFT JOIN (
-  SELECT * FROM `ethereum-data-nero.eth.9_tornado_relay_stats`
+  SELECT distinct relay, blocks  FROM `ethereum-data-nero.eth.9_tornado_relay_stats`
   WHERE frame = "30d"
 ) AS BB
 ON AA.relay = BB.relay
@@ -80,11 +80,11 @@ df.to_csv("relay_stats.csv", index=False)
 
 query = """SELECT AA.builder, IFNULL(BB.blocks, 0) non_censored_blocks, AA.blocks all_blocks, IFNULL(BB.blocks/AA.blocks* 100, 0)  share 
 FROM (
-  SELECT * FROM `ethereum-data-nero.eth.9_tornado_builder_stats` 
+  SELECT distinct builder, blocks FROM `ethereum-data-nero.eth.9_tornado_builder_stats` 
   WHERE frame = "all_blocks_30d" 
 ) AS AA
 LEFT JOIN (
-  SELECT * FROM `ethereum-data-nero.eth.9_tornado_builder_stats`
+  SELECT distinct builder, blocks  FROM `ethereum-data-nero.eth.9_tornado_builder_stats`
   WHERE frame = "30d"
 ) AS BB
 ON AA.builder = BB.builder
@@ -95,11 +95,11 @@ df.to_csv("builder_stats.csv", index=False)
 
 query = """SELECT AA.validator, IFNULL(BB.blocks, 0) non_censored_blocks, AA.blocks all_blocks, IFNULL(BB.blocks/AA.blocks* 100, 0)  share 
 FROM (
-  SELECT * FROM `ethereum-data-nero.eth.9_tornado_validator_stats_censorship` 
+  SELECT distinct validator, blocks  FROM `ethereum-data-nero.eth.9_tornado_validator_stats_censorship` 
   WHERE frame = "all_blocks_30d" 
 ) AS AA
 LEFT JOIN (
-  SELECT * FROM `ethereum-data-nero.eth.9_tornado_validator_stats_censorship`
+  SELECT distinct validator, blocks  FROM `ethereum-data-nero.eth.9_tornado_validator_stats_censorship`
   WHERE frame = "30d"
 ) AS BB
 ON AA.validator = BB.validator

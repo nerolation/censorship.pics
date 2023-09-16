@@ -1,4 +1,5 @@
 import os
+import re
 import dash
 from dash import dcc
 from dash import html
@@ -25,6 +26,12 @@ def build_query(select, dataset, appendix=""):
 BLACK = "rgb(15, 20, 25)"
 BLACK_ALPHA = "rgba(15, 20, 25, {})"
 
+def clean_url(url):
+    url = re.sub(r'https?://', '', url)
+    url = re.sub(r'www\.', '', url)
+    url = re.sub(r'\.[a-zA-Z]{2,}$', '', url)
+    url = re.sub(r'(\.[a-zA-Z]{2,})/.*$', r'\1', url)
+    return url
 
 def get_latest_slot_stats(df_censorship, df_entity, category):
     df_cat = df_censorship[df_censorship["category"] == category]
@@ -55,6 +62,10 @@ def prepare_data():
     df_validator = pd.read_csv("validator_stats.csv").sort_values("all_blocks", ascending=False)
     df_builder["builder"] = df_builder["builder"].apply(lambda x: x[0:10]+"..." if x.startswith("0x") else x)
     
+    df_relay["all_block_share"] = df_relay["all_blocks"] / df_relay.all_blocks.sum()
+    df_builder["all_block_share"] = df_builder["all_blocks"] / df_builder.all_blocks.sum()
+    df_validator["all_block_share"] = df_validator["all_blocks"] / df_validator.all_blocks.sum()
+    
     
     dfs_over_time = [
         (df_relays_over_time, "relay"),
@@ -83,6 +94,48 @@ def prepare_data():
         df_builder,
         df_validator
     )
+############ Load data
+
+(df_censorship, 
+ df_relays_over_time, 
+ df_builders_over_time, 
+ df_validators_over_time,
+ latest_data_relay, 
+ latest_data_builder, 
+ latest_data_validator,
+ df_relay,
+ df_builder,
+ df_validator) = prepare_data()
+
+
+############ Global variables
+
+df_validator['validator'] = df_validator['validator'].apply(lambda x: x[:15]+"..." if len(x) > 15 else x)
+df_validator["validator"] = df_validator.apply(lambda x: f'{x["validator"]} <span style="font-size:1.07vh">({x["all_block_share"]*100:.2f}%)</span>', axis=1)
+df_relay['relay'] = df_relay['relay'].apply(lambda x: x[:15]+"..." if len(x) > 15 else x)
+df_relay["relay"] = df_relay.apply(lambda x: f'{x["relay"]} <span style="font-size:1.07vh">({x["all_block_share"]*100:.2f}%)</span>', axis=1)
+df_builder["builder"] = df_builder["builder"].apply(lambda x: x.split("(")[0] if "(" in x else x)
+df_builder['builder'] = df_builder['builder'].apply(lambda x: f'{clean_url(x)}')
+df_builder['builder'] = df_builder['builder'].apply(lambda x: x[:15]+"..." if len(x) > 15 else x)
+df_builder["builder"] = df_builder.apply(lambda x: f'{x["builder"]} <span style="font-size:1.07vh">({x["all_block_share"]*100:.2f}%)</span>', axis=1)
+relay_names = df_relay.relay.to_list()[::-1]
+relay_values = df_relay.share.to_list()[::-1]
+builder_names = df_builder.builder.to_list()[::-1]
+builder_values = df_builder.share.to_list()[::-1]
+validator_names = df_validator.validator.to_list()[::-1]
+validator_values = df_validator.share.to_list()[::-1]
+
+y_positions_relay = np.linspace(0, len(relay_names)-1, len(relay_names))  # Y-positions for bars and arrows
+y_positions_builder = np.linspace(0, len(builder_names)-1, len(builder_names))  # Y-positions for bars and arrows
+y_positions_validator = np.linspace(0, len(validator_names)-1, len(validator_names))  # Y-positions for bars and arrows
+
+relay_bar_count = len(relay_names) * 10
+relay_arrow_count = len(relay_names)
+builder_bar_count = len(builder_names) * 10
+builder_arrow_count = len(builder_names)
+validator_bar_count = len(validator_names) * 10
+validator_arrow_count = len(validator_names)
+
 
 #########################################################
 
@@ -296,6 +349,7 @@ def update_layout_censorship_over_last_month(width=801):
         updatemenus=[
             dict(
                 type="buttons",
+                bgcolor= 'white',
                 direction="right",
                 x=0.5,
                 xanchor="center",
@@ -444,6 +498,7 @@ def comparison_chart_layout(width=801):
     else:
         font_size = 18
         hoverlabel_size = 20
+        
     
     visible_validator = [True]*validator_bar_count + [False]*relay_bar_count + [False]*builder_bar_count + [True]*validator_arrow_count + [False]*relay_arrow_count + [False]*builder_arrow_count
 
@@ -578,8 +633,8 @@ def comparison_chart():
             last_value_second_list = current_value_second_list
 
 
-    adjust_based_on_second_list(scaled_values_relay, relay_values)
-    adjust_based_on_second_list(scaled_values_builder, builder_values)
+    #adjust_based_on_second_list(scaled_values_relay, relay_values)
+    #adjust_based_on_second_list(scaled_values_builder, builder_values)
     #adjust_based_on_second_list(scaled_values_validator, validator_values, 0.001, 0.001)
 
 
@@ -626,8 +681,6 @@ def comparison_chart():
 
 
 
-
-
 # Figures
 def create_figures(
     df_censorship, 
@@ -648,36 +701,6 @@ def create_figures(
     fig_comparison = comparison_chart()
     return fig_bars, fig_over_months, fig_comparison
 
-(df_censorship, 
- df_relays_over_time, 
- df_builders_over_time, 
- df_validators_over_time,
- latest_data_relay, 
- latest_data_builder, 
- latest_data_validator,
- df_relay,
- df_builder,
- df_validator) = prepare_data()
-
-############ Global variables
-
-relay_names = df_relay.relay.to_list()[::-1]
-relay_values = df_relay.share.to_list()[::-1]
-builder_names = df_builder.builder.to_list()[::-1]
-builder_values = df_builder.share.to_list()[::-1]
-validator_names = df_validator.validator.to_list()[::-1]
-validator_values = df_validator.share.to_list()[::-1]
-
-y_positions_relay = np.linspace(0, len(relay_names)-1, len(relay_names))  # Y-positions for bars and arrows
-y_positions_builder = np.linspace(0, len(builder_names)-1, len(builder_names))  # Y-positions for bars and arrows
-y_positions_validator = np.linspace(0, len(validator_names)-1, len(validator_names))  # Y-positions for bars and arrows
-
-relay_bar_count = len(relay_names) * 10
-relay_arrow_count = len(relay_names)
-builder_bar_count = len(builder_names) * 10
-builder_arrow_count = len(builder_names)
-validator_bar_count = len(validator_names) * 10
-validator_arrow_count = len(validator_names)
 
 
 ############
@@ -777,7 +800,7 @@ app.layout = html.Div(
                 dbc.Row([
                     dbc.Col(
                         html.H5(
-                            ['Built with 🖤 by ', html.A('Toni Wahrstätter', href='https://twitter.com/nero_eth', target='_blank')],
+                            ['Built with 🖤 by', html.A('Toni Wahrstätter', href='https://twitter.com/nero_eth', target='_blank'), html.Br(), 'Underlying data from the past 30 days'],
                             className="mb-4 even-smaller-text" # Apply the class
                         ),
                         width={"size": 6, "order": 1}
@@ -786,27 +809,11 @@ app.layout = html.Div(
                         html.H5(
                             ['Check out ', html.A('tornado-warning.info', href='https://tornado-warning.info', target='_blank'), " for more stats"],
                             className="mb-4 even-smaller-text text-right",
-                            style={'textAlign': 'right', "margin-right": "2vw", "margin-bottom": "0px"}
+                            style={'textAlign': 'right', "margin-right": "2vw", "margin-bottom": "0px", "padding-bottom": "0px"}
                         ),
                         width={"size": 6, "order": 2}
                     )
-                ]),
-                dbc.Row([
-                    dbc.Col(
-                        html.H5(
-                            ['Underlying data from the past 30 days'],
-                            className="mb-4 even-smaller-text",
-                            style={'textAlign': 'left',  "margin-top": "0px"}
-                        ),
-                        width={"size": 6, "order": 1}
-                    ),
-                    dbc.Col(html.H5(
-                            [''],
-                            className="mb-4 even-smaller-text",
-                            style={'textAlign': 'left',  "margin-top": "0px"}
-                        ),
-                        width={"size": 6, "order": 1})
-                ])
+                ], style={"margin-bottom": "0px", "padding-bottom": "0px"}),
             ]),
             #dbc.Row(
             #   html.H5(
