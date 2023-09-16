@@ -11,6 +11,7 @@ import dash_bootstrap_components as dbc
 import numpy as np
 from dash import Input, Output
 from plotly.subplots import make_subplots
+import random
 
 
 QUERY = """
@@ -49,6 +50,11 @@ def prepare_data():
     df_relays_over_time = pd.read_csv("relays_over_time.csv")
     df_builders_over_time = pd.read_csv("builders_over_time.csv")
     df_validators_over_time = pd.read_csv("validators_over_time_censorship.csv")
+    df_relay = pd.read_csv("relay_stats.csv")
+    df_builder = pd.read_csv("builder_stats.csv")
+    df_validator = pd.read_csv("validator_stats.csv")
+    df_builder["builder"] = df_builder["builder"].apply(lambda x: x[0:10]+"..." if x.startswith("0x") else x)
+    
     
     dfs_over_time = [
         (df_relays_over_time, "relay"),
@@ -72,7 +78,10 @@ def prepare_data():
         df_validators_over_time,
         latest_data_relay, 
         latest_data_builder, 
-        latest_data_validator
+        latest_data_validator,
+        df_relay,
+        df_builder,
+        df_validator
     )
 
 #########################################################
@@ -93,14 +102,12 @@ def update_censorship_bars_layout(width=801):
         plot_bgcolor="#ffffff",
         height=650,
         margin=dict(l=40, r=0, t=80, b=20),
-        yaxis=dict(fixedrange =True),
-        xaxis=dict(fixedrange =True),
-        xaxis1=dict(showticklabels=False),  # Hide x-axis labels for first subplot
-        xaxis2=dict(showticklabels=False),  # Hide x-axis labels for second subplot
-        xaxis3=dict(showticklabels=False),  # Hide x-axis labels for third subplot
-        yaxis1=dict(showticklabels=False),  # Hide y-axis labels for first subplot
-        yaxis2=dict(showticklabels=False),  # Hide y-axis labels for second subplot
-        yaxis3=dict(showticklabels=False),
+        xaxis1=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for first subplot
+        xaxis2=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for second subplot
+        xaxis3=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for third subplot
+        yaxis1=dict(showticklabels=False, fixedrange =True),  # Hide y-axis labels for first subplot
+        yaxis2=dict(showticklabels=False, fixedrange =True),  # Hide y-axis labels for second subplot
+        yaxis3=dict(showticklabels=False, fixedrange =True),
         showlegend=False,
         hoverlabel=dict(
             bgcolor="white",
@@ -113,8 +120,8 @@ def update_censorship_bars_layout(width=801):
                 type='rect',
                 x0=0.95,
                 x1=0.93-shape_delta_x,
-                y0=1.1,
-                y1=1.14-shape_delta_y,
+                y0=1.1+shape_delta_y*2,
+                y1=1.14+shape_delta_y,
                 xref='paper',
                 yref='paper',
                 fillcolor='#d07070',
@@ -126,8 +133,8 @@ def update_censorship_bars_layout(width=801):
                 type='rect',
                 x0=0.95,
                 x1=0.93-shape_delta_x,
-                y0=1.02,
-                y1=1.06-shape_delta_y,
+                y0=1.02+shape_delta_y*2,
+                y1=1.06+shape_delta_y,
                 xref='paper',
                 yref='paper',
                 fillcolor='#80bf80',
@@ -238,17 +245,17 @@ def update_layout_censorship_over_last_month(width=801):
         font_size = 18
         
     buttons = [
-        dict(label="Show Relays",
+        dict(label="Relays",
              method="update",
              args=[{"visible": [True for _ in range(fig1_len)] + [False for _ in range(fig2_len)] + [False for _ in range(fig3_len)]},
                    {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Relays</span>'}]
             ),
-        dict(label="Show Builders",
+        dict(label="Builders",
              method="update",
              args=[{"visible": [False for _ in range(fig1_len)] + [True for _ in range(fig2_len)] + [False for _ in range(fig3_len)]},
                    {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Builders</span>'}]
             ),
-        dict(label="Show Validators",
+        dict(label="Validators",
              method="update",
              args=[{"visible": [False for _ in range(fig1_len)] + [False for _ in range(fig2_len)] + [True for _ in range(fig3_len)]},
                    {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Validators</span>'}]
@@ -268,7 +275,7 @@ def update_layout_censorship_over_last_month(width=801):
         #title_xanchor="left",
         #title_yanchor="auto",
         
-        margin=dict(l=20, r=20, t=120, b=20),
+        margin=dict(l=20, r=20, t=0, b=20),
         font=dict(
             family="Courier New, monospace",
             size=font_size,  # Set the font size here
@@ -314,7 +321,9 @@ def update_layout_censorship_over_last_month(width=801):
 
 def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_builders_over_time, df_validators_over_time):
     global fig1_len, fig2_len, fig3_len
-    df_relays_over_time = df_relays_over_time[df_relays_over_time["timestamp"] > sorted(df_relays_over_time["timestamp"].unique())[-33]]
+    df_relays_over_time = df_relays_over_time[
+        df_relays_over_time["timestamp"] > sorted(df_relays_over_time["timestamp"].unique())[-33]
+    ]
     df_relays_over_time = df_relays_over_time[df_relays_over_time["timestamp"] != max(df_relays_over_time["timestamp"])]
     df_cat = df_censoring[df_censoring["category"] == "relay"]
     _df = df_relays_over_time.merge(df_cat[["entity","censoring"]], how="left", left_on="relay", right_on="entity")
@@ -422,66 +431,194 @@ def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_buil
 
 ################################################
 
-
-def fig1_layout(width=801):
+def comparison_chart_layout(width=801):
     if width <= 800:
-        font_size = 10
+        font_size = 12
     else:
-        font_size = 20
+        font_size = 18
+    
+    visible_validator = [True]*validator_bar_count + [False]*relay_bar_count + [False]*builder_bar_count + [True]*validator_arrow_count + [False]*relay_arrow_count + [False]*builder_arrow_count
+
+    visible_relay = [False]*validator_bar_count + [True]*relay_bar_count + [False]*builder_bar_count + [False]*validator_arrow_count + [True]*relay_arrow_count + [False]*builder_arrow_count
+
+    visible_builder = [False]*validator_bar_count + [False]*relay_bar_count + [True]*builder_bar_count + [False]*validator_arrow_count + [False]*relay_arrow_count + [True]*builder_arrow_count
     return dict(
-        title=f'<span style="font-size: {font_size}px;font-weight:bold;">Number of Missed Blocks Over Time</span>',
-        xaxis_title='Date',
-        yaxis_title='#Blocks',
-        margin=dict(l=20, r=20, t=40, b=20),
-        font=dict(family="Ubuntu Mono", size = font_size),
-        hovermode = "x unified",
+        #title="Sanction Meter Gauge",
+        margin=dict(l=20, r=20, t=100, b=20),
+        xaxis=dict(
+            showline=False,
+            showticklabels=False,
+            zeroline=False,
+            range=[0, 1]
+        ),
+        yaxis=dict(
+            showline=False,
+            showticklabels=True,
+            tickfont=dict(size=font_size),
+            tickvals=y_positions_validator,  # This should be the default view
+            ticktext=validator_names  # This should be the default view
+        ),
+        hovermode="closest",
         hoverlabel=dict(
+            bgcolor="black",
             font_size=font_size,
             font_family="Ubuntu Mono"
         ),
-        legend=dict(
-            x=0,           # x position of the legend (1 corresponds to the right end of the plot)
-            y=1,           # y position of the legend (1 corresponds to the top of the plot)
-            xanchor="auto",  # x anchor of the legend
-            yanchor="auto",  # y anchor of the legend
-            bgcolor="rgba(255, 255, 255, 0.7)" # You can set a background color for readability if needed
+        height=2500,
+        barmode='stack',
+        showlegend=False,
+        plot_bgcolor='white',
+        paper_bgcolor='white',
+        bargap=0.4,  # Adjust this value to set the gap between bars
+        font=dict(
+            family="Courier New, monospace",
+            size=font_size,  # Set the font size here
+            color=BLACK
         ),
-        xaxis=dict(
-            fixedrange=True, 
-            showgrid=True,
-            gridcolor="#ffffff"   ,     
-            gridwidth=1.5   ,     
-        ),
-        yaxis=dict(
-            fixedrange=True, 
-            showgrid=True,
-            gridcolor="#ffffff",
-            gridwidth=1.5,
-        ),
-        updatemenus=[dict(
-            type="buttons",
-            buttons=[
-                dict(args=[{"visible": [True if i%2==0 else False for i in range(10)]},
-                           {}],
-                    label="Absolute",
-                    method="update"
-                )
-                ,
-                dict(args=[{"visible": [True if i%2==1 else False for i in range(10)]},
-                               {}],
-                        label="Relative",
-                        method="update"
-                )
-                ],
-            showactive= True,
-            direction= 'left',
-            active= 0,
-            x= 1.0, 
-            xanchor= 'right', 
-            y= 1.15, 
-            yanchor= 'top'
-        )]
+        updatemenus=[
+            dict(
+                type="buttons",
+                x=0.7,
+                y=1.01,
+                direction="right",
+                font=dict(size=font_size),
+                buttons=[
+                    dict(label="Show Validators",
+                         method="update",
+                         args=[{"visible": visible_validator},
+                               {"yaxis.tickvals": y_positions_validator, "yaxis.ticktext": validator_names, "height":2500,
+                               "yaxis.range": [min(y_positions_validator)-1, max(y_positions_validator)+1], "margin.t":0
+                               }]),
+                    dict(label="Show Relays",
+                         method="update",
+                         args=[{"visible": visible_relay},
+                               {"yaxis.tickvals": y_positions_relay, "yaxis.ticktext": relay_names, "height":700,
+                               "yaxis.range": [min(y_positions_relay)-1, max(y_positions_relay)+1],"margin.t":50
+                               }]),
+                    dict(label="Show Builders",
+                         method="update",
+                         args=[{"visible": visible_builder},
+                               {"yaxis.tickvals": y_positions_builder, "yaxis.ticktext": builder_names, "height":1500,
+                               "yaxis.range": [min(y_positions_builder)-1, max(y_positions_builder)+1], "margin.t":50
+                               }]),
+                    
+                ]
+            )
+        ]
     )
+    
+
+def comparison_chart():
+    benchmark_value = 5.0  # New benchmark value
+    fig = go.Figure()
+    # Create gradient bars
+    # Explicitly defined colors for the gradient, transitioning from red to yellow to green
+    red_tone = [208, 112, 112]
+    green_tone = [128, 191, 128]
+    colors = [
+        f"rgb({int(red_tone[0] + (green_tone[0] - red_tone[0]) * i / 9)}, \
+        {int(red_tone[1] + (green_tone[1] - red_tone[1]) * i / 9)}, \
+        {int(red_tone[2] + (green_tone[2] - red_tone[2]) * i / 9)})"
+        for i in range(10)
+    ]
+
+    n_colors = len(colors)
+    
+
+    visible = True
+    for names, y_positions  in [
+        (validator_names, y_positions_validator), (relay_names, y_positions_relay), (builder_names, y_positions_builder)
+    ]:
+        for i, (name, y_pos) in enumerate(zip(names, y_positions)):
+            for j, color_value in enumerate(colors):
+                fig.add_trace(
+                    go.Bar(
+                        y=[y_pos],
+                        x=[1.0 / n_colors],
+                        orientation='h',
+                        marker=dict(
+                            color=color_value,
+                        ),
+                        hoverinfo='none',
+                        showlegend=False,
+                        visible=visible
+                    )
+                )
+        visible = False
+
+
+
+    # Add arrows for each entity
+    scaled_values_relay = [max(min(val / benchmark_value, 0.99), 0.01) for val in relay_values]
+    scaled_values_builder = [max(min(val / benchmark_value, 0.99), 0.01) for val in builder_values]
+    scaled_values_validator = [max(min(val / benchmark_value, 0.99), 0.01) for val in validator_values]
+
+
+    def adjust_based_on_second_list(first_list, second_list, decrement=0.01, max_adjusting = 0.03):
+        last_value_second_list = None  # Initialize with None so the first element doesn't match
+
+        for ix, current_value_second_list in reversed(list(enumerate(second_list))):
+            if last_value_second_list is not None and current_value_second_list < last_value_second_list:
+                first_list[ix] = max(
+                    first_list[ix] - decrement - min(
+                        (last_value_second_list-current_value_second_list)/100, max_adjusting
+                    ), 0.01
+                )
+                decrement += 0.02  # Increment the decrement for the next iteration
+
+            last_value_second_list = current_value_second_list
+
+
+    adjust_based_on_second_list(scaled_values_relay, relay_values)
+    adjust_based_on_second_list(scaled_values_builder, builder_values)
+    #adjust_based_on_second_list(scaled_values_validator, validator_values, 0.001, 0.001)
+
+
+
+    arrow_offset = -0.3  # Offset to slightly move the arrows up
+
+    all_entities = [
+        (validator_names, scaled_values_validator, y_positions_validator, validator_values),
+        (relay_names, scaled_values_relay, y_positions_relay, relay_values),
+        (builder_names, scaled_values_builder, y_positions_builder, builder_values)
+    ]
+    visible = True
+    for entity_ix, (names, scaled_values, y_positions, values) in enumerate(all_entities):
+        for i, (name, scaled_value, y_pos, val) in enumerate(zip(names, scaled_values, y_positions, values)):
+            # Determine the color based on the scaled_value
+            color_idx = int(scaled_value * (n_colors - 1))
+            corresponding_bar_color = colors[color_idx]
+
+            fig.add_trace(
+                go.Scatter(
+                    y=[y_pos - arrow_offset],
+                    x=[scaled_value],
+                    mode='markers',
+                    marker=dict(
+                        symbol='triangle-down',
+                        size=14,
+                        color='black'
+                    ),
+                    hovertemplate=f"<b>{val:.2f}% non-censored blocks</b><extra></extra>",
+                    hoverlabel=dict(
+                        font=dict(size=16, color="white"),  # Increase size of hoverlabel
+                        bgcolor=corresponding_bar_color  # Set hover label background color to match scaled_value
+                    ),
+                    visible=(entity_ix == 0),
+                    showlegend=False
+                )
+            )
+
+
+
+
+
+    # Customize layout
+    fig.update_layout(
+        **comparison_chart_layout()
+    )
+    return fig
+
 
 
 
@@ -494,16 +631,64 @@ def create_figures(
     df_validators_over_time,
     latest_data_relay, 
     latest_data_builder, 
-    latest_data_validator
+    latest_data_validator,
+    df_relay,
+    df_builder,
+    df_validator
 ):
     fig_bars = censorship_bars(latest_data_relay, latest_data_builder, latest_data_validator)
-    fig_over_months = create_censorship_over_last_month(df_censorship, df_relays_over_time, df_builders_over_time, df_validators_over_time)
-    return fig_bars, fig_over_months
+    fig_over_months = create_censorship_over_last_month(
+        df_censorship, df_relays_over_time, df_builders_over_time, df_validators_over_time
+    )
+    fig_comparison = comparison_chart()
+    return fig_bars, fig_over_months, fig_comparison
 
-(df_censorship, df_relays_over_time, df_builders_over_time, df_validators_over_time,
- latest_data_relay, latest_data_builder, latest_data_validator) = prepare_data()
-fig_bars, fig_over_months = create_figures(df_censorship, df_relays_over_time, df_builders_over_time, df_validators_over_time,
-                                latest_data_relay, latest_data_builder, latest_data_validator)
+(df_censorship, 
+ df_relays_over_time, 
+ df_builders_over_time, 
+ df_validators_over_time,
+ latest_data_relay, 
+ latest_data_builder, 
+ latest_data_validator,
+ df_relay,
+ df_builder,
+ df_validator) = prepare_data()
+
+############ Global variables
+
+relay_names = df_relay.relay.to_list()[::-1]
+relay_values = df_relay.share.to_list()[::-1]
+builder_names = df_builder.builder.to_list()[::-1]
+builder_values = df_builder.share.to_list()[::-1]
+validator_names = df_validator.validator.to_list()[::-1]
+validator_values = df_validator.share.to_list()[::-1]
+
+y_positions_relay = np.linspace(0, len(relay_names)-1, len(relay_names))  # Y-positions for bars and arrows
+y_positions_builder = np.linspace(0, len(builder_names)-1, len(builder_names))  # Y-positions for bars and arrows
+y_positions_validator = np.linspace(0, len(validator_names)-1, len(validator_names))  # Y-positions for bars and arrows
+
+relay_bar_count = len(relay_names) * 10
+relay_arrow_count = len(relay_names)
+builder_bar_count = len(builder_names) * 10
+builder_arrow_count = len(builder_names)
+validator_bar_count = len(validator_names) * 10
+validator_arrow_count = len(validator_names)
+
+
+############
+
+fig_bars, fig_over_months, fig_comparison = create_figures(
+    df_censorship, 
+    df_relays_over_time, 
+    df_builders_over_time, 
+    df_validators_over_time,
+    latest_data_relay, 
+    latest_data_builder, 
+    latest_data_validator, 
+    df_relay,
+    df_builder,
+    df_validator
+)
 
 # Initialize the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -642,6 +827,7 @@ app.layout = html.Div(
             # Graphs
             dbc.Row(dbc.Col(dcc.Graph(id='graph1', figure=fig_bars), md=12, className="mb-4")),
             dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4")),
+            dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_comparison), md=12, className="mb-4")),
 
 
             dbc.Row(dcc.Interval(id='window-size-trigger', interval=1000, n_intervals=0, max_intervals=1)),
@@ -709,6 +895,20 @@ def update_layout1(window_size_data):
         for i in fig_over_months.layout.updatemenus:
             i.font.size = 10
     return fig_over_months
+
+@app.callback(
+    Output('graph3', 'figure'),
+    Input('window-size-store', 'data')
+)
+def update_layout3(window_size_data):
+    if window_size_data is None:
+        raise dash.exceptions.PreventUpdate
+    width = window_size_data['width']
+    fig_comparison.update_layout(**comparison_chart_layout(width))
+    if width <= 800:
+        for i in fig_comparison.layout.updatemenus:
+            i.font.size = 10
+    return fig_comparison
 
 
 #
