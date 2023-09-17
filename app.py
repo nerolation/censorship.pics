@@ -1,10 +1,8 @@
 import os
 import re
 import dash
-from dash import dcc
-from dash import html
 from datetime import datetime
-from dash import dash_table
+from dash import  Dash, Input, Output, dcc, html, dash_table
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
@@ -13,7 +11,6 @@ import numpy as np
 from dash import Input, Output
 from plotly.subplots import make_subplots
 import random
-
 
 QUERY = """
 SELECT {}
@@ -491,23 +488,23 @@ def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_buil
 
 ################################################
 
-def comparison_chart_layout(width=801):
+def comparison_chart_layout(width=801, height=2400, names=None, y_positions=None):
     if width <= 800:
-        font_size = 12
+        font_size = 10
         hoverlabel_size = 12
     else:
-        font_size = 18
-        hoverlabel_size = 20
+        font_size = 14
+        hoverlabel_size = 16
         
     
-    visible_validator = [True]*validator_bar_count + [False]*relay_bar_count + [False]*builder_bar_count + [True]*validator_arrow_count + [False]*relay_arrow_count + [False]*builder_arrow_count
+#    visible_validator = [True]*validator_bar_count + [False]*relay_bar_count + [False]*builder_bar_count + [True]*validator_arrow_count + [False]*relay_arrow_count + [False]*builder_arrow_count
 
-    visible_relay = [False]*validator_bar_count + [True]*relay_bar_count + [False]*builder_bar_count + [False]*validator_arrow_count + [True]*relay_arrow_count + [False]*builder_arrow_count
+#    visible_relay = [False]*validator_bar_count + [True]*relay_bar_count + [False]*builder_bar_count + [False]*validator_arrow_count + [True]*relay_arrow_count + [False]*builder_arrow_count
 
-    visible_builder = [False]*validator_bar_count + [False]*relay_bar_count + [True]*builder_bar_count + [False]*validator_arrow_count + [False]*relay_arrow_count + [True]*builder_arrow_count
+#    visible_builder = [False]*validator_bar_count + [False]*relay_bar_count + [True]*builder_bar_count + [False]*validator_arrow_count + [False]*relay_arrow_count + [True]*builder_arrow_count
     return dict(
-        #title="Overview of the last 30 days (Lido split up in its node operators)",
-        margin=dict(l=20, r=20, t=60, b=20),
+        title="Overview of the last 30 days <span style='font-size:1.5vh;'>(Lido is split up in its node operators)</span>",
+        margin=dict(l=20, r=20, t=0, b=0),
         xaxis=dict(
             showline=False,
             showticklabels=False,
@@ -520,15 +517,15 @@ def comparison_chart_layout(width=801):
             showticklabels=True,
             fixedrange =True,
             tickfont=dict(size=font_size),
-            tickvals=y_positions_validator,  # This should be the default view
-            ticktext=validator_names  # This should be the default view
+            tickvals=y_positions,  # This should be the default view
+            ticktext=names  # This should be the default view
         ),
         hovermode="closest",
         hoverlabel=dict(
             font_size=hoverlabel_size,
             font_family="Ubuntu Mono"
         ),
-        height=2500,
+        height=height,
         barmode='stack',
         showlegend=False,
         plot_bgcolor='white',
@@ -536,46 +533,47 @@ def comparison_chart_layout(width=801):
         bargap=0.4,  # Adjust this value to set the gap between bars
         font=dict(
             family="Courier New, monospace",
-            size=font_size,  # Set the font size here
+            size=font_size-2,  # Set the font size here
             color=BLACK
         ),
-        updatemenus=[
-            dict(
-                type="buttons",
-                bgcolor= 'white',
-                #x=0.7,
-                xanchor="left",
-                yanchor="top",
-                y=1.05,
-                direction="right",
-                font=dict(size=font_size),
-                buttons=[
-                    dict(label="Show Validators",
-                         method="update",
-                         args=[{"visible": visible_validator},
-                               {"yaxis.tickvals": y_positions_validator, "yaxis.ticktext": validator_names, "height":2500,
-                               "yaxis.range": [min(y_positions_validator)-1, max(y_positions_validator)+1],
-                               }]),
-                    dict(label="Show Relays",
-                         method="update",
-                         args=[{"visible": visible_relay},
-                               {"yaxis.tickvals": y_positions_relay, "yaxis.ticktext": relay_names, "height":430,
-                               "yaxis.range": [min(y_positions_relay)-1, max(y_positions_relay)+1]
-                               }]),
-                    dict(label="Show Builders",
-                         method="update",
-                         args=[{"visible": visible_builder},
-                               {"yaxis.tickvals": y_positions_builder, "yaxis.ticktext": builder_names, "height":1500,
-                               "yaxis.range": [min(y_positions_builder)-1, max(y_positions_builder)+1],
-                               }]),
-                    
-                ]
-            )
-        ]
+        #updatemenus=[
+        #    dict(
+        #        #type="buttons",
+        #        bgcolor= 'white',
+        #        showactive=True,
+        #        x=0.1,
+        #        xanchor="left",
+        #        y=1.1,
+        #        yanchor="top",
+        #        direction="down",
+        #        font=dict(size=font_size-6),
+        #        #buttons=[
+        #        #    dict(label="Show Validators",
+        #        #         method="update",
+        #        #         args=[{"visible": visible_validator},
+        #        #               {"yaxis.tickvals": y_positions_validator, "yaxis.ticktext": validator_names, "height":2500,
+        #        #               "yaxis.range": [min(y_positions_validator)-1, max(y_positions_validator)+1],
+        #        #               }]),
+        #        #    dict(label="Show Relays",
+        #        #         method="update",
+        #        #         args=[{"visible": visible_relay},
+        #        #               {"yaxis.tickvals": y_positions_relay, "yaxis.ticktext": relay_names, "height":430,
+        #        #               "yaxis.range": [min(y_positions_relay)-1, max(y_positions_relay)+1]
+        #        #               }]),
+        #        #    dict(label="Show Builders",
+        #        #         method="update",
+        #        #         args=[{"visible": visible_builder},
+        #        #               {"yaxis.tickvals": y_positions_builder, "yaxis.ticktext": builder_names, "height":1500,
+        #        #               "yaxis.range": [min(y_positions_builder)-1, max(y_positions_builder)+1],
+        #        #               }]),
+        #        #    
+        #        #]
+        #    )
+        #]
     )
     
 
-def comparison_chart():
+def comparison_chart(entity):
     global relay_values, builder_values, validator_values
     benchmark_value = 5.0  # New benchmark value
     fig = go.Figure()
@@ -593,9 +591,18 @@ def comparison_chart():
     n_colors = len(colors)
     
 
-    visible = True
+    if entity == "validator":
+        all_entities = (validator_names, y_positions_validator)
+        height=25*len(all_entities[0])
+    if entity == "relay":
+        all_entities = (relay_names, y_positions_relay)
+        height=25*len(all_entities[0])
+    if entity == "builder":
+        all_entities = (builder_names, y_positions_builder)
+        height=25*len(all_entities[0])
+
     for names, y_positions  in [
-        (validator_names, y_positions_validator), (relay_names, y_positions_relay), (builder_names, y_positions_builder)
+        all_entities
     ]:
         for i, (name, y_pos) in enumerate(zip(names, y_positions)):
             for j, color_value in enumerate(colors):
@@ -609,10 +616,10 @@ def comparison_chart():
                         ),
                         hoverinfo='none',
                         showlegend=False,
-                        visible=visible
+                        visible=True
                     )
                 )
-        visible = False
+
 
 
 
@@ -647,13 +654,16 @@ def comparison_chart():
 
     arrow_offset = -0.3  # Offset to slightly move the arrows up
 
-    all_entities = [
-        (validator_names, scaled_values_validator, y_positions_validator, validator_values),
-        (relay_names, scaled_values_relay, y_positions_relay, relay_values),
-        (builder_names, scaled_values_builder, y_positions_builder, builder_values)
-    ]
+
+    if entity == "validator":
+        all_entities_arr = ((validator_names, scaled_values_validator, y_positions_validator, validator_values),)
+    if entity == "relay":
+        all_entities_arr  = ((relay_names, scaled_values_relay, y_positions_relay, relay_values),)
+    if entity == "builder":
+        all_entities_arr  = ((builder_names, scaled_values_builder, y_positions_builder, builder_values),)
     visible = True
-    for entity_ix, (names, scaled_values, y_positions, values) in enumerate(all_entities):
+    
+    for entity_ix, (names, scaled_values, y_positions, values) in enumerate(all_entities_arr):
         for i, (name, scaled_value, y_pos, val) in enumerate(zip(names, scaled_values, y_positions, values)):
             # Determine the color based on the scaled_value
             color_idx = int(scaled_value * (n_colors - 1))
@@ -674,14 +684,14 @@ def comparison_chart():
                         font=dict(color="white"),  # Increase size of hoverlabel
                         bgcolor=corresponding_bar_color  # Set hover label background color to match scaled_value
                     ),
-                    visible=(entity_ix == 0),
+                    visible=True,
                     showlegend=False
                 )
             )
 
     # Customize layout
     fig.update_layout(
-        **comparison_chart_layout()
+        **comparison_chart_layout(801, height, all_entities[0], all_entities[1])
     )
     return fig
 
@@ -704,14 +714,21 @@ def create_figures(
     fig_over_months = create_censorship_over_last_month(
         df_censorship, df_relays_over_time, df_builders_over_time, df_validators_over_time
     )
-    fig_comparison = comparison_chart()
-    return fig_bars, fig_over_months, fig_comparison
+    
+    
+
+    fig_comp_val = comparison_chart("validator")
+    fig_comp_rel = comparison_chart("relay")
+    fig_comp_bui = comparison_chart("builder")
+    
+    #fig_comparison = comparison_chart()
+    return fig_bars, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui # fig_comparison,
 
 
 
 ############
 
-fig_bars, fig_over_months, fig_comparison = create_figures(
+fig_bars, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui = create_figures(
     df_censorship, 
     df_relays_over_time, 
     df_builders_over_time, 
@@ -723,6 +740,7 @@ fig_bars, fig_over_months, fig_comparison = create_figures(
     df_builder,
     df_validator
 )
+
 
 # Initialize the Dash app
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -774,7 +792,7 @@ def table_styles(width):
     font_size = '20px' if width >= 800 else '10px'
 
     return [
-        {'if': {'column_id': 'Slot Nr. in Epoch'}, 'maxWidth': '30px', 'text-align': 'center', 'fontSize': font_size},
+        {'if': {'column_id': 'Slot Nr. in Epoch'}, 'maxWidth': '30px', 'textAlign': 'center', 'fontSize': font_size},
         {'if': {'column_id': 'Slot'}, 'textAlign': 'right', 'maxWidth': '40px', 'fontSize': font_size},
         {'if': {'column_id': 'Parent Slot'}, 'textAlign': 'center', 'maxWidth': '40px', 'fontSize': font_size},
         {'if': {'column_id': 'Val. ID'}, 'maxWidth': '30px', 'fontSize': font_size},
@@ -782,26 +800,14 @@ def table_styles(width):
         {'if': {'column_id': 'CL Client'}, 'maxWidth': '80px', 'fontSize': font_size}
     ]
 
-@app.callback(
-    Output('main-div', 'style'),
-    Input('window-size-store', 'data')
-)
-def update_main_div_style(window_size_data):
-    if window_size_data is None:
-        raise dash.exceptions.PreventUpdate
 
-    window_width = window_size_data['width']
-    if window_width > 800:
-        return {'margin-right': '110px', 'margin-left': '110px'}
-    else:
-        return {}
 
 app.layout = html.Div(
     [
         dbc.Container(
         [
             # Title
-            dbc.Row(html.H1("Ethereum Censorship Dashboard", style={'text-align': 'center','margin-top': '20px'}), className="mb-4"),
+            dbc.Row(html.H1("Ethereum Censorship Dashboard", style={'textAlign': 'center','marginTop': '20px'}), className="mb-4"),
             html.Div([
                 dbc.Row([
                     dbc.Col(
@@ -815,68 +821,48 @@ app.layout = html.Div(
                         html.H5(
                             ['Check out ', html.A('tornado-warning.info', href='https://tornado-warning.info', target='_blank'), " for more stats"],
                             className="mb-4 even-smaller-text text-right",
-                            style={'textAlign': 'right', "margin-right": "2vw", "margin-bottom": "0px", "padding-bottom": "0px"}
+                            style={'textAlign': 'right', "marginRight": "2vw", "marginBottom": "0px", "paddingBottom": "0px"}
                         ),
                         width={"size": 6, "order": 2}
                     )
-                ], style={"margin-bottom": "0px", "padding-bottom": "0px"}),
+                ], style={"marginBottom": "0px", "paddingBottom": "0px"}),
             ]),
-            #dbc.Row(
-            #   html.H5(
-            #            ['Reorg Overview', ' (last 30 days)'],
-            #            className="mb-4 smaller-text" # Apply the class
-            #        )
-            #),
-            #dbc.Row(
-            #    dbc.Col(
-            #        dash_table.DataTable(
-            #            style_cell_conditional=table_styles(799),
-            #            id='table',
-            #            columns=[
-            #                {"name": i, 
-            #                 "id": i, 
-            #                 'presentation': 'markdown'} if i == 'Slot' else {"name": i, "id": i} for i in df_table.columns#[:-1]
-            #            ],# + [{"name": 'slot_sort', "id": 'slot_sort', "hidden": True}],
-            #            data=df_table.to_dict('records'),
-            #            page_size=15,
-            #            style_table={'overflowX': 'auto'},
-            #            style_cell={'whiteSpace': 'normal','height': 'auto'},
-            #            style_data_conditional=[
-            #                {'if': {'row_index': 'odd'}, 'backgroundColor': 'rgb(248, 248, 248)'},
-            #            ],
-            #            style_header={'backgroundColor': 'rgb(230, 230, 230)', 'fontWeight': 'bold'},
-            #            style_header_conditional=[
-            #                {'if': {'column_id': 'Slot'}, 'text-align': 'center'},
-            #                {'if': {'column_id': 'Parent Slot'}, 'text-align': 'center'},
-            #                {'if': {'column_id': 'Slot Nr. in Epoch'}, 'text-align': 'center'},
-            #            ],
-            #            css=[dict(selector="p", rule="margin: 0; text-align: center")],
-            #            sort_action="native",
-            #            sort_mode="single"
-            #        ),
-            #        className="mb-4", md=12
-            #    )
-            #),
+            
 
             # Graphs
             dbc.Row(dbc.Col(dcc.Graph(id='graph1', figure=fig_bars), md=12, className="mb-4")),
             dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4")),
-            dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_comparison), md=12, className="mb-4")),
+            #dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_comp_val), md=12, className="mb-4")),
+
+           dbc.Row(
+                dbc.Col(
+                    [
+                        dbc.Button('Validators', id='btn-a', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black'}),
+                        dbc.Button('Relays', id='btn-b', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black'}),
+                        dbc.Button('Builders', id='btn-c', n_clicks=0, style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black'})
+
+                    ],
+                    width={"size": 6, "offset": 3}
+                ),
+                className="mb-4"
+            ),
+            dbc.Row(dbc.Col(html.Div(id="graph-container"))),
+            dbc.Row(dbc.Col(id='dynamic-graph', md=12, className="mb-4")),
 
 
             dbc.Row(dcc.Interval(id='window-size-trigger', interval=1000, n_intervals=0, max_intervals=1)),
             dcc.Store(id='window-size-store',data={'width': 800})
         ],
         fluid=True,
-             style={"max-width": "960px"}
+             style={"maxWidth": "960px"}
     )],
     id='main-div',
     style={
                 "display": "flex",
-                "flex-direction": "column",
-                "justify-content": "center",
-                "align-items": "center",
-                "min-height": "100vh"
+                "flexDirection": "column",
+                "justifyContent": "center",
+                "alignItems": "center",
+                "minHight": "100vh"
             }
 )
 
@@ -893,18 +879,19 @@ app.layout = html.Div(
 #
 #    window_width = window_size_data['width']
 #    return table_styles(window_width)
-
+    
+    
 @app.callback(
     Output('main-div', 'style'),
     Input('window-size-store', 'data')
 )
-def update_main_div_style(window_size_data):
+def update_main_div_style_dynamic(window_size_data):
     if window_size_data is None:
         raise dash.exceptions.PreventUpdate
 
     window_width = window_size_data['width']
     if window_width > 800:
-        return {'margin-right': '110px', 'margin-left': '110px'}
+        return {'marginRight': '110px', 'marginLeft': '110px'}
     else:
         return {}
 
@@ -950,22 +937,6 @@ def update_layout1(window_size_data):
             i.font.size = 10
     return fig_over_months
 
-@app.callback(
-    Output('graph3', 'figure'),
-    Input('window-size-store', 'data')
-)
-def update_layout3(window_size_data):
-    if window_size_data is None:
-        raise dash.exceptions.PreventUpdate
-    width = window_size_data['width']
-    fig_comparison.update_layout(**comparison_chart_layout(width))
-    if width <= 800:
-        for i in fig_comparison.layout.updatemenus:
-            i.font.size = 10
-    return fig_comparison
-
-
-#
 #@app.callback(
 #    Output('graph3', 'figure'),
 #    Input('window-size-store', 'data')
@@ -974,84 +945,61 @@ def update_layout3(window_size_data):
 #    if window_size_data is None:
 #        raise dash.exceptions.PreventUpdate
 #    width = window_size_data['width']
-#    fig3.update_layout(**fig3_layout(width))
-#    return fig3
-#
-#@app.callback(
-#    Output('graph4', 'figure'),
-#    Input('window-size-store', 'data')
-#)
-#def update_layout4(window_size_data):
-#    if window_size_data is None:
-#        raise dash.exceptions.PreventUpdate
-#    width = window_size_data['width']
-#    fig4.update_layout(**fig4_layout(width))
-#    return fig4
-#
-#@app.callback(
-#    Output('graph5', 'figure'),
-#    Input('window-size-store', 'data')
-#)
-#def update_layout5(window_size_data):
-#    if window_size_data is None:
-#        raise dash.exceptions.PreventUpdate
-#    width = window_size_data['width']
-#    fig5.update_layout(**fig5_layout(width))
-#    return fig5
-#
-#@app.callback(
-#    Output('graph6', 'figure'),
-#    Input('window-size-store', 'data')
-#)
-#def update_layout6(window_size_data):
-#    if window_size_data is None:
-#        raise dash.exceptions.PreventUpdate
-#    width = window_size_data['width']
-#    fig6.update_layout(**fig6_layout(width))
-#    return fig6
-#@app.callback(
-#    Output('graph7', 'figure'),
-#    Input('window-size-store', 'data')
-#)
-#def update_layout7(window_size_data):
-#    if window_size_data is None:
-#        raise dash.exceptions.PreventUpdate
-#    width = window_size_data['width']
-#    fig7.update_layout(**fig7_layout(width))
-#    return fig7
-#
-#@app.callback(
-#    Output('graph8', 'figure'),
-#    Input('window-size-store', 'data')
-#)
-#def update_layout8(window_size_data):
-#    if window_size_data is None:
-#        raise dash.exceptions.PreventUpdate
-#    width = window_size_data['width']
-#    fig8.update_layout(**create_reorger_relay_layout(width))
-#    return fig8
-#
-#@app.callback(
-#    Output('graph9', 'figure'),
-#    Input('window-size-store', 'data')
-#)
-#def update_layout9(window_size_data):
-#    if window_size_data is None:
-#        raise dash.exceptions.PreventUpdate
-#    width = window_size_data['width']
-#    fig9.update_layout(**create_reorger_validator_layout(width))
-#    return fig9
-#
-#@app.callback(
-#    Output('graph10', 'figure'),
-#    Input('window-size-store', 'data')
-#)
-#def update_layout10(window_size_data):
-#    if window_size_data is None:
-#        raise dash.exceptions.PreventUpdate
-#    width = window_size_data['width']
-#    fig10.update_layout(**create_reorger_builder_layout(width))
-#    return fig10
+#    fig_comp_val.update_layout(**comparison_chart_layout(width))
+#    if width <= 800:
+#        for i in fig_comp_val.layout.updatemenus:
+#            i.font.size = 10
+#    return fig_comp_val
+
+    
+@app.callback(
+    Output('dynamic-graph', 'children'),
+    [
+        Input('btn-a', 'n_clicks'),
+        Input('btn-b', 'n_clicks'),
+        Input('btn-c', 'n_clicks')
+    ]
+)
+def update_graph3(btn_a, btn_b, btn_c):
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+
+    if 'btn-a' in changed_id:
+        return dcc.Graph(id='graph', figure=fig_comp_val)
+    elif 'btn-b' in changed_id:
+        return dcc.Graph(id='graph', figure=fig_comp_rel)
+    elif 'btn-c' in changed_id:
+        return dcc.Graph(id='graph', figure=fig_comp_bui)
+
+    return dcc.Graph(id='graph', figure=fig_comp_val) 
+
+
+
+@app.callback(
+    [Output('btn-a', 'style'),
+     Output('btn-b', 'style'),
+     Output('btn-c', 'style')],
+    [Input('btn-a', 'n_clicks'),
+     Input('btn-b', 'n_clicks'),
+     Input('btn-c', 'n_clicks')],
+    prevent_initial_call=True
+)
+def update_button_style(n1, n2, n3):
+    ctx = dash.callback_context
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    
+    default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black'}
+    active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black'}
+    
+    if button_id == 'btn-a':
+        return [active_style, default_style, default_style]
+    elif button_id == 'btn-b':
+        return [default_style, active_style, default_style]
+    elif button_id == 'btn-c':
+        return [default_style, default_style, active_style]
+    else:
+        return [default_style, default_style, default_style]
+
+
 
 if __name__ == '__main__':
     #app.run_server(debug=True)

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+
 .even-smaller-text {
     font-size: 18px; /* Adjust the font size as needed */
 }
@@ -11,4 +13,22 @@
 }
 .right-align {
     text-align: right;
+}
+
+.custom-button {
+  background-color: white;
+  border: 1px solid #eee;
+  color: black;
+    
+}
+
+.custom-button:active {
+  background-color: #ddd;
+}
+
+/* For responsiveness */
+@media (max-width: 768px) {
+    .custom-button {
+        margin-bottom: 10px;
+    }
 }
