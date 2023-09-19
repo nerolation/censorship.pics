@@ -160,6 +160,7 @@ def update_censorship_bars_layout(width=801):
         barmode='stack',
         title='',
         plot_bgcolor="#f1f2f6",
+        dragmode = False,
         paper_bgcolor= "#f1f2f6",
         height=650,
         margin=dict(l=40, r=0, t=90, b=20),
@@ -339,6 +340,7 @@ def bars_over_time_layout(height=450, width=801):
         #barmode='stack',
         showlegend=False,
         plot_bgcolor='white',
+        dragmode = False,
         paper_bgcolor= "#f1f2f6",
         #bargap=-0.01,  
         updatemenus=[
@@ -455,7 +457,7 @@ def update_layout_censorship_over_last_month(width=801):
         hoverlabel=dict(font=dict(color=BLACK, size=16)),
         #title_xanchor="left",
         #title_yanchor="auto",
-        
+        dragmode = False,
         margin=dict(l=20, r=20, t=120, b=20),
         font=dict(
             family="Courier New, monospace",
@@ -658,6 +660,7 @@ def comparison_chart_layout(width=801, height=2400, names=None, y_positions=None
             font_family="Ubuntu Mono"
         ),
         height=height,
+        dragmode = False,
         barmode='stack',
         showlegend=False,
         plot_bgcolor='#f1f2f6',
