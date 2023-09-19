@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
 
 .even-smaller-text {
-    font-size: 18px; /* Adjust the font size as needed */
+    font-size: 15px; /* Adjust the font size as needed */
+}
+.even-even-smaller-text {
+    font-size: 12px; /* Adjust the font size as needed */
 }
 @media screen and (max-width: 800px) {
     .smaller-text {
@@ -9,6 +12,9 @@
     }
     .even-smaller-text {
         font-size: 10px; /* Adjust the font size as needed */
+    }
+    .even-even-smaller-text {
+        font-size: 8px; /* Adjust the font size as needed */
     }
 }
 .right-align {
