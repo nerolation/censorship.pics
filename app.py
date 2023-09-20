@@ -161,11 +161,12 @@ def update_censorship_bars_layout(width=801):
         
     return dict(
         barmode='stack',
-        title='',
+        #title=f'OFAC Compliance <span style="font-size:{font_size-4}> (last 30 days)</span>',
         plot_bgcolor="#f1f2f6",
         dragmode = False,
         paper_bgcolor= "#f1f2f6",
-        height=650,
+        height=500,
+        #title_font_size = font_size+5,
         margin=dict(l=40, r=0, t=90, b=20),
         xaxis1=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for first subplot
         xaxis2=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for second subplot
@@ -984,16 +985,17 @@ app.layout = html.Div(
                         dcc.Markdown("""
 **Censorship resistance** is one of the **core values of Ethereum**. Today, users can be censored at **different layers** of the stack. **Builders** can exclusively build blocks that don't contain certain transactions, **relays** can refuse relaying them, and **validators** can build local blocks that strictly exclude certain entities or only connect to censoring relays. Today, with almost 95% of MEV-Boost adoption, the network's minimum censorship is the **maximum** of all these layers. **Ultimately, validators can impact censorship. Local block building prevents from contributing to censorship through MEV-Boost.**
 """, style={'textAlign': 'left', 'color': '#262525', 'fontFamily': 'Ubuntu Mono, monospace'}),
-                    ], className="mb-4 even-even-smaller-text", md=6),
+                    ], className="mb-2 even-even-smaller-text", md=6),
 
                     dbc.Col([
                         html.H4("Methodology", style={'textAlign': 'left', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace'}),
-                         dcc.Markdown("""**Entities** are labeled as 'censoring' if they **produce significantly low numbers** (close to zero) of blocks with sanctioned transactions, provided they have a sufficiently large block sample (>100) for evaluation. By comparing an entity's non-censored block rate with half of the average for the same time frame, a quite clear categorization can be achieved.
+                         dcc.Markdown("""**Entities** are labeled as 'censoring' if they **produce significantly low numbers** of blocks with OFAC-sanctioned transactions within a time window of 30 days, provided they have a sufficiently large block sample (>100) for evaluation. By comparing an entity's non-censored block rate with half of the average for the same time frame, a quite clear categorization can be achieved. For reporting realistic values, every transaction (incl. every trace) is analysed to determine if a block contains a OFAC-sanctionable offense or not. 
                               """, style={'textAlign': 'left', 'color': '#262525','fontFamily': 'Ubuntu Mono, monospace'}),
-                    ], className="mb-4 even-even-smaller-text", md=6)
+                    ], className="mb-2 even-even-smaller-text", md=6)
                 ])
-            ], className="mb-4 p-3 rounded", style={'background-color': '#ecf0f1'}),
-
+            ], className="mb-2 p-3 rounded", style={'background-color': '#ecf0f1'}),
+          
+            dbc.Row([html.H5("OFAC Compliance", style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})], className="customheader"),
             # Graphs with smooth transitions
             dbc.Row(dbc.Col(dcc.Graph(id='graph1', figure=fig_bars), md=12, className="mb-4 animated fadeIn")),
             dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_bars_over_time), md=12, className="mb-4 animated fadeIn")),
@@ -1223,7 +1225,7 @@ def update_button_style(n1, n2, n3):
 
 
 if __name__ == '__main__':
-    #app.run_server(debug=True)
+    app.run_server(debug=True)
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
     
