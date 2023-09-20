@@ -197,6 +197,7 @@ timestamp,relay,slot
 2023-07-06,ultrasound,2911
 2022-10-18,Other/None,2905
 2023-06-13,ultrasound,2905
+2023-09-19,ultrasound,2903
 2023-09-05,ultrasound,2897
 2023-07-10,ultrasound,2896
 2022-10-05,flashbots,2894
@@ -435,6 +436,7 @@ timestamp,relay,slot
 2023-04-22,flashbots,2286
 2023-06-23,ultrasound,2285
 2023-06-27,flashbots,2280
+2023-09-19,bloxroute (max profit),2280
 2023-04-25,flashbots,2277
 2023-07-11,flashbots,2275
 2023-07-13,flashbots,2274
@@ -449,6 +451,7 @@ timestamp,relay,slot
 2023-09-18,flashbots,2251
 2023-09-11,flashbots,2250
 2023-07-24,flashbots,2248
+2023-09-19,flashbots,2248
 2022-09-27,flashbots,2247
 2023-06-04,ultrasound,2245
 2023-09-04,flashbots,2240
@@ -747,6 +750,7 @@ timestamp,relay,slot
 2023-05-20,flashbots,1728
 2023-03-26,flashbots,1726
 2023-09-07,agnostic Gnosis,1726
+2023-09-19,agnostic Gnosis,1723
 2023-08-25,bloxroute (regulated),1722
 2022-09-22,flashbots,1718
 2023-08-02,agnostic Gnosis,1718
@@ -898,6 +902,7 @@ timestamp,relay,slot
 2023-06-15,agnostic Gnosis,1448
 2023-08-27,bloxroute (regulated),1447
 2023-06-27,agnostic Gnosis,1446
+2023-09-19,bloxroute (regulated),1444
 2023-06-12,agnostic Gnosis,1442
 2023-06-28,bloxroute (max profit),1442
 2023-06-03,agnostic Gnosis,1441
@@ -1044,6 +1049,7 @@ timestamp,relay,slot
 2023-07-23,blocknative,1223
 2023-03-09,bloxroute (max profit),1222
 2023-06-15,bloxroute (max profit),1221
+2023-09-19,blocknative,1221
 2022-09-18,flashbots,1220
 2023-05-12,Other/None,1218
 2023-07-22,blocknative,1218
@@ -1724,6 +1730,7 @@ timestamp,relay,slot
 2023-07-22,Other/None,474
 2023-01-28,agnostic Gnosis,473
 2023-07-29,Other/None,473
+2023-09-19,Other/None,473
 2023-02-26,agnostic Gnosis,472
 2023-06-23,blocknative,472
 2023-05-23,blocknative,471
@@ -1997,8 +2004,8 @@ timestamp,relay,slot
 2023-02-14,blocknative,261
 2022-09-22,bloxroute (max profit),260
 2023-01-04,blocknative,260
-2023-01-07,bloxroute (regulated),260
 2023-01-07,blocknative,260
+2023-01-07,bloxroute (regulated),260
 2023-01-18,blocknative,260
 2023-04-05,bloxroute (regulated),259
 2022-10-02,bloxroute (max profit),258
@@ -2031,6 +2038,7 @@ timestamp,relay,slot
 2023-01-24,blocknative,241
 2023-02-15,blocknative,241
 2023-08-27,eden,241
+2023-09-20,ultrasound,241
 2022-10-05,bloxroute (max profit),240
 2022-11-24,blocknative,240
 2023-01-02,blocknative,240
@@ -2066,7 +2074,6 @@ timestamp,relay,slot
 2022-12-27,eden,226
 2023-01-03,blocknative,226
 2022-12-21,eden,224
-2023-09-19,ultrasound,224
 2023-05-03,bloxroute (max profit),223
 2023-07-01,aestus,223
 2022-11-17,eden,222
@@ -2126,6 +2133,7 @@ timestamp,relay,slot
 2022-12-26,bloxroute (regulated),206
 2022-12-28,bloxroute (regulated),206
 2022-12-31,bloxroute (regulated),206
+2023-09-20,flashbots,205
 2022-12-17,agnostic Gnosis,204
 2023-03-07,bloxroute (regulated),204
 2022-10-16,eden,203
@@ -2166,7 +2174,6 @@ timestamp,relay,slot
 2022-10-24,eden,196
 2023-04-12,bloxroute (regulated),196
 2023-07-18,aestus,196
-2023-09-19,bloxroute (max profit),195
 2022-11-18,bloxroute (regulated),194
 2022-12-21,agnostic Gnosis,194
 2023-05-04,blocknative,194
@@ -2222,6 +2229,7 @@ timestamp,relay,slot
 2023-01-24,eden,179
 2023-06-10,bloxroute (regulated),179
 2023-07-14,aestus,179
+2023-09-20,bloxroute (max profit),179
 2023-06-29,aestus,178
 2023-08-02,eden,178
 2022-10-11,blocknative,177
@@ -2283,7 +2291,6 @@ timestamp,relay,slot
 2023-02-08,eden,167
 2023-04-15,bloxroute (regulated),167
 2023-07-28,eden,167
-2023-09-19,flashbots,167
 2022-10-09,eden,166
 2023-01-08,ultrasound,166
 2023-01-15,blocknative,166
@@ -2446,7 +2453,6 @@ timestamp,relay,slot
 2022-11-04,bloxroute (ethical),137
 2022-12-03,bloxroute (regulated),137
 2023-07-11,eden,137
-2023-09-19,agnostic Gnosis,137
 2022-10-12,eden,136
 2022-10-21,bloxroute (ethical),136
 2022-11-07,bloxroute (ethical),136
@@ -2469,6 +2475,7 @@ timestamp,relay,slot
 2022-12-11,eden,133
 2023-02-18,bloxroute (regulated),133
 2023-07-25,eden,133
+2023-09-20,agnostic Gnosis,133
 2022-10-13,manifold,132
 2022-10-22,bloxroute (ethical),132
 2023-03-16,aestus,131
@@ -2520,7 +2527,7 @@ timestamp,relay,slot
 2023-05-20,bloxroute (regulated),124
 2023-05-27,bloxroute (regulated),124
 2023-05-29,bloxroute (regulated),124
-2023-09-19,Other/None,124
+2023-09-19,aestus,124
 2022-11-08,bloxroute (regulated),123
 2023-07-17,eden,123
 2022-10-14,manifold,122
@@ -2539,13 +2546,13 @@ timestamp,relay,slot
 2023-02-20,bloxroute (regulated),120
 2023-02-25,bloxroute (ethical),120
 2023-04-16,blocknative,120
-2023-09-19,blocknative,120
+2023-09-20,bloxroute (regulated),120
 2023-05-23,eden,119
-2023-09-19,bloxroute (regulated),119
 2022-12-03,manifold,118
 2023-01-14,blocknative,118
 2023-02-10,bloxroute (regulated),118
 2023-02-21,bloxroute (regulated),118
+2023-09-20,Other/None,118
 2022-11-21,bloxroute (regulated),117
 2023-07-05,eden,117
 2023-08-09,eden,117
@@ -2697,8 +2704,8 @@ timestamp,relay,slot
 2022-12-29,ultrasound,89
 2023-02-10,eden,89
 2023-02-18,eden,89
-2023-02-19,eden,89
 2023-02-19,bloxroute (ethical),89
+2023-02-19,eden,89
 2023-03-08,aestus,89
 2023-03-09,aestus,89
 2023-04-09,eden,89
@@ -2743,8 +2750,8 @@ timestamp,relay,slot
 2023-02-14,bloxroute (ethical),82
 2023-02-17,bloxroute (ethical),82
 2023-02-19,bloxroute (regulated),82
-2023-03-26,aestus,82
 2023-03-26,blocknative,82
+2023-03-26,aestus,82
 2023-04-12,aestus,82
 2023-07-07,eden,82
 2022-09-26,bloxroute (ethical),81
@@ -2785,8 +2792,8 @@ timestamp,relay,slot
 2023-05-17,aestus,76
 2022-10-26,bloxroute (max profit),75
 2022-11-29,bloxroute (regulated),75
-2022-11-30,manifold,75
 2022-11-30,relayooor,75
+2022-11-30,manifold,75
 2023-01-30,eden,75
 2023-04-04,aestus,75
 2023-04-11,eden,75
@@ -2802,6 +2809,7 @@ timestamp,relay,slot
 2023-05-24,aestus,74
 2023-06-09,eden,74
 2023-09-16,aestus,74
+2023-09-20,blocknative,74
 2022-09-27,bloxroute (ethical),73
 2022-10-13,bloxroute (regulated),73
 2022-12-21,manifold,73
@@ -3065,8 +3073,8 @@ timestamp,relay,slot
 2022-11-10,relayooor,42
 2023-04-01,eden,42
 2023-04-15,bloxroute (ethical),42
-2023-04-16,bloxroute (ethical),42
 2023-04-16,manifold,42
+2023-04-16,bloxroute (ethical),42
 2023-06-24,eden,42
 2023-08-02,manifold,42
 2022-09-23,bloxroute (regulated),41
@@ -3085,8 +3093,8 @@ timestamp,relay,slot
 2022-11-08,manifold,40
 2022-11-27,bloxroute (ethical),40
 2022-12-08,bloxroute (ethical),40
-2022-12-16,manifold,40
 2022-12-16,bloxroute (ethical),40
+2022-12-16,manifold,40
 2023-01-20,bloxroute (regulated),40
 2023-02-02,eden,40
 2023-03-09,eden,40
@@ -3162,8 +3170,8 @@ timestamp,relay,slot
 2022-11-23,bloxroute (ethical),34
 2022-12-03,bloxroute (ethical),34
 2022-12-05,agnostic Gnosis,34
-2022-12-06,ultrasound,34
 2022-12-06,bloxroute (ethical),34
+2022-12-06,ultrasound,34
 2022-12-08,relayooor,34
 2022-12-18,bloxroute (ethical),34
 2023-02-27,relayooor,34
@@ -3448,8 +3456,8 @@ timestamp,relay,slot
 2022-10-31,relayooor,17
 2022-12-07,relayooor,17
 2022-12-16,relayooor,17
-2023-01-10,manifold,17
 2023-01-10,relayooor,17
+2023-01-10,manifold,17
 2023-01-11,relayooor,17
 2023-01-15,relayooor,17
 2023-02-03,bloxroute (ethical),17
@@ -3505,6 +3513,7 @@ timestamp,relay,slot
 2023-06-11,bloxroute (ethical),15
 2023-06-27,eden,15
 2023-08-28,manifold,15
+2023-09-19,eden,15
 2022-09-28,manifold,14
 2022-10-21,manifold,14
 2022-10-28,relayooor,14
@@ -3536,11 +3545,11 @@ timestamp,relay,slot
 2023-08-29,manifold,14
 2023-01-18,manifold,13
 2023-01-20,manifold,13
-2023-01-25,relayooor,13
 2023-01-25,aestus,13
+2023-01-25,relayooor,13
 2023-02-04,bloxroute (ethical),13
-2023-02-25,relayooor,13
 2023-02-25,manifold,13
+2023-02-25,relayooor,13
 2023-02-26,manifold,13
 2023-03-12,manifold,13
 2023-03-25,manifold,13
@@ -3551,8 +3560,8 @@ timestamp,relay,slot
 2023-04-13,manifold,13
 2023-04-19,aestus,13
 2023-04-21,manifold,13
-2023-04-24,bloxroute (ethical),13
 2023-04-24,manifold,13
+2023-04-24,bloxroute (ethical),13
 2023-04-25,bloxroute (ethical),13
 2023-04-29,eden,13
 2023-06-10,bloxroute (ethical),13
@@ -3623,14 +3632,15 @@ timestamp,relay,slot
 2023-08-03,bloxroute (ethical),11
 2023-08-11,manifold,11
 2023-09-16,eden,11
+2023-09-20,aestus,11
 2022-12-10,relayooor,10
 2023-02-09,manifold,10
 2023-02-13,aestus,10
 2023-03-09,manifold,10
 2023-03-27,manifold,10
 2023-04-19,bloxroute (ethical),10
-2023-04-28,bloxroute (regulated),10
 2023-04-28,manifold,10
+2023-04-28,bloxroute (regulated),10
 2023-05-20,eden,10
 2023-06-02,bloxroute (ethical),10
 2023-06-15,manifold,10
@@ -3779,10 +3789,10 @@ timestamp,relay,slot
 2023-03-20,manifold,5
 2023-03-23,relayooor,5
 2023-05-01,bloxroute (ethical),5
-2023-05-06,manifold,5
 2023-05-06,eden,5
-2023-05-08,manifold,5
+2023-05-06,manifold,5
 2023-05-08,bloxroute (ethical),5
+2023-05-08,manifold,5
 2023-05-17,bloxroute (ethical),5
 2023-05-23,bloxroute (ethical),5
 2023-05-26,manifold,5
@@ -3809,7 +3819,6 @@ timestamp,relay,slot
 2023-08-19,bloxroute (ethical),5
 2023-09-12,manifold,5
 2023-09-16,manifold,5
-2023-09-19,aestus,5
 2022-09-15,eden,4
 2022-09-18,eden,4
 2022-09-23,eden,4
@@ -3866,6 +3875,7 @@ timestamp,relay,slot
 2023-07-23,bloxroute (ethical),3
 2023-07-24,bloxroute (ethical),3
 2023-08-13,bloxroute (ethical),3
+2023-09-20,eden,3
 2022-11-28,ultrasound,2
 2022-11-30,agnostic Gnosis,2
 2022-12-08,aestus,2
@@ -3895,6 +3905,7 @@ timestamp,relay,slot
 2023-08-09,bloxroute (ethical),2
 2023-08-21,manifold,2
 2023-09-13,manifold,2
+2023-09-19,manifold,2
 2022-09-16,eden,1
 2022-09-18,manifold,1
 2022-09-19,manifold,1

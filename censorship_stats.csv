@@ -1,49 +1,58 @@
 entity,category,tc_blocks30,all_blocks30,censoring
-Shared/Default,builder,28,855,0
-0xaed6ce171012a6fc72d3ad39e56d231af939f5e6c814cd090fa42847b8c8a00fa67e4c909405704e2783045fae5387d6,builder,0,1,1
-Assembled delicately by Beelder,builder,109,2158,0
-Bob the builder,builder,0,164,1
+Assembled delicately by Beelder,builder,109,2181,0
+uwu.builders,builder,3,167,0
+Flashbots SGX,builder,0,15,1
 EigenPhi,builder,1,6,0
-Blocknative,builder,0,8109,1
-0xac704d0eed44527df13750c61843ed2322e82988fe7ac0a017f7f0bd5c5af4eff32ca57fcebbb0c1a905280f72bfa15f,builder,0,3,1
-nfactorial.xyz,builder,0,165,1
-spiderbuilder.net,builder,0,5,1
-lightspeedbuilder.info,builder,0,246,1
-Geth Go,builder,12,394,0
-flashbots-builder.eth,builder,6,109,0
-0xb094c3c1487b931d7b0029a89d0859ec5e1e664d14f7798bc52e8e90b418755c381426adc4ea82d5f23463c88868059a,builder,0,1,1
-ethbuilder,builder,0,24,1
-BloXroute,builder,419,3695,0
-0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,builder,0,2,1
-Manifold,builder,116,139,0
-https://eth-builder.com,builder,0,809,1
-0xb1eb2f5e13b7d7dee21799ffa58b70525cec5badf395e25d62a41a75719eb844ad70775a3fc95aaa9e7d4a89ef12cd10,builder,0,1,1
-0xad5ce1019364de397776d647ca94636c8ab2d7f2f4989d2a15b1899e6fc132613f480058405368f935af575554a7aa6f,builder,0,2,1
-Flashbots SGX,builder,0,23,1
-Flashbots,builder,0,36499,1
-I can haz block?,builder,0,85,1
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,637,1
-rsync-builder.xyz,builder,0,87645,1
+payload.de,builder,48,681,0
+f1b.io,builder,559,5199,0
+Bob the builder,builder,0,162,1
+BuildAI (https://buildai.net),builder,96,3453,0
 0xae45d2a2a884fae8a9bdb20a89d6ad8f333e0b4fa725e3c33930d8cc083a7e9ab92342f608572d264b09163be44235cd,builder,0,1,1
-antbuilder,builder,1,147,1
-Gambit Labs (https://gmbit.co),builder,178,2355,0
-boba-builder.com,builder,39,1890,0
-beaverbuild.org,builder,5,109553,1
+boba-builder.com,builder,41,1927,0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,626,1
+0xaed6ce171012a6fc72d3ad39e56d231af939f5e6c814cd090fa42847b8c8a00fa67e4c909405704e2783045fae5387d6,builder,0,1,1
+Manifold,builder,109,132,0
+nfactorial.xyz,builder,0,161,1
 FC,builder,0,5,1
-red ocean surfer,builder,0,6,1
-payload.de,builder,48,666,0
-uwu.builders,builder,3,176,0
-f1b.io,builder,562,5577,0
 blocksmith.org,builder,7,128,0
-"If you build it, they will come.",builder,0,4,1
+0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,builder,0,3,1
+builder0x69,builder,0,18354,1
+Geth Go,builder,12,398,0
+beaverbuild.org,builder,5,110130,1
+ethbuilder,builder,0,30,1
+Shared/Default,builder,28,855,0
+antbuilder,builder,3,179,0
+Flashbots,builder,0,36377,1
 smithbot.xyz,builder,0,15,1
-It's Free Real Estate,builder,21,66,0
+Titan Builder,builder,4955,86757,0
+spiderbuilder.net,builder,0,5,1
+flashbots-builder.eth,builder,6,109,0
+0xac704d0eed44527df13750c61843ed2322e82988fe7ac0a017f7f0bd5c5af4eff32ca57fcebbb0c1a905280f72bfa15f,builder,0,3,1
+I can haz block?,builder,0,88,1
+Blocknative,builder,0,7799,1
+0xad5ce1019364de397776d647ca94636c8ab2d7f2f4989d2a15b1899e6fc132613f480058405368f935af575554a7aa6f,builder,0,2,1
 mev-reth,builder,0,4,1
-BuildAI (https://buildai.net),builder,98,3457,0
-builder0x69,builder,0,18492,1
-https://edennetwork.io,builder,0,52,1
-Titan Builder,builder,4933,86093,0
-rpc.tbuilder.xyz,builder,0,1,1
+https://edennetwork.io,builder,0,64,1
+"If you build it, they will come.",builder,0,3,1
+It's Free Real Estate,builder,21,66,0
+https://eth-builder.com,builder,0,809,1
+red ocean surfer,builder,0,1,1
+0xb1eb2f5e13b7d7dee21799ffa58b70525cec5badf395e25d62a41a75719eb844ad70775a3fc95aaa9e7d4a89ef12cd10,builder,0,1,1
+0xb094c3c1487b931d7b0029a89d0859ec5e1e664d14f7798bc52e8e90b418755c381426adc4ea82d5f23463c88868059a,builder,0,1,1
+lightspeedbuilder.info,builder,0,236,1
+rsync-builder.xyz,builder,0,87888,1
+BloXroute,builder,418,3700,0
+Gambit Labs (https://gmbit.co),builder,184,2522,0
+ultrasound,relay,2644,83761,0
+flashbots,relay,0,64028,1
+bloxroute (regulated),relay,5,45483,1
+eden,relay,0,3579,1
+bloxroute (max profit),relay,2026,73755,0
+aestus,relay,312,9435,0
+manifold,relay,135,641,0
+blocknative,relay,0,35792,1
+bloxroute (ethical),relay,0,1,1
+agnostic Gnosis,relay,1483,54769,0
 wex exchange,validator,3,304,0
 tokenpocket,validator,2,98,0
 tetranode,validator,1,2,0
@@ -125,13 +134,3 @@ Blockdaemon,validator,3,2672,1
 Attestant (BVI) Limited,validator,89,3725,0
 Anyblock Analytics,validator,0,3,1
 Allnodes,validator,145,6928,0
-ultrasound,relay,2613,83195,0
-eden,relay,0,3669,1
-aestus,relay,312,9520,0
-manifold,relay,142,649,0
-bloxroute (ethical),relay,0,7,1
-bloxroute (max profit),relay,2026,73903,0
-blocknative,relay,0,35735,1
-bloxroute (regulated),relay,5,45490,1
-flashbots,relay,0,63606,1
-agnostic Gnosis,relay,1488,54691,0

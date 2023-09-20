@@ -1225,7 +1225,7 @@ def update_button_style(n1, n2, n3):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    #app.run_server(debug=True)
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
     
