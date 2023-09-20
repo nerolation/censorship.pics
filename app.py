@@ -11,7 +11,7 @@ import numpy as np
 from dash import Input, Output
 from plotly.subplots import make_subplots
 import random
-
+pd.set_option('mode.chained_assignment', None)
 QUERY = """
 SELECT {}
 FROM {}
@@ -1039,7 +1039,7 @@ app.layout = html.Div(
                 ])
             ], style={
                 'backgroundColor': '#f1f2f6',
-                'color': 'white',
+                'color': 'black',
                 'textAlign': 'left',
                 'paddingTop': '30px',
                 
@@ -1214,7 +1214,7 @@ def update_button_style(n1, n2, n3):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    #app.run_server(debug=True)
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
     
