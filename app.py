@@ -40,9 +40,12 @@ def get_latest_slot_stats(df_censorship, df_entity, category):
     agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
     agg_df.sort_values("censoring", inplace=True)
     agg_df = agg_df[agg_df["timestamp"] != max(agg_df["timestamp"])]
-    latest_data = agg_df[agg_df['timestamp'] == agg_df['timestamp'].max()]
-    total_slots = latest_data['slot'].sum()
-    latest_data.loc[:,('percentage')] = (latest_data['slot'] / total_slots) * 100
+    agg_df['timestamp'] = pd.to_datetime(agg_df['timestamp'])
+    latest_data = agg_df[agg_df['timestamp'] > agg_df['timestamp'] -  pd.Timedelta(days=30)]
+    total_slots = latest_data.groupby("timestamp")['slot'].sum().reset_index()
+    latest_data = pd.merge(latest_data, total_slots, how="left", on="timestamp")
+    latest_data.loc[:,('percentage')] = (latest_data['slot_x'] / latest_data['slot_y']) * 100
+    latest_data = latest_data.groupby("censoring")["percentage"].mean().reset_index()
     return latest_data
     
   
@@ -420,7 +423,7 @@ def bars_over_time(dfs, entities):
     return fig
 
 #########################################################
-fig1_len, fig2_len, fig3_len = [1]*3
+fig1_len, fig2_len, fig3_len = [2]*3
 def update_layout_censorship_over_last_month(width=801):
     if width <= 800:
         font_size = 12
@@ -448,7 +451,7 @@ def update_layout_censorship_over_last_month(width=801):
 
     return dict(
         xaxis_tickangle=-45,
-        title='<span style="font-size: 24px;font-weight:bold;">Censorship - Validators (last month)</span>',
+        title='<span style="font-size: 24px;font-weight:bold;">Censorship - Relays (last month)</span>',
         xaxis_title="",
         yaxis_title="% of total slots",
         #yaxis_range = [0,100],
@@ -510,23 +513,18 @@ def update_layout_censorship_over_last_month(width=801):
     )
 
 
-def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_builders_over_time, df_validators_over_time):
+def create_censorship_over_last_month(bars_over_time_relay, bars_over_time_builder, bars_over_time_validator):
     global fig1_len, fig2_len, fig3_len
-    df_relays_over_time = df_relays_over_time[
-        df_relays_over_time["timestamp"] > sorted(df_relays_over_time["timestamp"].unique())[-33]
+    
+    bars_over_time_relay = bars_over_time_relay[
+        bars_over_time_relay["date"] > sorted(bars_over_time_relay["date"].unique())[-33]
     ]
-    df_relays_over_time = df_relays_over_time[df_relays_over_time["timestamp"] != max(df_relays_over_time["timestamp"])]
-    df_cat = df_censoring[df_censoring["category"] == "relay"]
-    _df = df_relays_over_time.merge(df_cat[["entity","censoring"]], how="left", left_on="relay", right_on="entity")
-    _df = _df.fillna(0)
-    df = _df
-    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
-    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
-    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
-    agg_df.sort_values("censoring", inplace=True)
-    fig1 = px.area(agg_df, 
-                  x="timestamp", 
-                  y="slot", 
+    bars_over_time_relay["color"] = bars_over_time_relay["censoring"].apply(lambda x: "#FF0000" if x == "non-censoring" else "#008000")
+    bars_over_time_relay.sort_values("censoring", inplace=True)
+    
+    fig1 = px.area(bars_over_time_relay, 
+                  x="date", 
+                  y="Share_of_Blocks", 
                   color="censoring", 
                   line_group="censoring",
                   color_discrete_sequence = ["#FF0000", "#008000"],
@@ -542,21 +540,15 @@ def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_buil
     # BUILDERS
 
    
-    df_builders_over_time = df_builders_over_time[df_builders_over_time["timestamp"] > sorted(df_builders_over_time["timestamp"].unique())[-33]]
-    df_builders_over_time = df_builders_over_time[df_builders_over_time["timestamp"] != max(df_builders_over_time["timestamp"])]
-
-    df_cat = df_censoring[df_censoring["category"] == "builder"]
-    _df = df_builders_over_time.merge(df_cat[["entity","censoring"]], how="left", left_on="builder", right_on="entity")
-    _df = _df.fillna(0)
-    df = _df
-
-    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
-    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
-    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
-    agg_df.sort_values("censoring", inplace=True)
-    fig2 = px.area(agg_df, 
-                  x="timestamp", 
-                  y="slot", 
+    bars_over_time_builder = bars_over_time_builder[
+        bars_over_time_builder["date"] > sorted(bars_over_time_builder["date"].unique())[-33]
+    ]
+    bars_over_time_builder.sort_values("censoring", inplace=True)
+    
+    bars_over_time_builder["color"] = bars_over_time_builder["censoring"].apply(lambda x: "#FF0000" if x == "non-censoring" else "#008000")
+    fig2 = px.area(bars_over_time_builder, 
+                  x="date", 
+                  y="Share_of_Blocks", 
                   color="censoring", 
                   #line_group="relay_censoring",
                   color_discrete_sequence = ["#FF0000", "#008000"],
@@ -571,24 +563,17 @@ def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_buil
     ##################################7
     # VALIDATORS
 
-    df_validators_over_time = df_validators_over_time[df_validators_over_time["timestamp"] > sorted(df_validators_over_time["timestamp"].unique())[-32]]
-    df_validators_over_time = df_validators_over_time[df_validators_over_time["timestamp"] != max(df_validators_over_time["timestamp"])]
-
-    df_cat = df_censoring[df_censoring["category"] == "validator"]
-    _df = df_validators_over_time.merge(df_cat[["entity","censoring"]], how="left", left_on="validator", right_on="entity")
-    _df = _df.fillna(0)
-    df = _df
-    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
-    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
-    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
-
-    agg_df.sort_values("censoring", inplace=True)
-    fig3 = px.area(agg_df, 
-                  x="timestamp", 
-                  y="slot", 
+    bars_over_time_validator = bars_over_time_validator[
+        bars_over_time_validator["date"] > sorted(bars_over_time_validator["date"].unique())[-33]
+    ]
+    bars_over_time_validator.sort_values("censoring", inplace=True)
+    bars_over_time_validator["color"] = bars_over_time_validator["censoring"].apply(lambda x: "#FF0000" if x == "non-censoring" else "#008000")
+    fig3 = px.area(bars_over_time_validator, 
+                  x="date", 
+                  y="Share_of_Blocks", 
                   color="censoring", 
                   #line_group="relay_censoring",
-                  color_discrete_sequence = ["#FF0000", "#008000"],
+                  color_discrete_sequence = ["#008000", "#FF0000"],
                   title="Builders Over Time",
                   labels={'slot':'Slot Count'},
                   groupnorm="percent"  # Normalize the area for each relay as a percentage of the total
@@ -600,16 +585,16 @@ def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_buil
     # COMBINE PLOTS
 
     fig = make_subplots(rows=1, cols=1)
-    for trace in fig3['data']:
+    for trace in fig1['data']:
         trace.visible=True
         fig.add_trace(trace)
 
-    for trace in fig1['data']:
+    for trace in fig2['data']:
         trace.visible=False
         #trace.name = f"Builders: {trace.name}"
         fig.add_trace(trace)
 
-    for trace in fig2['data']:
+    for trace in fig3['data']:
         trace.visible=False
         #trace.name = f"Builders: {trace.name}"
         fig.add_trace(trace)
@@ -850,7 +835,7 @@ def create_figures(
 ):
     fig_bars = censorship_bars(latest_data_relay, latest_data_builder, latest_data_validator)
     fig_over_months = create_censorship_over_last_month(
-        df_censorship, df_relays_over_time, df_builders_over_time, df_validators_over_time
+        bars_over_time_validator, bars_over_time_relay, bars_over_time_builder
     )
     
     

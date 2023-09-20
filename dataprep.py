@@ -107,7 +107,7 @@ for entity in ["validator", "relay", "builder"]:
 
 
 query = """
-SELECT *, IF(tc_blocks30/all_blocks30 < 0.0075, 1, 0) censoring FROM (
+SELECT *, IF(tc_blocks30/all_blocks30 < 0.0090, 1, 0) censoring FROM (
 
 SELECT A.relay as entity, "relay" as category, IFNULL(tc_blocks30, 0) tc_blocks30, all_blocks30 from
 (SELECT relay, blocks as all_blocks30 FROM `ethereum-data-nero.eth.9_tornado_relay_stats` where frame = "all_blocks_30d"
