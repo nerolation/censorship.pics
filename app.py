@@ -177,10 +177,10 @@ def update_censorship_bars_layout(width=801):
         hoverlabel=dict(
             bgcolor="white",
             font_size=font_size,
-            font_family="Ubuntu Mono"
+            font_family="Ubuntu Mono, monospace"
         ),
         font=dict(
-            family="Courier New, monospace",
+            family="Ubuntu Mono, monospace",
             #size=18,  # Set the font size here
             color="#262525"
         ),
@@ -203,8 +203,8 @@ def update_censorship_bars_layout(width=801):
                 type='rect',
                 x0=0.95,
                 x1=0.93-shape_delta_x,
-                y0=1.02+shape_delta_y*2,
-                y1=1.06+shape_delta_y,
+                y0=1.02+shape_delta_y*4,
+                y1=1.06+shape_delta_y*3,
                 xref='paper',
                 yref='paper',
                 fillcolor='#80bf80',
@@ -244,7 +244,10 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
             )
 
             if row["percentage"] > 10:
-                annotation_text = f'{row["percentage"]:.2f}%'
+                if row["percentage"] < 12:
+                    annotation_text = f'{row["percentage"]:.0f}%'
+                else:
+                    annotation_text = f'{row["percentage"]:.2f}%'
             else:
                 annotation_text = f""
 
@@ -267,7 +270,7 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
                     yref=f'y{idx + 1}',
                     text=f'<span style="font-weight:bold;">{annotation_text}</span>',
                     showarrow=False,
-                    font=dict(size=10, color="white"),
+                    font=dict(size=12, color="white"),
                     visible=False
                 )
             )
@@ -410,8 +413,10 @@ def bars_over_time(dfs, entities):
                     mode='lines',
                     line_shape='hv',
                     marker=dict(
-                        color="#FF0000" if censor_type == 'censoring' else "#008000"
+                        color="#FF0000" if censor_type == 'censoring' else "#008000",
+                       
                     ),
+                    fillpattern = dict(shape="\\") if censor_type == 'censoring' else None,
                     visible=visible,
                     customdata=individual_values,  # Include custom data
                     hovertemplate="<b>%{fullData.name}:</b> %{customdata:.1f}%<extra></extra>"
@@ -528,8 +533,8 @@ def create_censorship_over_last_month(bars_over_time_relay, bars_over_time_build
                   color="censoring", 
                   line_group="censoring",
                   color_discrete_sequence = ["#FF0000", "#008000"],
-                  title="Validators Over Time",
-                  labels={'slot':'Slot Count'},
+                  title="Relays Over Time",
+                  labels={'Share_of_Blocks':'Slot Count'},
                   groupnorm="percent",
                     pattern_shape="censoring", pattern_shape_map={"censoring":"\\", "non-censoring":""},
                   )
@@ -543,19 +548,20 @@ def create_censorship_over_last_month(bars_over_time_relay, bars_over_time_build
     bars_over_time_builder = bars_over_time_builder[
         bars_over_time_builder["date"] > sorted(bars_over_time_builder["date"].unique())[-33]
     ]
-    bars_over_time_builder.sort_values("censoring", inplace=True)
+    
     
     bars_over_time_builder["color"] = bars_over_time_builder["censoring"].apply(lambda x: "#FF0000" if x == "non-censoring" else "#008000")
+    bars_over_time_builder.sort_values("censoring", inplace=True)
     fig2 = px.area(bars_over_time_builder, 
                   x="date", 
                   y="Share_of_Blocks", 
                   color="censoring", 
-                  #line_group="relay_censoring",
+                  line_group="censoring",
                   color_discrete_sequence = ["#FF0000", "#008000"],
-                  title="Relays Over Time",
-                  labels={'slot':'Slot Count'},
+                  title="Builders Over Time",
+                  labels={'Share_of_Blocks':'Slot Count'},
                   groupnorm="percent" ,
-                  pattern_shape="censoring", pattern_shape_map={"censoring":"/", "non-censoring":""},
+                  pattern_shape="censoring", pattern_shape_map={"censoring":"\\", "non-censoring":""},
                   )
     for trace in fig2.data:
         trace.hovertemplate = "<b>%{fullData.name}:</b> %{y:.1f}%<extra></extra>"
@@ -573,10 +579,11 @@ def create_censorship_over_last_month(bars_over_time_relay, bars_over_time_build
                   y="Share_of_Blocks", 
                   color="censoring", 
                   #line_group="relay_censoring",
-                  color_discrete_sequence = ["#008000", "#FF0000"],
-                  title="Builders Over Time",
-                  labels={'slot':'Slot Count'},
-                  groupnorm="percent"  # Normalize the area for each relay as a percentage of the total
+                  color_discrete_sequence = ["#FF0000", "#008000"],
+                  title="Validators Over Time",
+                  labels={'Share_of_Blocks':'Slot Count'},
+                  groupnorm="percent",
+                  pattern_shape="censoring", pattern_shape_map={"censoring":"\\", "non-censoring":""},
                   )
 
     for trace in fig3.data:
@@ -952,7 +959,7 @@ app.layout = html.Div(
                     ),
                     dbc.Col(
                         html.H5(
-                            ['Check out ', html.A('tornado-warning.info', href='https://tornado-warning.info', target='_blank')],
+                            ['Check out ', html.A('tornado-warning.info', href='https://tornado-warning.info', target='_blank'), ' for additional stats', html.Br(), f'Latest data timestamp: {bars_over_time_validator["date"].max()}'],
                             className="mb-4 even-smaller-text text-right",
                             style={'textAlign': 'right', "marginRight": "2vw", "marginBottom": "0px", "paddingBottom": "0px", 'color': '#262525', 'fontFamily': 'Ubuntu Mono, monospace'}
                         ),
@@ -966,7 +973,7 @@ app.layout = html.Div(
                     dbc.Col([
                         html.H4("What for?", style={'textAlign': 'left', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace'}),
                         dcc.Markdown("""
-**Censorship resistance** is one of the **core values of Ethereum**. Today, users can be censored at **different layers** of the stack. **Builders** can exclusively build blocks that don't contain certain transactions, **relays** can refuse relaying them, and **validators** can build local blocks that strictly exclude certain entities or only connect to censoring relays. Today, with almost 95% of MEV-Boost adoption, the network's **true** censorship is the **maximum** of all these layers. **Ultimately, validators have most impact on how censored their network is. Local block building always prevents from contributing to censorship.**
+**Censorship resistance** is one of the **core values of Ethereum**. Today, users can be censored at **different layers** of the stack. **Builders** can exclusively build blocks that don't contain certain transactions, **relays** can refuse relaying them, and **validators** can build local blocks that strictly exclude certain entities or only connect to censoring relays. Today, with almost 95% of MEV-Boost adoption, the network's minimum censorship is the **maximum** of all these layers. **Ultimately, validators can impact censorship. Local block building prevents from contributing to censorship through MEV-Boost.**
 """, style={'textAlign': 'left', 'color': '#262525', 'fontFamily': 'Ubuntu Mono, monospace'}),
                     ], className="mb-4 even-even-smaller-text", md=6),
 
@@ -991,7 +998,7 @@ app.layout = html.Div(
                         dbc.Button('Relays', id='btn-b', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black'}),
                         dbc.Button('Builders', id='btn-c', n_clicks=0, style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black'})
                     ],
-                    width={"size": 7, "offset": 4}
+                    width={"size": 6, "offset": 4}
                 ),
                 className="mb-4"
             ),
@@ -1102,6 +1109,7 @@ def update_layout3(window_size_data):
                 i.visible=False
         for i in fig_bars.layout.annotations[-2:]:
             i.font.size = 12
+        fig_bars.layout.annotations[-1].y += 0.01
     else:
         for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
             if ix % 2 == 0 and "%" in i.text:

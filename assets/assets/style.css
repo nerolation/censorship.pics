@@ -8,10 +8,10 @@
 }
 @media screen and (max-width: 800px) {
     .smaller-text {
-        font-size: 12px; /* Adjust the font size as needed */
+        font-size: 11px; /* Adjust the font size as needed */
     }
     .even-smaller-text {
-        font-size: 10px; /* Adjust the font size as needed */
+        font-size: 9px; /* Adjust the font size as needed */
     }
     .even-even-smaller-text {
         font-size: 8px; /* Adjust the font size as needed */
