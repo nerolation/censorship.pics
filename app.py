@@ -35,15 +35,12 @@ def clean_url(url):
     return url
 
 def get_latest_slot_stats_60d(_df_censorship, category):
-    print(_df_censorship)
     df_censorship = _df_censorship.copy()
     agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
     agg_df['date'] = pd.to_datetime(agg_df['date'])
     latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=60)]
     latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
     latest_data = latest_data.rename(columns={"Share_of_Blocks":"percentage"})
-    print(60)
-    print(latest_data)
     return latest_data
 
 def get_latest_slot_stats_30d(_df_censorship, category):
@@ -53,9 +50,6 @@ def get_latest_slot_stats_30d(_df_censorship, category):
     latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=30)]
     latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
     latest_data = latest_data.rename(columns={"Share_of_Blocks":"percentage"})
-    
-    print(30)
-    print(latest_data)
     return latest_data
 
 def get_latest_slot_stats_14d(_df_censorship, category):
@@ -64,9 +58,7 @@ def get_latest_slot_stats_14d(_df_censorship, category):
     agg_df['date'] = pd.to_datetime(agg_df['date'])
     latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=14)]
     latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
-    latest_data = latest_data.rename(columns={"Share_of_Blocks":"percentage"})
-    print(14)
-    print(latest_data)    
+    latest_data = latest_data.rename(columns={"Share_of_Blocks":"percentage"}) 
     return latest_data
     
   
@@ -331,7 +323,7 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
             # Text for 'non-censoring'
             dict(
                 x=0.91,
-                y=1.07,
+                y=1.09,
                 xref='paper',
                 yref='paper',
                 text='Non-Censoring',
@@ -1300,7 +1292,6 @@ def update_graph3(btn_a, btn_b,  btn_c, window_size_data):
     width = window_size_data['width']
     
     changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
-    print(changed_id)
     if 'btn-cc' in changed_id:
         fig_bars = fig_bars_60d
     elif 'btn-bb' in changed_id:
@@ -1399,7 +1390,6 @@ def update_button_style2(n1, n2, n3, window_size_data):
     elif button_id == 'btn-aa':
         return [default_style, default_style, active_style]
     else:
-        print("-----------------------default")
         return [default_style, default_style, active_style]
 
 
