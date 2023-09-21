@@ -148,7 +148,7 @@ def slot_to_time(slot):
 
 
 try:
-    entries = pd.read_parquet("tornado_blocks.parquet")
+    entries = pd.read_parquet(DATA+"tornado_blocks.parquet")
     maxslot = entries["slot"].max()
     maxslot
 except:
