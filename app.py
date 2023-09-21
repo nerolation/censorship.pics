@@ -30,62 +30,32 @@ def clean_url(url):
     url = re.sub(r'(\.[a-zA-Z]{2,})/.*$', r'\1', url)
     return url
 
-def get_latest_slot_stats_60d(df_censorship, df_entity, category):
-    df_cat = df_censorship[df_censorship["category"] == category]
-    _df = df_entity.merge(df_cat[["entity","censoring"]], how="left", left_on=category, right_on="entity")
-    _df = _df.fillna(0)
-    df = _df
-    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
-    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
-    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
-    agg_df.sort_values("censoring", inplace=True)
-    agg_df = agg_df[agg_df["timestamp"] != max(agg_df["timestamp"])]
-    agg_df['timestamp'] = pd.to_datetime(agg_df['timestamp'])
-    latest_data = agg_df[agg_df['timestamp'] > agg_df['timestamp'].max() -  pd.Timedelta(days=60)]
-    total_slots = latest_data.groupby("timestamp")['slot'].sum().reset_index()
-    latest_data = pd.merge(latest_data, total_slots, how="left", on="timestamp")
-    latest_data.loc[:,('percentage')] = (latest_data['slot_x'] / latest_data['slot_y']) * 100
-    latest_data = latest_data.groupby("censoring")["percentage"].mean().reset_index()
+def get_latest_slot_stats_60d(_df_censorship, _df_entity, category):
+    df_censorship = _df_censorship.copy()
+    agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
+    agg_df['date'] = pd.to_datetime(agg_df['date'])
+    latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=14)]
+    latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
     print(60)
     print(latest_data)
     return latest_data
 
-def get_latest_slot_stats_30d(df_censorship, df_entity, category):
-    df_cat = df_censorship[df_censorship["category"] == category]
-    _df = df_entity.merge(df_cat[["entity","censoring"]], how="left", left_on=category, right_on="entity")
-    _df = _df.fillna(0)
-    df = _df
-    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
-    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
-    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
-    agg_df.sort_values("censoring", inplace=True)
-    agg_df = agg_df[agg_df["timestamp"] != max(agg_df["timestamp"])]
-    agg_df['timestamp'] = pd.to_datetime(agg_df['timestamp'])
-    latest_data = agg_df[agg_df['timestamp'] > agg_df['timestamp'].max() -  pd.Timedelta(days=30)]
-    total_slots = latest_data.groupby("timestamp")['slot'].sum().reset_index()
-    latest_data = pd.merge(latest_data, total_slots, how="left", on="timestamp")
-    latest_data.loc[:,('percentage')] = (latest_data['slot_x'] / latest_data['slot_y']) * 100
-    latest_data = latest_data.groupby("censoring")["percentage"].mean().reset_index()
+def get_latest_slot_stats_30d(_df_censorship, _df_entity, category):
+    df_censorship = _df_censorship.copy()
+    agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
+    agg_df['date'] = pd.to_datetime(agg_df['date'])
+    latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=60)]
+    latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
     print(30)
     print(latest_data)
     return latest_data
 
-def get_latest_slot_stats_14d(df_censorship, df_entity, category):
-    df_cat = df_censorship[df_censorship["category"] == category]
-    _df = df_entity.merge(df_cat[["entity","censoring"]], how="left", left_on=category, right_on="entity")
-    _df = _df.fillna(0)
-    df = _df
-    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
-    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
-    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
-    agg_df.sort_values("censoring", inplace=True)
-    agg_df = agg_df[agg_df["timestamp"] != max(agg_df["timestamp"])]
-    agg_df['timestamp'] = pd.to_datetime(agg_df['timestamp'])
-    latest_data = agg_df[agg_df['timestamp'] > agg_df['timestamp'].max() -  pd.Timedelta(days=14)]
-    total_slots = latest_data.groupby("timestamp")['slot'].sum().reset_index()
-    latest_data = pd.merge(latest_data, total_slots, how="left", on="timestamp")
-    latest_data.loc[:,('percentage')] = (latest_data['slot_x'] / latest_data['slot_y']) * 100
-    latest_data = latest_data.groupby("censoring")["percentage"].mean().reset_index()
+def get_latest_slot_stats_14d(_df_censorship, category):
+    df_censorship = _df_censorship.copy()
+    agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
+    agg_df['date'] = pd.to_datetime(agg_df['date'])
+    latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=30)]
+    latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
     print(14)
     print(latest_data)    
     return latest_data
@@ -121,7 +91,7 @@ def prepare_data():
     latest_slots_60d = []
     latest_slots_30d = []
     latest_slots_14d = []
-    for i, j in dfs_over_time:
+    for i, j in [(bars_over_time_relay "relay"), (bars_over_time_builder"builder"),  (bars_over_time_validator"validator")]:
         latest_slots_60d.append(get_latest_slot_stats_60d(df_censorship, i, j))
         latest_slots_30d.append(get_latest_slot_stats_30d(df_censorship, i, j))
         latest_slots_14d.append(get_latest_slot_stats_14d(df_censorship, i, j))
@@ -1425,7 +1395,7 @@ def update_button_style2(n1, n2, n3, window_size_data):
 
 
 if __name__ == '__main__':
-    #app.run_server(debug=True)
+    app.run_server(debug=True)
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
     
