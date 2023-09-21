@@ -165,7 +165,7 @@ def update_censorship_bars_layout(width=801):
         plot_bgcolor="#f1f2f6",
         dragmode = False,
         paper_bgcolor= "#f1f2f6",
-        height=500,
+        height=430,
         #title_font_size = font_size+5,
         margin=dict(l=40, r=0, t=90, b=20),
         xaxis1=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for first subplot
@@ -204,8 +204,8 @@ def update_censorship_bars_layout(width=801):
                 type='rect',
                 x0=0.95,
                 x1=0.93-shape_delta_x,
-                y0=1.02+shape_delta_y*4,
-                y1=1.06+shape_delta_y*3,
+                y0=1.02+shape_delta_y*2,
+                y1=1.06+shape_delta_y*1,
                 xref='paper',
                 yref='paper',
                 fillcolor='#80bf80',
@@ -311,7 +311,7 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
     return fig
 
 
-def bars_over_time_layout(height=450, width=801):
+def bars_over_time_layout(width=801):
     if width <= 800:
         font_size = 12
     else:
@@ -321,29 +321,30 @@ def bars_over_time_layout(height=450, width=801):
              method="update",
              args=[
                  {"visible": [True, True, False, False, False, False]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Validators</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Validators</span>'}]
             ),
         dict(label=f"Relays",
              method="update",
              args=[{"visible": [False, False, True, True, False, False]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Relays</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Relays</span>'}]
             ),
         dict(label=f"Builders",
              method="update",
              args=[{"visible": [False, False, False, False, True, True]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Builders</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Builders</span>'}]
             )
     ]
     return dict(
         margin=dict(l=20, r=20, t=120, b=0),
-        title='<span style="font-size: 24px;font-weight:bold;">Censorship - Validators</span>',
+        title=f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Validators</span>',
         font=dict(
             family="Courier New, monospace",
-            size=18,  # Set the font size here
+            size=font_size-2,  # Set the font size here
             color="#262525"
         ),
         hovermode="x unified",
-        height=height,
+        height=400,
+        hoverlabel=dict(font=dict(color=BLACK, size=font_size)),
         #barmode='stack',
         showlegend=False,
         plot_bgcolor='white',
@@ -357,7 +358,7 @@ def bars_over_time_layout(height=450, width=801):
                 direction="right",
                 x=0.5,
                 xanchor="center",
-                y=1.12,
+                y=1.15,
                 yanchor="top",
                 buttons=buttons,
                 font=dict(size= font_size)
@@ -389,7 +390,7 @@ def bars_over_time(dfs, entities):
     visible=True
     for df, entity in zip(dfs, entities):
         all_entities = df['censoring'].unique()
-        height = 450
+        height = 400
         prev = None
         prev_values = {}  # Store previous values here for hover template
 
@@ -424,7 +425,7 @@ def bars_over_time(dfs, entities):
                 )
             )
         visible=False
-    layout = bars_over_time_layout(height)
+    layout = bars_over_time_layout()
     fig.update_layout(**layout)
     return fig
 
@@ -441,29 +442,29 @@ def update_layout_censorship_over_last_month(width=801):
              method="update",
              args=[
                  {"visible": [True for _ in range(fig1_len)] + [False for _ in range(fig2_len)] + [False for _ in range(fig3_len)]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Validators (last month)</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Validators (last month)</span>'}]
             ),
         dict(label="Relays",
              method="update",
              args=[{"visible": [False for _ in range(fig1_len)] + [True for _ in range(fig2_len)] + [False for _ in range(fig3_len)]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Relays (last month)</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Relays (last month)</span>'}]
             ),
         dict(label="Builders",
              method="update",
              args=[{"visible": [False for _ in range(fig1_len)] + [False for _ in range(fig2_len)] + [True for _ in range(fig3_len)]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Builders (last month)</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Builders (last month)</span>'}]
             )
     ]
 
     return dict(
         xaxis_tickangle=-45,
-        title='<span style="font-size: 24px;font-weight:bold;">Censorship - Relays (last month)</span>',
+        title=f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Relays (last month)</span>',
         xaxis_title="",
         yaxis_title="% of total slots",
         #yaxis_range = [0,100],
         #legend_title="Relay Provider",
         hovermode = "x unified",
-        hoverlabel=dict(font=dict(color=BLACK, size=16)),
+        hoverlabel=dict(font=dict(color=BLACK, size=font_size)),
         #title_xanchor="left",
         #title_yanchor="auto",
         dragmode = False,
@@ -484,7 +485,7 @@ def update_layout_censorship_over_last_month(width=801):
         plot_bgcolor='#ffffff',
         #yaxis=dict(fixedrange =True),
         #autosize=True, 
-        height=580,
+        height=500,
         #width=width,
         updatemenus=[
             dict(
@@ -493,7 +494,7 @@ def update_layout_censorship_over_last_month(width=801):
                 direction="right",
                 x=0.5,
                 xanchor="center",
-                y=1.1,
+                y=1.15,
                 yanchor="top",
                 buttons=buttons,
                 font=dict(size= font_size)
@@ -1011,7 +1012,7 @@ app.layout = html.Div(
                     ],
                     width={"size": 6, "offset": 4}
                 ),
-                className="mb-4"
+                className="mb-4", id="buttons-last-fig"
             ),
             dbc.Row(dbc.Col(html.Div(id="graph-container")), style={"paddingBottom": "20px"}),
             dbc.Row(dbc.Col(id='dynamic-graph', md=12, className="mb-4")),
@@ -1087,7 +1088,7 @@ app.layout = html.Div(
 #
 #    window_width = window_size_data['width']
 #    return table_styles(window_width)
-    
+
     
 @app.callback(
     Output('main-div', 'style'),
@@ -1112,6 +1113,11 @@ def update_layout3(window_size_data):
         raise dash.exceptions.PreventUpdate
     width = window_size_data['width']
     fig_bars.update_layout(**update_censorship_bars_layout(width))
+    for i, annotation in enumerate(fig_bars.layout.annotations):
+        annotation_dict = annotation.to_plotly_json()
+        if '24px' in annotation_dict['text']:
+            annotation_dict['text'] = annotation_dict['text'].replace('24px', '14px')
+            fig_bars.layout.annotations[i].update(annotation_dict)
     if width <= 800:
         for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
             if ix % 2 != 0 and "%" in i.text:
@@ -1203,15 +1209,21 @@ def update_graph4(btn_a, btn_b, btn_c):
      Output('btn-c', 'style')],
     [Input('btn-a', 'n_clicks'),
      Input('btn-b', 'n_clicks'),
-     Input('btn-c', 'n_clicks')],
-    prevent_initial_call=True
+     Input('btn-c', 'n_clicks'),
+     Input('window-size-store', 'data')],
+    prevent_initial_call=False
 )
-def update_button_style(n1, n2, n3):
+def update_button_style(n1, n2, n3, window_size_data):
+    width = window_size_data['width']
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     
-    default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black'}
-    active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black'}
+    if width <= 800:
+        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black', 'fontSize': '10px'}
+        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black', 'fontSize': '10px'}
+    else:
+        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black', 'fontSize': '18px'}
+        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black', 'fontSize': '18px'}
     
     if button_id == 'btn-a':
         return [active_style, default_style, default_style]
