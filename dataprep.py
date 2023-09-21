@@ -3,7 +3,10 @@ import pandas as pd
 import os
 from google.cloud import bigquery
 
+DATA = "data/"
 
+if not os.path.isdir(DATA):
+    os.mkdir(DATA)
 
 def set_google_credentials(CONFIG, GOOGLE_CREDENTIALS):
     try:
@@ -160,7 +163,7 @@ df = pd.read_gbq(query)
 df["timestamp"] = df["slot"].apply(lambda x: slot_to_time(x))
 df = pd.concat([entries, df], ignore_index=True)
 df.fillna("non Mev-Boost", inplace=True)
-df.to_parquet("tornado_blocks.parquet", index=False)
+df.to_parquet(DATA + "tornado_blocks.parquet", index=False)
 
 
 df = entries
@@ -206,7 +209,7 @@ for entity in ["validator", "relay", "builder"]:
     _data = pd.merge(data, data.groupby("date")["slots"].sum().reset_index(), on="date")
     _data["Share_of_Blocks"] = _data["slots_x"]/_data["slots_y"]*100
     _data = _data.drop(["slots_x", "slots_y"], axis=1)
-    _data.to_csv(entity+"_censorship_share.csv", index=False)
+    _data.to_csv(DATA + entity+"_censorship_share.csv", index=False)
 
 
 
@@ -238,21 +241,21 @@ SELECT A.validator, "validator" as category, IFNULL(tc_blocks30, 0) tc_blocks30,
 """
 df_censoring = pd.read_gbq(query)
 
-df_censoring.to_csv("censorship_stats.csv", index=False)
+df_censoring.to_csv(DATA + "censorship_stats.csv", index=False)
 
-DS = "ethereum-data-nero.eth.3_relays_over_time"
-query = build_query("timestamp, relay, slot", DS, "ORDER BY slot DESC")
-df = pd.read_gbq(query)
-df.to_csv("relays_over_time.csv", index=False)
-DS = "ethereum-data-nero.eth.3_builders_over_time"
-query = build_query("timestamp, builder, slot", DS, "ORDER BY slot DESC")
-df = pd.read_gbq(query)
-df.to_csv("builders_over_time.csv", index=False)
-DS = "ethereum-data-nero.eth.3_validators_over_time_censorship"
-query = build_query("timestamp, validator, slot", DS, "ORDER BY slot DESC")
-df = pd.read_gbq(query)
-df.to_csv("validators_over_time_censorship.csv", index=False)
-
+#DS = "ethereum-data-nero.eth.3_relays_over_time"
+#query = build_query("timestamp, relay, slot", DS, "ORDER BY slot DESC")
+#df = pd.read_gbq(query)
+#df.to_csv("relays_over_time.csv", index=False)
+#DS = "ethereum-data-nero.eth.3_builders_over_time"
+#query = build_query("timestamp, builder, slot", DS, "ORDER BY slot DESC")
+#df = pd.read_gbq(query)
+#df.to_csv("builders_over_time.csv", index=False)
+#DS = "ethereum-data-nero.eth.3_validators_over_time_censorship"
+#query = build_query("timestamp, validator, slot", DS, "ORDER BY slot DESC")
+#df = pd.read_gbq(query)
+#df.to_csv("validators_over_time_censorship.csv", index=False)
+#
 
 query = """SELECT AA.relay, IFNULL(BB.blocks, 0) non_censored_blocks, AA.blocks all_blocks, IFNULL(BB.blocks/AA.blocks* 100, 0)  share 
 FROM (
@@ -267,7 +270,7 @@ ON AA.relay = BB.relay
 order by share desc
 """
 df = pd.read_gbq(query)
-df.to_csv("relay_stats.csv", index=False)
+df.to_csv(DATA + "relay_stats.csv", index=False)
 
 query = """SELECT AA.builder, IFNULL(BB.blocks, 0) non_censored_blocks, AA.blocks all_blocks, IFNULL(BB.blocks/AA.blocks* 100, 0)  share 
 FROM (
@@ -282,7 +285,7 @@ ON AA.builder = BB.builder
 order by share desc
 """
 df = pd.read_gbq(query)
-df.to_csv("builder_stats.csv", index=False)
+df.to_csv(DATA + "builder_stats.csv", index=False)
 
 query = """SELECT AA.validator, IFNULL(BB.blocks, 0) non_censored_blocks, AA.blocks all_blocks, IFNULL(BB.blocks/AA.blocks* 100, 0)  share 
 FROM (
@@ -297,6 +300,6 @@ ON AA.validator = BB.validator
 order by share desc
 """
 df = pd.read_gbq(query)
-df.to_csv("validator_stats.csv", index=False)
+df.to_csv(DATA + "validator_stats.csv", index=False)
 
 print("finished")

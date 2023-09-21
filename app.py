@@ -12,6 +12,10 @@ from dash import Input, Output
 from plotly.subplots import make_subplots
 import random
 pd.set_option('mode.chained_assignment', None)
+
+
+DATA = "data/"
+
 QUERY = """
 SELECT {}
 FROM {}
@@ -30,22 +34,26 @@ def clean_url(url):
     url = re.sub(r'(\.[a-zA-Z]{2,})/.*$', r'\1', url)
     return url
 
-def get_latest_slot_stats_60d(_df_censorship, _df_entity, category):
-    df_censorship = _df_censorship.copy()
-    agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
-    agg_df['date'] = pd.to_datetime(agg_df['date'])
-    latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=14)]
-    latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
-    print(60)
-    print(latest_data)
-    return latest_data
-
-def get_latest_slot_stats_30d(_df_censorship, _df_entity, category):
+def get_latest_slot_stats_60d(_df_censorship, category):
+    print(_df_censorship)
     df_censorship = _df_censorship.copy()
     agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
     agg_df['date'] = pd.to_datetime(agg_df['date'])
     latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=60)]
     latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
+    latest_data = latest_data.rename(columns={"Share_of_Blocks":"percentage"})
+    print(60)
+    print(latest_data)
+    return latest_data
+
+def get_latest_slot_stats_30d(_df_censorship, category):
+    df_censorship = _df_censorship.copy()
+    agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
+    agg_df['date'] = pd.to_datetime(agg_df['date'])
+    latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=30)]
+    latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
+    latest_data = latest_data.rename(columns={"Share_of_Blocks":"percentage"})
+    
     print(30)
     print(latest_data)
     return latest_data
@@ -54,8 +62,9 @@ def get_latest_slot_stats_14d(_df_censorship, category):
     df_censorship = _df_censorship.copy()
     agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
     agg_df['date'] = pd.to_datetime(agg_df['date'])
-    latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=30)]
+    latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=14)]
     latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
+    latest_data = latest_data.rename(columns={"Share_of_Blocks":"percentage"})
     print(14)
     print(latest_data)    
     return latest_data
@@ -64,37 +73,37 @@ def get_latest_slot_stats_14d(_df_censorship, category):
     
 # Data preparation
 def prepare_data():
-    df_censorship = pd.read_csv("censorship_stats.csv").replace("Unknown", "Unknown/missed")
+    df_censorship = pd.read_csv(DATA + "censorship_stats.csv").replace("Unknown", "Unknown/missed")
     
-    df_relays_over_time = pd.read_csv("relays_over_time.csv")
-    df_builders_over_time = pd.read_csv("builders_over_time.csv")
-    df_validators_over_time = pd.read_csv("validators_over_time_censorship.csv")
-    df_relay = pd.read_csv("relay_stats.csv").sort_values("all_blocks", ascending=False)
-    df_builder = pd.read_csv("builder_stats.csv").sort_values("all_blocks", ascending=False)
-    df_validator = pd.read_csv("validator_stats.csv").sort_values("all_blocks", ascending=False)
+    #df_relays_over_time = pd.read_csv("relays_over_time.csv")
+    #df_builders_over_time = pd.read_csv("builders_over_time.csv")
+    #df_validators_over_time = pd.read_csv("validators_over_time_censorship.csv")
+    df_relay = pd.read_csv(DATA + "relay_stats.csv").sort_values("all_blocks", ascending=False)
+    df_builder = pd.read_csv(DATA + "builder_stats.csv").sort_values("all_blocks", ascending=False)
+    df_validator = pd.read_csv(DATA + "validator_stats.csv").sort_values("all_blocks", ascending=False)
     df_builder["builder"] = df_builder["builder"].apply(lambda x: x[0:10]+"..." if x.startswith("0x") else x)
     
     df_relay["all_block_share"] = df_relay["all_blocks"] / df_relay.all_blocks.sum()
     df_builder["all_block_share"] = df_builder["all_blocks"] / df_builder.all_blocks.sum()
     df_validator["all_block_share"] = df_validator["all_blocks"] / df_validator.all_blocks.sum()
     
-    bars_over_time_validator = pd.read_csv("validator_censorship_share.csv").iloc[120:]
-    bars_over_time_relay = pd.read_csv("relay_censorship_share.csv").iloc[120:]
-    bars_over_time_builder = pd.read_csv("builder_censorship_share.csv").iloc[120:]
+    bars_over_time_validator = pd.read_csv(DATA + "validator_censorship_share.csv").iloc[120:]
+    bars_over_time_relay = pd.read_csv(DATA + "relay_censorship_share.csv").iloc[120:]
+    bars_over_time_builder = pd.read_csv(DATA + "builder_censorship_share.csv").iloc[120:]
     
     
-    dfs_over_time = [
-        (df_relays_over_time, "relay"),
-        (df_builders_over_time, "builder"),
-        (df_validators_over_time, "validator")
-    ]
+    #dfs_over_time = [
+    #    (df_relays_over_time, "relay"),
+    #    (df_builders_over_time, "builder"),
+    #    (df_validators_over_time, "validator")
+    #]
     latest_slots_60d = []
     latest_slots_30d = []
     latest_slots_14d = []
-    for i, j in [(bars_over_time_relay "relay"), (bars_over_time_builder"builder"),  (bars_over_time_validator"validator")]:
-        latest_slots_60d.append(get_latest_slot_stats_60d(df_censorship, i, j))
-        latest_slots_30d.append(get_latest_slot_stats_30d(df_censorship, i, j))
-        latest_slots_14d.append(get_latest_slot_stats_14d(df_censorship, i, j))
+    for i, j in [(bars_over_time_relay,"relay"), (bars_over_time_builder,"builder"),  (bars_over_time_validator,"validator")]:
+        latest_slots_60d.append(get_latest_slot_stats_60d(i, j))
+        latest_slots_30d.append(get_latest_slot_stats_30d(i, j))
+        latest_slots_14d.append(get_latest_slot_stats_14d(i, j))
 
     latest_data_relay_60d, latest_data_builder_60d, latest_data_validator_60d = tuple(latest_slots_60d)
     latest_data_relay_30d, latest_data_builder_30d, latest_data_validator_30d = tuple(latest_slots_30d)
@@ -106,9 +115,9 @@ def prepare_data():
     
     return (
         df_censorship,
-        df_relays_over_time,
-        df_builders_over_time,
-        df_validators_over_time,
+        #df_relays_over_time,
+        #df_builders_over_time,
+        #df_validators_over_time,
         latest_data_relay_60d,
         latest_data_builder_60d,
         latest_data_validator_60d,
@@ -128,9 +137,9 @@ def prepare_data():
 ############ Load data
 
 (df_censorship, 
- df_relays_over_time, 
- df_builders_over_time, 
- df_validators_over_time,
+ #df_relays_over_time, 
+ #df_builders_over_time, 
+ #df_validators_over_time,
  latest_data_relay_60d,
  latest_data_builder_60d,
  latest_data_validator_60d, 
@@ -870,9 +879,9 @@ def comparison_chart(entity):
 # Figures
 def create_figures(
     df_censorship, 
-    df_relays_over_time, 
-    df_builders_over_time, 
-    df_validators_over_time,
+    #df_relays_over_time, 
+    #df_builders_over_time, 
+    #df_validators_over_time,
     latest_data_relay_60d,
     latest_data_builder_60d,
     latest_data_validator_60d,
@@ -916,9 +925,9 @@ def create_figures(
 
 fig_bars_60d, fig_bars_30d, fig_bars_14d, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui,fig_bars_over_time= create_figures(
     df_censorship, 
-    df_relays_over_time, 
-    df_builders_over_time, 
-    df_validators_over_time,
+    #df_relays_over_time, 
+    #df_builders_over_time, 
+    #df_validators_over_time,
     latest_data_relay_60d,
     latest_data_builder_60d,
     latest_data_validator_60d,
@@ -1072,6 +1081,7 @@ app.layout = html.Div(
             
             #dbc.Row(dbc.Col(dcc.Graph(id='graph11', figure=fig_bars_60d), md=12, className="mb-4 animated fadeIn")),
             #dbc.Row(dbc.Col(dcc.Graph(id='graph12', figure=fig_bars_30d), md=12, className="mb-4 animated fadeIn")),
+            #dbc.Row(dbc.Col(dcc.Graph(id='graph13', figure=fig_bars_14d), md=12, className="mb-4 animated fadeIn")),
             dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_bars_over_time), md=12, className="mb-4 animated fadeIn")),
             dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4 animated fadeIn")),
             
@@ -1278,9 +1288,9 @@ def update_graph4(btn_a, btn_b, btn_c):
 @app.callback(
     Output('graph1', 'children'),
     [
+        Input('btn-cc', 'n_clicks'),
         Input('btn-aa', 'n_clicks'),
         Input('btn-bb', 'n_clicks'),
-        Input('btn-cc', 'n_clicks'),
         Input('window-size-store', 'data')
     ]
 )
@@ -1395,7 +1405,7 @@ def update_button_style2(n1, n2, n3, window_size_data):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    #app.run_server(debug=True)
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
     
