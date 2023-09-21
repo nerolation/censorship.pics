@@ -20,8 +20,8 @@ FROM {}
 
 def build_query(select, dataset, appendix=""):
     return QUERY.format(select, dataset, appendix)
-BLACK = "rgb(15, 20, 25)"
-BLACK_ALPHA = "rgba(15, 20, 25, {})"
+BLACK = "rgb(26, 25, 25)"
+BLACK_ALPHA = "rgba(26, 25, 25, {})"
 
 def clean_url(url):
     url = re.sub(r'https?://', '', url)
@@ -30,7 +30,7 @@ def clean_url(url):
     url = re.sub(r'(\.[a-zA-Z]{2,})/.*$', r'\1', url)
     return url
 
-def get_latest_slot_stats(df_censorship, df_entity, category):
+def get_latest_slot_stats_60d(df_censorship, df_entity, category):
     df_cat = df_censorship[df_censorship["category"] == category]
     _df = df_entity.merge(df_cat[["entity","censoring"]], how="left", left_on=category, right_on="entity")
     _df = _df.fillna(0)
@@ -41,11 +41,53 @@ def get_latest_slot_stats(df_censorship, df_entity, category):
     agg_df.sort_values("censoring", inplace=True)
     agg_df = agg_df[agg_df["timestamp"] != max(agg_df["timestamp"])]
     agg_df['timestamp'] = pd.to_datetime(agg_df['timestamp'])
-    latest_data = agg_df[agg_df['timestamp'] > agg_df['timestamp'] -  pd.Timedelta(days=30)]
+    latest_data = agg_df[agg_df['timestamp'] > agg_df['timestamp'].max() -  pd.Timedelta(days=60)]
     total_slots = latest_data.groupby("timestamp")['slot'].sum().reset_index()
     latest_data = pd.merge(latest_data, total_slots, how="left", on="timestamp")
     latest_data.loc[:,('percentage')] = (latest_data['slot_x'] / latest_data['slot_y']) * 100
     latest_data = latest_data.groupby("censoring")["percentage"].mean().reset_index()
+    print(60)
+    print(latest_data)
+    return latest_data
+
+def get_latest_slot_stats_30d(df_censorship, df_entity, category):
+    df_cat = df_censorship[df_censorship["category"] == category]
+    _df = df_entity.merge(df_cat[["entity","censoring"]], how="left", left_on=category, right_on="entity")
+    _df = _df.fillna(0)
+    df = _df
+    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
+    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
+    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
+    agg_df.sort_values("censoring", inplace=True)
+    agg_df = agg_df[agg_df["timestamp"] != max(agg_df["timestamp"])]
+    agg_df['timestamp'] = pd.to_datetime(agg_df['timestamp'])
+    latest_data = agg_df[agg_df['timestamp'] > agg_df['timestamp'].max() -  pd.Timedelta(days=30)]
+    total_slots = latest_data.groupby("timestamp")['slot'].sum().reset_index()
+    latest_data = pd.merge(latest_data, total_slots, how="left", on="timestamp")
+    latest_data.loc[:,('percentage')] = (latest_data['slot_x'] / latest_data['slot_y']) * 100
+    latest_data = latest_data.groupby("censoring")["percentage"].mean().reset_index()
+    print(30)
+    print(latest_data)
+    return latest_data
+
+def get_latest_slot_stats_14d(df_censorship, df_entity, category):
+    df_cat = df_censorship[df_censorship["category"] == category]
+    _df = df_entity.merge(df_cat[["entity","censoring"]], how="left", left_on=category, right_on="entity")
+    _df = _df.fillna(0)
+    df = _df
+    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
+    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
+    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
+    agg_df.sort_values("censoring", inplace=True)
+    agg_df = agg_df[agg_df["timestamp"] != max(agg_df["timestamp"])]
+    agg_df['timestamp'] = pd.to_datetime(agg_df['timestamp'])
+    latest_data = agg_df[agg_df['timestamp'] > agg_df['timestamp'].max() -  pd.Timedelta(days=14)]
+    total_slots = latest_data.groupby("timestamp")['slot'].sum().reset_index()
+    latest_data = pd.merge(latest_data, total_slots, how="left", on="timestamp")
+    latest_data.loc[:,('percentage')] = (latest_data['slot_x'] / latest_data['slot_y']) * 100
+    latest_data = latest_data.groupby("censoring")["percentage"].mean().reset_index()
+    print(14)
+    print(latest_data)    
     return latest_data
     
   
@@ -76,11 +118,17 @@ def prepare_data():
         (df_builders_over_time, "builder"),
         (df_validators_over_time, "validator")
     ]
-    latest_slots = []
+    latest_slots_60d = []
+    latest_slots_30d = []
+    latest_slots_14d = []
     for i, j in dfs_over_time:
-        latest_slots.append(get_latest_slot_stats(df_censorship, i, j))
+        latest_slots_60d.append(get_latest_slot_stats_60d(df_censorship, i, j))
+        latest_slots_30d.append(get_latest_slot_stats_30d(df_censorship, i, j))
+        latest_slots_14d.append(get_latest_slot_stats_14d(df_censorship, i, j))
 
-    latest_data_relay, latest_data_builder, latest_data_validator = tuple(latest_slots)
+    latest_data_relay_60d, latest_data_builder_60d, latest_data_validator_60d = tuple(latest_slots_60d)
+    latest_data_relay_30d, latest_data_builder_30d, latest_data_validator_30d = tuple(latest_slots_30d)
+    latest_data_relay_14d, latest_data_builder_14d, latest_data_validator_14d = tuple(latest_slots_14d)
     
     
     def max_slot(slot):
@@ -91,9 +139,15 @@ def prepare_data():
         df_relays_over_time,
         df_builders_over_time,
         df_validators_over_time,
-        latest_data_relay, 
-        latest_data_builder, 
-        latest_data_validator,
+        latest_data_relay_60d,
+        latest_data_builder_60d,
+        latest_data_validator_60d,
+        latest_data_relay_30d,
+        latest_data_builder_30d,
+        latest_data_validator_30d,
+        latest_data_relay_14d,
+        latest_data_builder_14d,
+        latest_data_validator_14d,
         df_relay,
         df_builder,
         df_validator,
@@ -107,9 +161,15 @@ def prepare_data():
  df_relays_over_time, 
  df_builders_over_time, 
  df_validators_over_time,
- latest_data_relay, 
- latest_data_builder, 
- latest_data_validator,
+ latest_data_relay_60d,
+ latest_data_builder_60d,
+ latest_data_validator_60d, 
+ latest_data_relay_30d,
+ latest_data_builder_30d,
+ latest_data_validator_30d,
+ latest_data_relay_14d,
+ latest_data_builder_14d,
+ latest_data_validator_14d,
  df_relay,
  df_builder,
  df_validator,
@@ -196,7 +256,7 @@ def update_censorship_bars_layout(width=801):
                 xref='paper',
                 yref='paper',
                 fillcolor='#d07070',
-                line=dict(color='black', width=2),
+                line=dict(color='#262525', width=2),
                 opacity=1,
             ),
             # Green box for 'non-censoring'
@@ -209,7 +269,7 @@ def update_censorship_bars_layout(width=801):
                 xref='paper',
                 yref='paper',
                 fillcolor='#80bf80',
-                line=dict(color='black', width=2),
+                line=dict(color='#262525', width=2),
                 opacity=1,
             )
         ]
@@ -239,7 +299,7 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
                     name=row['censoring'],
                     marker=dict(
                         color='#d07070' if row['censoring'] == 'censoring' else '#80bf80',
-                        line=dict(color='black', width=2)
+                        line=dict(color='#262525', width=2)
                     )
                 ), row=idx + 1, col=1
             )
@@ -297,7 +357,7 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
                 yref='paper',
                 text='Non-Censoring',
                 showarrow=False,
-                font=dict(size=18, color="black")
+                font=dict(size=18, color="#262525")
             )
         ]
     annotations.extend(legend_annotations)
@@ -344,12 +404,22 @@ def bars_over_time_layout(width=801):
         ),
         hovermode="x unified",
         height=400,
+        yaxis_title="% of total slots",
+        
         hoverlabel=dict(font=dict(color=BLACK, size=font_size)),
         #barmode='stack',
-        showlegend=False,
+        showlegend=True,
         plot_bgcolor='white',
         dragmode = False,
         paper_bgcolor= "#f1f2f6",
+        legend=dict(
+            x=1,
+            font=dict(size=font_size-2),
+            xanchor='right',
+            y=1,
+            yanchor='top',
+            bgcolor='rgba(255, 255, 255, 0.7)'
+        ),
         #bargap=-0.01,  
         updatemenus=[
             dict(
@@ -377,7 +447,7 @@ def bars_over_time_layout(width=801):
             gridwidth=1, 
             gridcolor=BLACK_ALPHA.format(0.2),
             tickfont=dict(size=font_size),
-            title_font=dict(size=font_size+2), 
+            title_font=dict(size=font_size-2), 
             range=[0,100],
             fixedrange =True
         ),  
@@ -478,6 +548,7 @@ def update_layout_censorship_over_last_month(width=801):
             x=1,
             xanchor='right',
             y=1,
+            font=dict(size=font_size-2),
             yanchor='top',
             bgcolor='rgba(255, 255, 255, 0.7)'
         ),
@@ -513,7 +584,7 @@ def update_layout_censorship_over_last_month(width=801):
             gridwidth=1, 
             gridcolor=BLACK_ALPHA.format(0.2),
             tickfont=dict(size=font_size),
-            title_font=dict(size=font_size+2), 
+            title_font=dict(size=font_size-2), 
             range=[0,100],
             fixedrange =True
         ),  
@@ -806,7 +877,7 @@ def comparison_chart(entity):
                     marker=dict(
                         symbol='triangle-down',
                         size=14,
-                        color='black'
+                        color='#262525'
                     ),
                     hovertemplate=f"<b>{val:.2f}% non-censored blocks</b><extra></extra>",
                     hoverlabel=dict(
@@ -832,9 +903,15 @@ def create_figures(
     df_relays_over_time, 
     df_builders_over_time, 
     df_validators_over_time,
-    latest_data_relay, 
-    latest_data_builder, 
-    latest_data_validator,
+    latest_data_relay_60d,
+    latest_data_builder_60d,
+    latest_data_validator_60d,
+    latest_data_relay_30d,
+    latest_data_builder_30d,
+    latest_data_validator_30d,
+    latest_data_relay_14d,
+    latest_data_builder_14d,
+    latest_data_validator_14d,
     df_relay,
     df_builder,
     df_validator,
@@ -842,7 +919,9 @@ def create_figures(
     bars_over_time_relay,
     bars_over_time_builder
 ):
-    fig_bars = censorship_bars(latest_data_relay, latest_data_builder, latest_data_validator)
+    fig_bars_60d = censorship_bars(latest_data_relay_60d, latest_data_builder_60d, latest_data_validator_60d)
+    fig_bars_30d = censorship_bars(latest_data_relay_30d, latest_data_builder_30d, latest_data_validator_30d)
+    fig_bars_14d = censorship_bars(latest_data_relay_14d, latest_data_builder_14d, latest_data_validator_14d)
     fig_over_months = create_censorship_over_last_month(
         bars_over_time_validator, bars_over_time_relay, bars_over_time_builder
     )
@@ -859,20 +938,26 @@ def create_figures(
     )
     
     #fig_comparison = comparison_chart()
-    return (fig_bars, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui, fig_bars_over_time) # fig_comparison,
+    return (fig_bars_60d, fig_bars_30d, fig_bars_14d, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui, fig_bars_over_time) # fig_comparison,
 
 
 
 ############
 
-fig_bars, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui,fig_bars_over_time= create_figures(
+fig_bars_60d, fig_bars_30d, fig_bars_14d, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui,fig_bars_over_time= create_figures(
     df_censorship, 
     df_relays_over_time, 
     df_builders_over_time, 
     df_validators_over_time,
-    latest_data_relay, 
-    latest_data_builder, 
-    latest_data_validator, 
+    latest_data_relay_60d,
+    latest_data_builder_60d,
+    latest_data_validator_60d,
+    latest_data_relay_30d,
+    latest_data_builder_30d,
+    latest_data_validator_30d,
+    latest_data_relay_14d,
+    latest_data_builder_14d,
+    latest_data_validator_14d,
     df_relay,
     df_builder,
     df_validator,
@@ -962,7 +1047,7 @@ app.layout = html.Div(
                 dbc.Row([
                     dbc.Col(
                         html.H5(
-                             ['Built with 🖤 by ', html.A('Toni Wahrstätter', href='https://twitter.com/nero_eth', target='_blank'), html.Br(), 'Underlying data from the past 30 days'],
+                             ['Built with 🖤 by ', html.A('Toni Wahrstätter', href='https://twitter.com/nero_eth', target='_blank'), html.Br(), ''],
                             className="mb-4 even-smaller-text", # Apply the class
                             style={'color': '#262525', 'fontFamily': 'Ubuntu Mono, monospace'}
                         ),
@@ -996,21 +1081,40 @@ app.layout = html.Div(
                 ])
             ], className="mb-2 p-3 rounded", style={'background-color': '#ecf0f1'}),
           
-            dbc.Row([html.H5("OFAC Compliance", style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})], className="customheader"),
-            # Graphs with smooth transitions
-            dbc.Row(dbc.Col(dcc.Graph(id='graph1', figure=fig_bars), md=12, className="mb-4 animated fadeIn")),
-            dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_bars_over_time), md=12, className="mb-4 animated fadeIn")),
-            dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4 animated fadeIn")),
-            
-            # Button row
+            dbc.Row([html.H5("OFAC Compliance", style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})], className="customheader mb-0"),
             dbc.Row(
                 dbc.Col(
                     [
-                        dbc.Button('Validators', id='btn-a', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black'}),
-                        dbc.Button('Relays', id='btn-b', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black'}),
-                        dbc.Button('Builders', id='btn-c', n_clicks=0, style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black'})
+                        dbc.Button('60 days', id='btn-cc', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525'}),
+                        dbc.Button('30 days', id='btn-aa', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525'}),
+                        dbc.Button('14 days', id='btn-bb', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525'}),
+                        
+                       
+                    ],className="d-flex justify-content-end",
+                    style={"marginRight": "3vw"}
+                ),
+                style={"textAlign": "right !important"},
+                className="mb-4", id="buttons-first-fig"
+            ),
+            # Graphs with smooth transitions
+            #dbc.Row(dbc.Col(html.Div(id="graph-container2")), style={"paddingBottom": "20px"}),
+            dbc.Row(dbc.Col(id='graph1', md=12, className="mb-4")),
+            
+            #dbc.Row(dbc.Col(dcc.Graph(id='graph11', figure=fig_bars_60d), md=12, className="mb-4 animated fadeIn")),
+            #dbc.Row(dbc.Col(dcc.Graph(id='graph12', figure=fig_bars_30d), md=12, className="mb-4 animated fadeIn")),
+            dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_bars_over_time), md=12, className="mb-4 animated fadeIn")),
+            dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4 animated fadeIn")),
+            
+            dbc.Row([html.H5("Censorship-Meter", style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})], className="customheader mb-0"),
+            dbc.Row(
+                dbc.Col(
+                    [
+                        dbc.Button('Validators', id='btn-a', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525'}),
+                        dbc.Button('Relays', id='btn-b', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525'}),
+                        dbc.Button('Builders', id='btn-c', n_clicks=0, style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525'})
                     ],
-                    width={"size": 6, "offset": 4}
+                    className="d-flex justify-content-end",
+                    style={"marginRight": "3vw"}
                 ),
                 className="mb-4", id="buttons-last-fig"
             ),
@@ -1018,40 +1122,40 @@ app.layout = html.Div(
             dbc.Row(dbc.Col(id='dynamic-graph', md=12, className="mb-4")),
             
             html.Div([
-                html.H4('Useful Links:', style={'color': 'black','marginLeft':'10px'}),
+                html.H4('Useful Links:', style={'color': '#262525','marginLeft':'10px'}),
                 html.Ul([
                     html.Li([
-                        html.A('PBS censorship-resistance alternatives', href='https://notes.ethereum.org/@fradamt/H1TsYRfJc', target='_blank', style={'color': 'black'}),
-                        html.Span(" by Francesco – Oct 2022", style={'color': 'black'})
+                        html.A('PBS censorship-resistance alternatives', href='https://notes.ethereum.org/@fradamt/H1TsYRfJc', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Francesco – Oct 2022", style={'color': '#262525'})
                     ]),
                     html.Li([
-                        html.A('Forward inclusion list', href='https://notes.ethereum.org/@fradamt/forward-inclusion-lists', target='_blank', style={'color': 'black'}),
-                        html.Span(" by Francesco – Oct 2022", style={'color': 'black'})
+                        html.A('Forward inclusion list', href='https://notes.ethereum.org/@fradamt/forward-inclusion-lists', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Francesco – Oct 2022", style={'color': '#262525'})
                     ]),
                     html.Li([
-                        html.A('Censorship Résistance & PBS', href='https://www.youtube.com/watch?v=XZJcZ05d-Wo', target='_blank', style={'color': 'black'}),
-                        html.Span(" by Justin – Sept 2022", style={'color': 'black'})
+                        html.A('Censorship Résistance & PBS', href='https://www.youtube.com/watch?v=XZJcZ05d-Wo', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Justin – Sept 2022", style={'color': '#262525'})
                     ]),
                     html.Li([
-                        html.A('How much can we constrain builders without bringing back heavy burdens to proposers?', href='https://ethresear.ch/t/how-much-can-we-constrain-builders-without-bringing-back-heavy-burdens-to-proposers/13808', target='_blank', style={'color': 'black'}),
-                        html.Span(" by Vitalik – Oct 2022", style={'color': 'black'})
+                        html.A('How much can we constrain builders without bringing back heavy burdens to proposers?', href='https://ethresear.ch/t/how-much-can-we-constrain-builders-without-bringing-back-heavy-burdens-to-proposers/13808', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Vitalik – Oct 2022", style={'color': '#262525'})
                     ]),
                     html.Li([
-                        html.A('State of research: increasing censorship resistance of transactions under proposer/builder separation (PBS)', href='https://notes.ethereum.org/@vbuterin/pbs_censorship_resistance', target='_blank', style={'color': 'black'}),
-                        html.Span(" by Vitalik – Jan 2022", style={'color': 'black'})
+                        html.A('State of research: increasing censorship resistance of transactions under proposer/builder separation (PBS)', href='https://notes.ethereum.org/@vbuterin/pbs_censorship_resistance', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Vitalik – Jan 2022", style={'color': '#262525'})
                     ]),
                     html.Li([
-                        html.A('No free lunch – a new inclusion list design', href='https://ethresear.ch/t/no-free-lunch-a-new-inclusion-list-design/16389', target='_blank', style={'color': 'black'}),
-                        html.Span(" by Vitalik and Mike – Aug 2023", style={'color': 'black'})
+                        html.A('No free lunch – a new inclusion list design', href='https://ethresear.ch/t/no-free-lunch-a-new-inclusion-list-design/16389', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Vitalik and Mike – Aug 2023", style={'color': '#262525'})
                     ]),
                     html.Li([
-                        html.A('Cumulative, Non-Expiring Inclusion Lists', href='https://ethresear.ch/t/cumulative-non-expiring-inclusion-lists/16520', target='_blank', style={'color': 'black'}),
-                        html.Span(" by Toni – Aug 2023", style={'color': 'black'})
+                        html.A('Cumulative, Non-Expiring Inclusion Lists', href='https://ethresear.ch/t/cumulative-non-expiring-inclusion-lists/16520', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Toni – Aug 2023", style={'color': '#262525'})
                     ]),                    
                 ])
             ], style={
                 'backgroundColor': '#f1f2f6',
-                'color': 'black',
+                'color': '#262525',
                 'textAlign': 'left',
                 'paddingTop': '30px',
                 
@@ -1104,38 +1208,38 @@ def update_main_div_style_dynamic(window_size_data):
     else:
         return {}
 
-@app.callback(
-    Output('graph1', 'figure'),
-    Input('window-size-store', 'data')
-)
-def update_layout3(window_size_data):
-    if window_size_data is None:
-        raise dash.exceptions.PreventUpdate
-    width = window_size_data['width']
-    fig_bars.update_layout(**update_censorship_bars_layout(width))
-    for i, annotation in enumerate(fig_bars.layout.annotations):
-        annotation_dict = annotation.to_plotly_json()
-        if '24px' in annotation_dict['text']:
-            annotation_dict['text'] = annotation_dict['text'].replace('24px', '14px')
-            fig_bars.layout.annotations[i].update(annotation_dict)
-    if width <= 800:
-        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
-            if ix % 2 != 0 and "%" in i.text:
-                i.visible = True
-            elif "%" in i.text:
-                i.visible=False
-        for i in fig_bars.layout.annotations[-2:]:
-            i.font.size = 12
-        fig_bars.layout.annotations[-1].y += 0.01
-    else:
-        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
-            if ix % 2 == 0 and "%" in i.text:
-                i.visible = True
-            elif "%" in i.text:
-                i.visible=False
-        for i in fig_bars.layout.annotations[-2:]:
-            i.font.size = 18
-    return fig_bars
+#@app.callback(
+#    Output('graph1', 'figure'),
+#    Input('window-size-store', 'data')
+#)
+#def update_layout3(window_size_data):
+#    if window_size_data is None:
+#        raise dash.exceptions.PreventUpdate
+#    width = window_size_data['width']
+#    fig_bars.update_layout(**update_censorship_bars_layout(width))
+#    for i, annotation in enumerate(fig_bars.layout.annotations):
+#        annotation_dict = annotation.to_plotly_json()
+#        if '24px' in annotation_dict['text']:
+#            annotation_dict['text'] = annotation_dict['text'].replace('24px', '14px')
+#            fig_bars.layout.annotations[i].update(annotation_dict)
+#    if width <= 800:
+#        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
+#            if ix % 2 != 0 and "%" in i.text:
+#                i.visible = True
+#            elif "%" in i.text:
+#                i.visible=False
+#        for i in fig_bars.layout.annotations[-2:]:
+#            i.font.size = 12
+#        fig_bars.layout.annotations[-1].y += 0.01
+#    else:
+#        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
+#            if ix % 2 == 0 and "%" in i.text:
+#                i.visible = True
+#            elif "%" in i.text:
+#                i.visible=False
+#        for i in fig_bars.layout.annotations[-2:]:
+#            i.font.size = 18
+#    return fig_bars
 
 
 @app.callback(
@@ -1201,6 +1305,58 @@ def update_graph4(btn_a, btn_b, btn_c):
 
     return dcc.Graph(id='graph', figure=fig_comp_rel) 
 
+@app.callback(
+    Output('graph1', 'children'),
+    [
+        Input('btn-aa', 'n_clicks'),
+        Input('btn-bb', 'n_clicks'),
+        Input('btn-cc', 'n_clicks'),
+        Input('window-size-store', 'data')
+    ]
+)
+def update_graph3(btn_a, btn_b,  btn_c, window_size_data):
+    if window_size_data is None:
+        raise dash.exceptions.PreventUpdate
+    width = window_size_data['width']
+    
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+    print(changed_id)
+    if 'btn-cc' in changed_id:
+        fig_bars = fig_bars_60d
+    elif 'btn-bb' in changed_id:
+        fig_bars = fig_bars_14d
+    else:
+        fig_bars = fig_bars_30d
+    
+    
+    fig_bars.update_layout(**update_censorship_bars_layout(width))
+    for i, annotation in enumerate(fig_bars.layout.annotations):
+        annotation_dict = annotation.to_plotly_json()
+        if '24px' in annotation_dict['text']:
+            annotation_dict['text'] = annotation_dict['text'].replace('24px', '14px')
+            fig_bars.layout.annotations[i].update(annotation_dict)
+    if width <= 800:
+        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
+            if ix % 2 != 0 and "%" in i.text:
+                i.visible = True
+            elif "%" in i.text:
+                i.visible=False
+        for i in fig_bars.layout.annotations[-2:]:
+            i.font.size = 12
+        fig_bars.layout.annotations[-1].y += 0.01
+    else:
+        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
+            if ix % 2 == 0 and "%" in i.text:
+                i.visible = True
+            elif "%" in i.text:
+                i.visible=False
+        for i in fig_bars.layout.annotations[-2:]:
+            i.font.size = 18
+    
+    
+
+    return dcc.Graph(id='graph123', figure=fig_bars) 
+
 
 
 @app.callback(
@@ -1219,11 +1375,11 @@ def update_button_style(n1, n2, n3, window_size_data):
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     
     if width <= 800:
-        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black', 'fontSize': '10px'}
-        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black', 'fontSize': '10px'}
+        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '9px'}
+        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '9px'}
     else:
-        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black', 'fontSize': '18px'}
-        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black', 'fontSize': '18px'}
+        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '14px'}
+        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '14px'}
     
     if button_id == 'btn-a':
         return [active_style, default_style, default_style]
@@ -1233,6 +1389,38 @@ def update_button_style(n1, n2, n3, window_size_data):
         return [default_style, default_style, active_style]
     else:
         return [default_style, active_style, default_style]
+    
+@app.callback(
+    [Output('btn-cc', 'style'),
+     Output('btn-bb', 'style'),
+    Output('btn-aa', 'style')],
+    [Input('btn-aa', 'n_clicks'),
+     Input('btn-bb', 'n_clicks'),
+     Input('btn-cc', 'n_clicks'),
+     Input('window-size-store', 'data')],
+    prevent_initial_call=False
+)
+def update_button_style2(n1, n2, n3, window_size_data):
+    width = window_size_data['width']
+    ctx = dash.callback_context
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    
+    if width <= 800:
+        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '9px'}
+        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '9px'}
+    else:
+        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '14px'}
+        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '14px'}
+    
+    if button_id == 'btn-cc':
+        return [active_style, default_style, default_style]
+    elif button_id == 'btn-bb':
+        return [default_style, active_style, default_style]
+    elif button_id == 'btn-aa':
+        return [default_style, default_style, active_style]
+    else:
+        print("-----------------------default")
+        return [default_style, default_style, active_style]
 
 
 
