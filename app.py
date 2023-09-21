@@ -1097,6 +1097,10 @@ app.layout = html.Div(
                 html.H4('Useful Links:', style={'color': '#262525','marginLeft':'10px'}),
                 html.Ul([
                     html.Li([
+                        html.A('Dataset of OFAC sanction list', href='https://github.com/ultrasoundmoney/ofac-ethereum-addresses', target='_blank', style={'color': '#262525'}),
+                        html.Span(" Ultra Sound – Oct 23", style={'color': '#262525'})
+                    ]),
+                    html.Li([
                         html.A('PBS censorship-resistance alternatives', href='https://notes.ethereum.org/@fradamt/H1TsYRfJc', target='_blank', style={'color': '#262525'}),
                         html.Span(" by Francesco – Oct 2022", style={'color': '#262525'})
                     ]),
