@@ -1,6 +1,125 @@
 from datetime import datetime
 import pandas as pd
 import os
+from google.cloud import bigquery
+
+
+
+def set_google_credentials(CONFIG, GOOGLE_CREDENTIALS):
+    try:
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+    except:
+        print(f"setting google credentials as global variable...")
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = CONFIG \
+        + GOOGLE_CREDENTIALS or input("No Google API credendials file provided." 
+        + "Please specify path now:\n")
+        
+set_google_credentials("./config/","google-creds.json")
+
+query = """
+CREATE OR REPLACE TABLE `ethereum-data-nero.eth.9_tornado_validator_stats_censorship` AS
+SELECT * FROM (
+  SELECT validator, count(validator) blocks, sum(txs) txs, "total" as frame FROM `ethereum-data-nero.eth.9_tornado_in_mev_censorship` GROUP BY validator
+  UNION ALL
+  SELECT validator, count(validator) blocks, sum(txs) txs, "24h" FROM `ethereum-data-nero.eth.9_tornado_in_mev_censorship` 
+  WHERE slot > (
+    (
+      SELECT MAX(slot) FROM `ethereum-data-nero.eth.9_tornado_in_mev_censorship`
+    ) - 86400/12
+  )
+  GROUP BY validator
+  UNION ALL
+  SELECT validator, count(validator) blocks, sum(txs) txs, "14d" FROM `ethereum-data-nero.eth.9_tornado_in_mev_censorship` 
+  WHERE slot > (
+    (
+      SELECT MAX(slot) FROM `ethereum-data-nero.eth.9_tornado_in_mev_censorship`
+    ) - 86400*14/12
+  )
+  GROUP BY validator
+  UNION ALL
+  SELECT validator, count(validator) blocks, sum(txs) txs, "30d" FROM `ethereum-data-nero.eth.9_tornado_in_mev_censorship` 
+  WHERE slot > (
+    (
+      SELECT MAX(slot) FROM `ethereum-data-nero.eth.9_tornado_in_mev_censorship`
+    ) - 86400*30/12
+  )
+  GROUP BY validator
+  UNION ALL
+  SELECT validator, blocks, txs, "all_blocks" FROM (
+    SELECT IFNULL(BBB.name, AAA.validator) validator, count(validator) blocks, 0 txs FROM `ethereum-data-nero.eth.mevboost_db` AAA
+    LEFT JOIN `ethereum-data-nero.eth.lido_validator_db` BBB on AAA.proposer_pubkey = BBB.pubkey
+    GROUP BY validator
+  )
+  UNION ALL
+  SELECT validator, blocks, txs, "all_blocks_30d" FROM (
+    SELECT IFNULL(BBB.name, AAA.validator) validator, count(validator) blocks, 0 txs FROM `ethereum-data-nero.eth.mevboost_db` AAA
+    LEFT JOIN `ethereum-data-nero.eth.lido_validator_db` BBB on AAA.proposer_pubkey = BBB.pubkey
+    where TIMESTAMP_TRUNC(date, DAY) BETWEEN TIMESTAMP(DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)) AND CURRENT_TIMESTAMP()
+    GROUP BY validator
+  )
+)
+WHERE not STARTS_WITH(validator, "0x")
+ORDER BY validator DESC, frame DESC, blocks DESC;
+
+
+#####################
+
+CREATE OR REPLACE TABLE `ethereum-data-nero.eth.9_tornado_in_mev_censorship` AS
+SELECT AA.*,  BB.txs FROM
+(SELECT DISTINCT AAA.block_number, AAA.slot, AAA.relay, AAA.builder, AAA.proposer_pubkey, IFNULL(BBB.name, AAA.validator) validator FROM `ethereum-data-nero.eth.mevboost_db` AAA
+LEFT JOIN `ethereum-data-nero.eth.lido_validator_db` BBB on AAA.proposer_pubkey = BBB.pubkey) AA
+
+INNER JOIN (
+  SELECT A.block_number, count(distinct B.txhash) txs FROM (
+    SELECT DISTINCT block_number, tx_hash FROM `ethereum-data-nero.eth.mevboost_txs` 
+    UNION ALL
+    SELECT DISTINCT block_number, tx_hash  FROM `ethereum-data-nero.eth.non_mevboost_txs`) A
+  INNER JOIN (
+    SELECT txhash FROM `ethereum-data-nero.eth.ofaced_txs`# WHERE contract != "torn"
+  ) B ON B.txhash = A.tx_hash
+  GROUP BY block_number
+) BB ON AA.block_number = BB.block_number
+WHERE BB.txs > 0 
+and slot not in (
+  SELECT distinct orphaned_slot FROM (
+    SELECT distinct A.block_number, min(A.slot) orphaned_slot FROM 
+    (SELECT slot, block_number FROM `ethereum-data-nero.eth.mevboost_empty_filled` ) A
+    LEFT JOIN (
+      SELECT slot, block_number FROM `ethereum-data-nero.eth.mevboost_empty_filled`
+    ) B on A.block_number = B.block_number
+    WHERE A.slot = B.slot-1
+    group by A.block_number
+    )
+    order by orphaned_slot desc
+)
+and AA.slot != 6611105 and AA.slot != 6622529 # manual fix for blocknative
+ORDER BY block_number; 
+
+###############
+
+
+CREATE OR REPLACE TABLE `ethereum-data-nero.eth.3_validators_over_time_censorship` AS
+  SELECT 
+  FORMAT_TIMESTAMP("%F", `date`) AS `timestamp`,
+  IFNULL(BBB.name, AAA.validator) validator,
+  count(distinct slot) slot
+FROM `ethereum-data-nero.eth.mevboost_db`   AAA
+LEFT JOIN `ethereum-data-nero.eth.lido_validator_db` BBB on AAA.proposer_pubkey = BBB.pubkey
+where not STARTS_WITH(validator, "0x") and validator != "missed"
+
+GROUP BY `timestamp`, validator
+
+
+"""
+
+def run_bq_job():
+    print("running queries for validators...")
+    client.query(query)
+    print("finished bq job")
+    
+    
+client = bigquery.Client()
+run_bq_job()
 
 
 QUERY = """
@@ -19,16 +138,6 @@ def slot_to_time(slot):
     return formatted_time
 
 
-def set_google_credentials(CONFIG, GOOGLE_CREDENTIALS):
-    try:
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS']
-    except:
-        print(f"setting google credentials as global variable...")
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = CONFIG \
-        + GOOGLE_CREDENTIALS or input("No Google API credendials file provided." 
-        + "Please specify path now:\n")
-        
-set_google_credentials("./config/","google-creds.json")
 
 
 
