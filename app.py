@@ -673,7 +673,7 @@ def comparison_chart_layout(width=801, height=2400, names=None, y_positions=None
 
 #    visible_builder = [False]*validator_bar_count + [False]*relay_bar_count + [True]*builder_bar_count + [False]*validator_arrow_count + [False]*relay_arrow_count + [True]*builder_arrow_count
     return dict(
-        #title="Overview of the last 30 days <span style='font-size:1.5vh;'>(Lido is split up in its node operators)</span>",
+        title="Overview of the last 30 days <span style='font-size:1.5vh;'>(Lido is split up in its node operators)</span>",
         margin=dict(l=20, r=20, t=0, b=0),
         xaxis=dict(
             showline=False,
@@ -850,7 +850,7 @@ def comparison_chart(entity):
                         size=14,
                         color='#262525'
                     ),
-                    hovertemplate=f"<b>{val:.2f}% non-censored blocks</b><extra></extra>",
+                    hovertemplate=f"<b>{val:.2f}% blocks with OFAC sanctioned content</b><extra></extra>",
                     hoverlabel=dict(
                         font=dict(color="white"),  # Increase size of hoverlabel
                         bgcolor=corresponding_bar_color  # Set hover label background color to match scaled_value
@@ -1077,7 +1077,19 @@ app.layout = html.Div(
             dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_bars_over_time), md=12, className="mb-4 animated fadeIn")),
             dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4 animated fadeIn")),
             
-            dbc.Row([html.H5("Censorship-Meter", style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})], className="customheader mb-0"),
+            dbc.Row([html.Div(id='header-text', children=[
+                html.H5([
+                    "Censorship-Meter - Relays",
+                    html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
+                ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
+                dbc.Tooltip(
+                    "The x-axis shows the percentage of OFAC-sanctioned transactions included in the blocks by relays. It ranges from 0 to ~7%, but it is not linear.",
+                    target="info-tooltip",
+                    placement="right"
+                ),
+                html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})
+            ])]),
+                              
             dbc.Row(
                 dbc.Col(
                     [
@@ -1396,7 +1408,59 @@ def update_button_style2(n1, n2, n3, window_size_data):
     else:
         return [default_style, default_style, active_style]
 
+@app.callback(
+    Output('header-text', 'children'),
+    [
+        Input('btn-a', 'n_clicks'),
+        Input('btn-b', 'n_clicks'),
+        Input('btn-c', 'n_clicks')
+    ]
+)
+def update_header(btn_a, btn_b, btn_c):
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+    
+    if 'btn-a' in changed_id:
+        return [
+            html.H5([
+                "Censorship-Meter - Validators",
+                html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
+            ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
+            dbc.Tooltip(
+                    "The x-axis shows the percentage of OFAC-sanctioned transactions included in the blocks of validators. It ranges from 0 to 7%, but it is not linear. The upper-case entities are the split-up Lido Node Operators.",
+                    target="info-tooltip",
+                    placement="right"
+                ),
+            html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})
+        ]
+    elif "btn-c" in changed_id:
+        return [
+            html.H5([
+                    "Censorship-Meter - Builders",
+                    html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
+                ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
+                dbc.Tooltip(
+                    "The x-axis shows the percentage of OFAC-sanctioned transactions included in the blocks by builders. It ranges from 0 to 7%, but it is not linear.",
+                    target="info-tooltip",
+                    placement="right"
+                ),
+                html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})
+        ]
+    else:
+        return [
+           html.H5([
+                    "Censorship-Meter- Relays",
+                    html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
+                ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
+                dbc.Tooltip(
+                    "The x-axis shows the percentage of OFAC-sanctioned transactions included in the blocks by relays. It ranges from 0 to 7%, but it is not linear.",
+                    target="info-tooltip",
+                    placement="right"
+                ),
+                html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})
+        ]
+        
 
+    
 
 if __name__ == '__main__':
     #app.run_server(debug=True)

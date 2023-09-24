@@ -20,6 +20,42 @@ def set_google_credentials(CONFIG, GOOGLE_CREDENTIALS):
 set_google_credentials("./config/","google-creds.json")
 
 query = """
+
+
+CREATE OR REPLACE TABLE `ethereum-data-nero.eth.9_tornado_in_mev_censorship` AS
+SELECT AA.*,  BB.txs FROM
+(SELECT DISTINCT AAA.block_number, AAA.slot, AAA.relay, AAA.builder, AAA.proposer_pubkey, IFNULL(BBB.name, AAA.validator) validator FROM `ethereum-data-nero.eth.mevboost_db` AAA
+LEFT JOIN `ethereum-data-nero.eth.lido_validator_db` BBB on AAA.proposer_pubkey = BBB.pubkey) AA
+
+INNER JOIN (
+  SELECT A.block_number, count(distinct B.txhash) txs FROM (
+    SELECT DISTINCT block_number, tx_hash FROM `ethereum-data-nero.eth.mevboost_txs` 
+    UNION ALL
+    SELECT DISTINCT block_number, tx_hash  FROM `ethereum-data-nero.eth.non_mevboost_txs`) A
+  INNER JOIN (
+    SELECT txhash FROM `ethereum-data-nero.eth.ofaced_txs`# WHERE contract != "torn"
+  ) B ON B.txhash = A.tx_hash
+  GROUP BY block_number
+) BB ON AA.block_number = BB.block_number
+WHERE BB.txs > 0 
+and slot not in (
+  SELECT distinct orphaned_slot FROM (
+    SELECT distinct A.block_number, min(A.slot) orphaned_slot FROM 
+    (SELECT slot, block_number FROM `ethereum-data-nero.eth.mevboost_empty_filled` ) A
+    LEFT JOIN (
+      SELECT slot, block_number FROM `ethereum-data-nero.eth.mevboost_empty_filled`
+    ) B on A.block_number = B.block_number
+    WHERE A.slot = B.slot-1
+    group by A.block_number
+    )
+    order by orphaned_slot desc
+)
+and AA.slot != 6611105 and AA.slot != 6622529 # manual fix for blocknative
+ORDER BY block_number; 
+
+###############
+
+
 CREATE OR REPLACE TABLE `ethereum-data-nero.eth.9_tornado_validator_stats_censorship` AS
 SELECT * FROM (
   SELECT validator, count(validator) blocks, sum(txs) txs, "total" as frame FROM `ethereum-data-nero.eth.9_tornado_in_mev_censorship` GROUP BY validator
@@ -67,38 +103,6 @@ ORDER BY validator DESC, frame DESC, blocks DESC;
 
 #####################
 
-CREATE OR REPLACE TABLE `ethereum-data-nero.eth.9_tornado_in_mev_censorship` AS
-SELECT AA.*,  BB.txs FROM
-(SELECT DISTINCT AAA.block_number, AAA.slot, AAA.relay, AAA.builder, AAA.proposer_pubkey, IFNULL(BBB.name, AAA.validator) validator FROM `ethereum-data-nero.eth.mevboost_db` AAA
-LEFT JOIN `ethereum-data-nero.eth.lido_validator_db` BBB on AAA.proposer_pubkey = BBB.pubkey) AA
-
-INNER JOIN (
-  SELECT A.block_number, count(distinct B.txhash) txs FROM (
-    SELECT DISTINCT block_number, tx_hash FROM `ethereum-data-nero.eth.mevboost_txs` 
-    UNION ALL
-    SELECT DISTINCT block_number, tx_hash  FROM `ethereum-data-nero.eth.non_mevboost_txs`) A
-  INNER JOIN (
-    SELECT txhash FROM `ethereum-data-nero.eth.ofaced_txs`# WHERE contract != "torn"
-  ) B ON B.txhash = A.tx_hash
-  GROUP BY block_number
-) BB ON AA.block_number = BB.block_number
-WHERE BB.txs > 0 
-and slot not in (
-  SELECT distinct orphaned_slot FROM (
-    SELECT distinct A.block_number, min(A.slot) orphaned_slot FROM 
-    (SELECT slot, block_number FROM `ethereum-data-nero.eth.mevboost_empty_filled` ) A
-    LEFT JOIN (
-      SELECT slot, block_number FROM `ethereum-data-nero.eth.mevboost_empty_filled`
-    ) B on A.block_number = B.block_number
-    WHERE A.slot = B.slot-1
-    group by A.block_number
-    )
-    order by orphaned_slot desc
-)
-and AA.slot != 6611105 and AA.slot != 6622529 # manual fix for blocknative
-ORDER BY block_number; 
-
-###############
 
 
 CREATE OR REPLACE TABLE `ethereum-data-nero.eth.3_validators_over_time_censorship` AS
@@ -148,6 +152,7 @@ def slot_to_time(slot):
 
 
 try:
+    raise
     entries = pd.read_parquet(DATA+"tornado_blocks.parquet")
     maxslot = entries["slot"].max()
     maxslot
@@ -155,18 +160,32 @@ except:
     entries = pd.DataFrame()
     maxslot = 0
     
-query = f"""SELECT distinct aa.slot, aa.builder, aa.relay, aa.validator, IF(bb.txs > 0, 1,0) touched_sanctioned_address FROM `ethereum-data-nero.eth.mevboost_db` aa LEFT JOIN
+query = f"""SELECT distinct aa.slot, aa.builder, aa.relay, aa.validator, 
+IF(bb.txs > 0, 1,0) touched_sanctioned_address #1/IF(CC.counts=0, 1, CC.counts) counts
+FROM `ethereum-data-nero.eth.mevboost_db` aa LEFT JOIN
 `ethereum-data-nero.eth.9_tornado_in_mev_censorship` bb on aa.slot = bb.slot 
+#LEFT JOIN  (
+#  SELECT slot, block_hash, COUNT(DISTINCT relay) AS counts
+#  FROM `ethereum-data-nero.eth.mevboost_db`
+#  where relay is not null
+#  GROUP BY slot, block_hash
+#) CC ON aa.slot = CC.slot
 where aa.slot > {maxslot}
 """
+
+query = f"""SELECT distinct aa.slot, aa.builder, aa.relay, aa.validator, IF(bb.txs > 0, 1,0) touched_sanctioned_address FROM `ethereum-data-nero.eth.mevboost_db` aa LEFT JOIN
+`ethereum-data-nero.eth.9_tornado_in_mev_censorship` bb on aa.slot = bb.slot 
+where aa.slot > {maxslot}"""
+
 df = pd.read_gbq(query)
 df["timestamp"] = df["slot"].apply(lambda x: slot_to_time(x))
 df = pd.concat([entries, df], ignore_index=True)
+#df["counts"] = df["counts"].fillna(1)
 df.fillna("non Mev-Boost", inplace=True)
 df.to_parquet(DATA + "tornado_blocks.parquet", index=False)
 
 
-df = entries
+#df = entries
 df_daily_share=[]
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 
@@ -174,6 +193,7 @@ for entity in ["validator", "relay", "builder"]:
     print(f"\n{entity}")
     df.sort_values(by=['timestamp', entity], inplace=True)
     data = []
+    data2 = []
     largest = df.groupby(entity)["slot"].count().sort_values(ascending=False).reset_index()[entity].tolist()[:30]
     _df = df[df[entity].isin(largest)].copy()
     for date in pd.date_range(_df['timestamp'].min().date(), _df['timestamp'].max().date()):
@@ -196,7 +216,7 @@ for entity in ["validator", "relay", "builder"]:
         censoring = a.apply(lambda x: x[entity] if x["percentage"] < avg_incl/2 and x["slot"] > 100 else None, axis=1)
         df_filtered2["censoring"] = df_filtered2[entity].isin(censoring).astype(int)
         gg = df_filtered2.groupby("censoring")["slot"].count()
-        
+        #gg = df_filtered2.groupby("censoring")["counts"].sum()/df_filtered2.groupby("censoring")["counts"].sum().sum()*100
         #print(date, int(gg.iloc[0]), int(gg.iloc[1]))
         #data.loc[len(data),("date", "censoring", "slots")] = (date, "censoring", int(gg.iloc[0]))  
         data.append((date, "non-censoring", int(gg.iloc[0])))
