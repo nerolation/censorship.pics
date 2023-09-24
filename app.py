@@ -1319,7 +1319,7 @@ def update_graph3(btn_a, btn_b,  btn_c, window_size_data):
     fig_bars.update_layout(**update_censorship_bars_layout(width))
     for i, annotation in enumerate(fig_bars.layout.annotations):
         annotation_dict = annotation.to_plotly_json()
-        if '24px' in annotation_dict['text']:
+        if '24px' in annotation_dict['text'] and width <= 800:
             annotation_dict['text'] = annotation_dict['text'].replace('24px', '14px')
             fig_bars.layout.annotations[i].update(annotation_dict)
     if width <= 800:
