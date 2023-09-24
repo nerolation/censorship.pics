@@ -673,7 +673,7 @@ def comparison_chart_layout(width=801, height=2400, names=None, y_positions=None
 
 #    visible_builder = [False]*validator_bar_count + [False]*relay_bar_count + [True]*builder_bar_count + [False]*validator_arrow_count + [False]*relay_arrow_count + [True]*builder_arrow_count
     return dict(
-        title="Overview of the last 30 days <span style='font-size:1.5vh;'>(Lido is split up in its node operators)</span>",
+        #title="Overview of the last 30 days <span style='font-size:1.5vh;'>(Lido is split up in its node operators)</span>",
         margin=dict(l=20, r=20, t=0, b=0),
         xaxis=dict(
             showline=False,
