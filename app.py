@@ -78,6 +78,9 @@ def prepare_data():
     df_relay["all_block_share"] = df_relay["all_blocks"] / df_relay.all_blocks.sum()
     df_builder["all_block_share"] = df_builder["all_blocks"] / df_builder.all_blocks.sum()
     df_validator["all_block_share"] = df_validator["all_blocks"] / df_validator.all_blocks.sum()
+    df_validator = df_validator[df_validator["all_blocks"] > 50]
+    df_relay = df_relay[df_relay["all_blocks"] > 50]
+    df_builder = df_builder[df_builder["all_blocks"] > 50]
     
     bars_over_time_validator = pd.read_csv(DATA + "validator_censorship_share.csv").iloc[120:]
     bars_over_time_relay = pd.read_csv(DATA + "relay_censorship_share.csv").iloc[120:]
