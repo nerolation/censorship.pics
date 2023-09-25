@@ -1451,7 +1451,7 @@ def update_header(btn_a, btn_b, btn_c):
     else:
         return [
            html.H5([
-                    "Censorship-Meter- Relays",
+                    "Censorship-Meter - Relays",
                     html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
                 ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
                 dbc.Tooltip(
