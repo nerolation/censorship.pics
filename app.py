@@ -1083,7 +1083,7 @@ app.layout = html.Div(
                     html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
                 ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
                 dbc.Tooltip(
-                    "The x-axis shows the percentage of OFAC-sanctioned transactions included in the blocks by relays. It ranges from 0 to ~7%, but it is not linear.",
+                    "The x-axis shows the percentage of blocks containing OFAC-sanctioned transactions by relays. It ranges from 0 to ~7%, but it is not linear.",
                     target="info-tooltip",
                     placement="right"
                 ),
@@ -1426,7 +1426,7 @@ def update_header(btn_a, btn_b, btn_c):
                 html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
             ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
             dbc.Tooltip(
-                    "The x-axis shows the percentage of OFAC-sanctioned transactions included in the blocks of validators. It ranges from 0 to 7%, but it is not linear. The upper-case entities are the split-up Lido Node Operators.",
+                    "The x-axis shows the percentage of blocks containing OFAC-sanctioned transactions by validators. It ranges from 0 to 7%, but it is not linear. The upper-case entities are the split-up Lido Node Operators.",
                     target="info-tooltip",
                     placement="right"
                 ),
@@ -1439,7 +1439,7 @@ def update_header(btn_a, btn_b, btn_c):
                     html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
                 ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
                 dbc.Tooltip(
-                    "The x-axis shows the percentage of OFAC-sanctioned transactions included in the blocks by builders. It ranges from 0 to 7%, but it is not linear.",
+                    "The x-axis shows the percentage of blocks containing OFAC-sanctioned transactions by builders. It ranges from 0 to 7%, but it is not linear.",
                     target="info-tooltip",
                     placement="right"
                 ),
@@ -1452,7 +1452,7 @@ def update_header(btn_a, btn_b, btn_c):
                     html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
                 ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
                 dbc.Tooltip(
-                    "The x-axis shows the percentage of OFAC-sanctioned transactions included in the blocks by relays. It ranges from 0 to 7%, but it is not linear.",
+                    "The x-axis shows the percentage of blocks containing OFAC-sanctioned transactions by relays. It ranges from 0 to 7%, but it is not linear.",
                     target="info-tooltip",
                     placement="right"
                 ),
