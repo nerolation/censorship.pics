@@ -312,17 +312,7 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
 
             stack_position += row['percentage']
             
-    legend_annotations = [
-            # Text for 'censoring'
-            dict(
-                x=0.91,
-                y=1.15,
-                xref='paper',
-                yref='paper',
-                text='Censoring',
-                showarrow=False,
-                font=dict(size=18, color="#262525")
-            ),
+    legend_annotations = [  
             # Text for 'non-censoring'
             dict(
                 x=0.91,
@@ -330,6 +320,16 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
                 xref='paper',
                 yref='paper',
                 text='Non-Censoring',
+                showarrow=False,
+                font=dict(size=18, color="#262525")
+            ),
+            # Text for 'censoring'
+            dict(
+                x=0.91,
+                y=1.15,
+                xref='paper',
+                yref='paper',
+                text='Censoring',
                 showarrow=False,
                 font=dict(size=18, color="#262525")
             )
