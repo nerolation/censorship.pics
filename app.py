@@ -201,14 +201,22 @@ def update_censorship_bars_layout(width=801):
         paper_bgcolor= "#f1f2f6",
         height=430,
         #title_font_size = font_size+5,
-        margin=dict(l=40, r=0, t=90, b=20),
+        margin=dict(l=30, r=0, t=90, b=20),
         xaxis1=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for first subplot
         xaxis2=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for second subplot
         xaxis3=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for third subplot
         yaxis1=dict(showticklabels=False, fixedrange =True),  # Hide y-axis labels for first subplot
         yaxis2=dict(showticklabels=False, fixedrange =True),  # Hide y-axis labels for second subplot
         yaxis3=dict(showticklabels=False, fixedrange =True),
-        showlegend=False,
+        showlegend=True,
+        legend=dict(
+            x=0,  # 1 means the far right of the plot
+            y=1.18,  # 1 means the top of the plot
+            traceorder="normal",
+            font=dict(size=font_size-2),
+            bgcolor="rgba(255,255,255,0)",
+            #orientation="h"
+        ),
         hoverlabel=dict(
             bgcolor="white",
             font_size=font_size,
@@ -219,34 +227,34 @@ def update_censorship_bars_layout(width=801):
             #size=18,  # Set the font size here
             color="#262525"
         ),
-        shapes=[
-            # Red box for 'censoring'
-            dict(
-                type='rect',
-                x0=0.95,
-                x1=0.93-shape_delta_x,
-                y0=1.1+shape_delta_y,
-                y1=1.14,
-                xref='paper',
-                yref='paper',
-                fillcolor='#d07070',
-                line=dict(color='#262525', width=2),
-                opacity=1,
-            ),
-            # Green box for 'non-censoring'
-            dict(
-                type='rect',
-                x0=0.95,
-                x1=0.93-shape_delta_x,
-                y0=1.02+shape_delta_y*3,
-                y1=1.06+shape_delta_y*2,
-                xref='paper',
-                yref='paper',
-                fillcolor='#80bf80',
-                line=dict(color='#262525', width=2),
-                opacity=1,
-            )
-        ]
+        #shapes=[
+        #    # Red box for 'censoring'
+        #    dict(
+        #        type='rect',
+        #        x0=100,
+        #        x1=100*(0.98-shape_delta_x),
+        #        y0=1.1+shape_delta_y,
+        #        y1=1.14,
+        #        xref='x3',
+        #        yref='paper',
+        #        fillcolor='#d07070',
+        #        line=dict(color='#262525', width=2),
+        #        opacity=1,
+        #    ),
+        #    # Green box for 'non-censoring'
+        #    dict(
+        #        type='rect',
+        #        x0=100,
+        #        x1=100*(0.98-shape_delta_x),
+        #        y0=1.02+shape_delta_y*3,
+        #        y1=1.06+shape_delta_y*2,
+        #        xref='x3',
+        #        yref='paper',
+        #        fillcolor='#80bf80',
+        #        line=dict(color='#262525', width=2),
+        #        opacity=1,
+        #    )
+        #]
     )
 
 def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validator):
@@ -261,7 +269,7 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
 
     # Data and rows
     data_rows = [(latest_data_validator, 'x3'),(latest_data_relay, 'x'), (latest_data_builder, 'x2')]
-
+    showlegend = True
     for idx, (data, xref) in enumerate(data_rows):
         stack_position = 0
         for index, row in data.iterrows():
@@ -271,6 +279,8 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
                     y=[idx],
                     orientation='h',
                     name=row['censoring'],
+                    showlegend=showlegend,  # Use the showlegend variable here
+
                     marker=dict(
                         color='#d07070' if row['censoring'] == 'censoring' else '#80bf80',
                         line=dict(color='#262525', width=2)
@@ -311,30 +321,32 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
             )
 
             stack_position += row['percentage']
+        showlegend = False
             
-    legend_annotations = [  
-            # Text for 'non-censoring'
-            dict(
-                x=0.91,
-                y=1.09,
-                xref='paper',
-                yref='paper',
-                text='Non-Censoring',
-                showarrow=False,
-                font=dict(size=18, color="#262525")
-            ),
-            # Text for 'censoring'
-            dict(
-                x=0.91,
-                y=1.15,
-                xref='paper',
-                yref='paper',
-                text='Censoring',
-                showarrow=False,
-                font=dict(size=18, color="#262525")
-            )
-        ]
-    annotations.extend(legend_annotations)
+            
+    #legend_annotations = [  
+    #        # Text for 'non-censoring'
+    #        dict(
+    #            x=100*0.90,
+    #            y=1.09,
+    #            xref='x3',
+    #            yref='paper',
+    #            text='Non-Censoring',
+    #            showarrow=False,
+    #            font=dict(size=18, color="#262525")
+    #        ),
+    #        # Text for 'censoring'
+    #        dict(
+    #            x=100*0.92,
+    #            y=1.15,
+    #            xref='x3',
+    #            yref='paper',
+    #            text='Censoring',
+    #            showarrow=False,
+    #            font=dict(size=18, color="#262525")
+    #        )
+    #    ]
+    #annotations.extend(legend_annotations)
 
     fig['layout']['annotations'] += tuple(annotations)
 
