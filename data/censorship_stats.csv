@@ -1,130 +1,133 @@
 entity,category,tc_blocks30,all_blocks30,censoring
-wex exchange,validator,3,276,0
+wex exchange,validator,3,264,0
 weekineth,validator,0,1,1
-tokenpocket,validator,0,63,1
-teku team,validator,2,34,0
-swell,validator,7,794,1
-stkr,validator,12,555,0
+tokenpocket,validator,0,67,1
+teku team,validator,2,33,0
+swell,validator,7,804,1
+stkr,validator,12,575,0
 stereum.net,validator,0,6,1
 stakewise solos,validator,0,44,1
-stakewise,validator,18,940,0
-stakehound,validator,11,1131,0
-stakefish,validator,570,31673,0
-staked.us,validator,178,10673,0
-staked.finance,validator,0,8,1
-stafi,validator,2,70,0
-sigma prime team,validator,2,34,0
-sharedstake,validator,0,61,1
-rockx,validator,3,48,0
-rocketpool,validator,95,8063,0
+stakewise,validator,19,939,0
+stakehound,validator,12,1117,0
+stakefish,validator,574,31704,0
+staked.us,validator,177,10573,0
+staked.finance,validator,0,9,1
+stafi,validator,2,72,0
+sigma prime team,validator,2,35,0
+sharedstake,validator,0,65,1
+rockx,validator,3,50,0
+rocketpool,validator,101,8005,0
 prysm team,validator,1,32,0
-poloniex,validator,7,284,0
-p2p.org,validator,30,1675,0
-okx,validator,85,8344,0
+poloniex,validator,7,288,0
+p2p.org,validator,31,1650,0
+okx,validator,90,8424,0
 node dao,validator,0,48,1
-nimbus team,validator,0,28,1
-neukind.com,validator,0,6,1
+nimbus team,validator,0,29,1
+neukind.com,validator,0,9,1
 mycoldwallet,validator,0,2,1
-missed,validator,0,1157,1
-mintdice.com,validator,0,27,1
-lido,validator,13,1488,1
-kucoin,validator,16,381,0
-kraken,validator,143,10250,0
-infstones,validator,10,381,0
-huobi,validator,12,922,0
-harbour,validator,0,120,1
-frax finance,validator,53,3001,0
-figment,validator,86,13248,1
-everstake pool,validator,0,116,1
+missed,validator,0,1058,1
+mintdice.com,validator,0,24,1
+lido,validator,13,1474,1
+kucoin,validator,16,390,0
+kraken,validator,142,10082,0
+infstones,validator,10,387,0
+huobi,validator,12,914,0
+harbour,validator,0,119,1
+frax finance,validator,56,3029,0
+figment,validator,88,13328,1
+everstake pool,validator,0,115,1
 ethereum on arm,validator,0,3,1
 ethereum hive,validator,0,3,1
-cryptostake.com,validator,0,51,1
-coinbase,validator,326,19007,0
-celsius,validator,3,1315,1
-cake defi,validator,5,336,0
+cryptostake.com,validator,0,52,1
+coinbase,validator,334,18917,0
+celsius,validator,3,1294,1
+cake defi,validator,5,351,0
 boxfish.studio,validator,0,1,1
 blox staking,validator,0,11,1
 blockdaemon.com,validator,0,1,1
-bitstamp,validator,7,781,1
-bitpie,validator,1,103,0
-bitfinex,validator,6,252,0
-bitcoin suisse,validator,146,8084,0
-binance,validator,233,14855,0
+bitstamp,validator,5,761,1
+bitpie,validator,1,104,0
+bitfinex,validator,6,251,0
+bitcoin suisse,validator,150,8105,0
+binance,validator,236,14811,0
 bifrost,validator,0,3,1
-abyss finance,validator,114,7352,0
-Staking Facilities,validator,57,3143,0
-Stakin,validator,88,4898,0
-Stakely,validator,97,6639,0
-SkillZ,validator,85,5490,0
-Simply Staking,validator,80,5092,0
-Sigma Prime,validator,94,2704,0
-SenseiNode,validator,7,253,0
-RockX,validator,76,5592,0
-RockLogic GmbH,validator,45,3912,0
-Prysmatic Labs,validator,69,2607,0
-P2P.ORG - P2P Validator,validator,82,3278,0
-Nethermind,validator,74,6738,0
-Launchnodes,validator,0,144,1
-Kukis Global,validator,61,3270,0
-InfStones,validator,83,4616,0
-HashQuark,validator,79,5047,0
-Figment,validator,4,2792,1
-Everstake,validator,86,6055,0
-DSRV,validator,74,6214,0
-CryptoManufaktur,validator,55,2828,0
-ConsenSys Codefi,validator,94,5265,0
-Chorus One,validator,46,2837,0
-ChainSafe,validator,103,4212,0
-ChainLayer,validator,59,2593,0
-Certus One,validator,1,200,1
-BridgeTower,validator,90,3518,0
-Blockscape,validator,74,3639,0
-Blockdaemon,validator,5,2560,1
-Attestant (BVI) Limited,validator,107,4257,0
-Allnodes,validator,97,6549,0
-0xa3843eddcff557c1d9cc39b165688a8211979cef3679ef7c79751023dce64396f9ae6b86fa7b1fa15b9041d71dde7614,builder,0,2,1
-smithbot.xyz,builder,0,1,1
-Manifold,builder,44,61,0
-boba-builder.com,builder,32,2748,0
-antbuilder,builder,11,465,0
-Flashbots,builder,25,41912,1
-beaverbuild.org,builder,0,104082,1
-Shared/Default,builder,0,2,1
-f1b.io,builder,598,6679,0
-0x91d9b528a49e8cf7f3483021f0bdc73950254438ccb5c239a36ec2700ca674a886087c45f714baf63b5093fadbac853d,builder,0,1,1
-nfactorial.xyz,builder,0,141,1
-blocksmith.org,builder,0,11,1
-builder0x69,builder,0,15556,1
-https://eth-builder.com,builder,0,1095,1
-FC,builder,0,3,1
-BuildAI (https://buildai.net),builder,22,2953,1
-Blocknative,builder,0,894,1
-0x881ae260375b36284a721c3257ec3c73bc151214b6b523584344f482284d3f8d808d227a2d8f400255e6afb4ab3dc27c,builder,0,1,1
-Assembled delicately by Beelder,builder,25,739,0
-I can haz block?,builder,0,48,1
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,564,1
-Ty For The Block,builder,0,163,1
-rsync-builder.xyz,builder,0,92937,1
-Geth Go,builder,4,295,0
+abyss finance,validator,111,7358,0
+Staking Facilities,validator,54,3117,0
+Stakin,validator,91,4810,0
+Stakely,validator,105,6670,0
+SkillZ,validator,81,5457,0
+Simply Staking,validator,83,5040,0
+Sigma Prime,validator,92,2722,0
+SenseiNode,validator,8,279,0
+RockX,validator,74,5658,0
+RockLogic GmbH,validator,47,3914,0
+Prysmatic Labs,validator,72,2601,0
+P2P.ORG - P2P Validator,validator,82,3253,0
+Nethermind,validator,74,6692,0
+Launchnodes,validator,0,166,1
+Kukis Global,validator,57,3250,0
+InfStones,validator,82,4568,0
+HashQuark,validator,78,5069,0
+Gateway.fm AS,validator,0,1,1
+Figment,validator,4,2795,1
+Everstake,validator,90,6064,0
+Ebunker,validator,0,1,1
+DSRV,validator,76,6220,0
+CryptoManufaktur,validator,56,2813,0
+ConsenSys Codefi,validator,92,5230,0
+Chorus One,validator,47,2845,0
+ChainSafe,validator,104,4200,0
+ChainLayer,validator,57,2581,0
+Certus One,validator,1,197,1
+BridgeTower,validator,98,3562,0
+Blockscape,validator,74,3609,0
+Blockdaemon,validator,5,2558,1
+Attestant (BVI) Limited,validator,111,4318,0
+Allnodes,validator,90,6508,0
+A41,validator,0,1,1
+nfactorial.xyz,builder,0,140,1
+Bob the builder,builder,0,149,1
 0x8fba0d6601df6c242e4fc76584ba6a48d252c2070e726a848915479ed72941bb7ca08e5200b380e55846551e5bff54a1,builder,0,1,1
-Bob the builder,builder,0,148,1
-0xacfc9cd388987f36d0f3294527f85edfea1683732a5d091c329b3f4b771d13f9ba0f9ada45a9e7ec633fc9c4487c8c17,builder,0,1,1
-https://edennetwork.io,builder,0,326,1
-Gambit Labs (https://gmbit.co),builder,630,8353,0
-payload.de,builder,70,619,0
 0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,builder,0,32,1
-ethbuilder,builder,0,89,1
-BloXroute,builder,204,1950,0
-"If you build it, they will come.",builder,0,1,1
-lightspeedbuilder.info,builder,0,12,1
+beaverbuild.org,builder,0,102946,1
+Shared/Default,builder,0,2,1
+BuildAI (https://buildai.net),builder,22,2868,1
+Manifold,builder,47,62,0
+0xacfc9cd388987f36d0f3294527f85edfea1683732a5d091c329b3f4b771d13f9ba0f9ada45a9e7ec633fc9c4487c8c17,builder,0,1,1
+f1b.io,builder,591,6486,0
+payload.de,builder,66,613,0
+rsync-builder.xyz,builder,0,93714,1
+antbuilder,builder,11,468,0
+https://edennetwork.io,builder,0,334,1
 0xb094c3c1487b931d7b0029a89d0859ec5e1e664d14f7798bc52e8e90b418755c381426adc4ea82d5f23463c88868059a,builder,0,1,1
-Titan Builder,builder,3729,73868,0
-eden,relay,0,510,1
-manifold,relay,58,339,0
-agnostic Gnosis,relay,1066,58231,0
-bloxroute (regulated),relay,18,45853,1
-bloxroute (max profit),relay,1474,66717,0
-blocknative,relay,0,10825,1
-ultrasound,relay,2458,100664,0
-flashbots,relay,0,67629,1
-aestus,relay,320,5986,0
+0x881ae260375b36284a721c3257ec3c73bc151214b6b523584344f482284d3f8d808d227a2d8f400255e6afb4ab3dc27c,builder,0,1,1
+https://eth-builder.com,builder,0,1108,1
+lightspeedbuilder.info,builder,0,15,1
+0x91d9b528a49e8cf7f3483021f0bdc73950254438ccb5c239a36ec2700ca674a886087c45f714baf63b5093fadbac853d,builder,0,1,1
+I can haz block?,builder,0,41,1
+BloXroute,builder,205,1933,0
+Ty For The Block,builder,0,166,1
+Assembled delicately by Beelder,builder,30,915,0
+Titan Builder,builder,3776,73815,0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,563,1
+Blocknative,builder,0,684,1
+FC,builder,0,3,1
+Geth Go,builder,4,311,0
+0xa3843eddcff557c1d9cc39b165688a8211979cef3679ef7c79751023dce64396f9ae6b86fa7b1fa15b9041d71dde7614,builder,0,2,1
+builder0x69,builder,0,15435,1
+Gambit Labs (https://gmbit.co),builder,646,8449,0
+"If you build it, they will come.",builder,0,1,1
+boba-builder.com,builder,32,2628,0
+smithbot.xyz,builder,0,1,1
+ethbuilder,builder,0,89,1
+blocksmith.org,builder,0,11,1
+Flashbots,builder,25,42480,1
+blocknative,relay,0,9685,1
+aestus,relay,328,6136,0
+bloxroute (max profit),relay,1516,66894,0
+agnostic Gnosis,relay,1071,58237,0
+ultrasound,relay,2462,100935,0
+flashbots,relay,0,67604,1
+bloxroute (regulated),relay,18,46126,1
+manifold,relay,60,336,0
+eden,relay,0,516,1
