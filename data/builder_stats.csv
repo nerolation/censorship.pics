@@ -1,41 +1,42 @@
 builder,non_censored_blocks,all_blocks,share
-Manifold,29,48,60.416666666666664
-payload.de,78,335,23.283582089552237
-BloXroute,125,1095,11.415525114155251
+Manifold,24,46,52.17391304347826
+payload.de,74,314,23.56687898089172
+BloXroute,124,1070,11.588785046728972
 Blocksmith (smithbuilder.io),58,755,7.682119205298013
-Titan Builder,4587,66197,6.92931703853649
-lokibuilder.xyz,53,856,6.191588785046729
-Assembled delicately by Beelder,160,3137,5.100414408670704
-Ty For The Block,5,138,3.6231884057971016
-f1b.io,48,2170,2.2119815668202767
-rpc.tbuilder.xyz,3,198,1.5151515151515151
-Gambit Labs (https://gmbit.co),113,9760,1.1577868852459017
-Flashbots Imposter,31,5121,0.6053505174770553
-Geth Go,2,356,0.5617977528089888
-BuildAI (https://buildai.net),6,2169,0.2766251728907331
-boba-builder.com,2,1188,0.16835016835016833
-0x8f9ddd206c4c77aef5dfd8021150800e834fe301fd58504a8b3c887e7b1fcba64348ecfebbab700fa8245d925be909a1,0,2,0.0
-0x91d9b528a49e8cf7f3483021f0bdc73950254438ccb5c239a36ec2700ca674a886087c45f714baf63b5093fadbac853d,0,2,0.0
-Bob the builder,0,138,0.0
-beaverbuild.org,0,106030,0.0
-lightspeedbuilder.info,0,16,0.0
-antbuilder,0,13,0.0
-builder0x69,0,16530,0.0
-nfactorial.xyz,0,135,0.0
-0xa14e3b66992455885c965113e66dfae1727c68ba43accebc0e8b1c3f0dd76d1dbc6e39ef6daf1de8ea64fc456cb1ad23,0,3,0.0
-rsync-builder.xyz,0,112287,0.0
-"If you build it, they will come.",0,3,0.0
-0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,0,11,0.0
-https://eth-builder.com,0,677,0.0
-f1b-test.io,0,87,0.0
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,0,620,0.0
-I can haz block?,0,10,0.0
-ethfst.xyz,0,110,0.0
-https://edennetwork.io,0,289,0.0
+Titan Builder,4623,66193,6.984122188146783
+lokibuilder.xyz,54,921,5.863192182410423
+Assembled delicately by Beelder,157,3097,5.069422021310946
+Ty For The Block,5,127,3.937007874015748
+rpc.tbuilder.xyz,3,201,1.4925373134328357
+f1b.io,24,1912,1.2552301255230125
+Gambit Labs (https://gmbit.co),100,9703,1.0306090899721736
+Geth Go,3,351,0.8547008547008548
+Flashbots Imposter,31,4854,0.638648537288834
+BuildAI (https://buildai.net),6,2054,0.2921129503407984
+boba-builder.com,2,1136,0.17605633802816903
 ibuilder.xyz,0,262,0.0
-smithbot.xyz,0,3,0.0
-Flashbots,0,40645,0.0
+https://edennetwork.io,0,291,0.0
+jetbldr.xyz,0,18,0.0
+rsync-builder.xyz,0,113532,0.0
+https://eth-builder.com,0,645,0.0
+0x91d9b528a49e8cf7f3483021f0bdc73950254438ccb5c239a36ec2700ca674a886087c45f714baf63b5093fadbac853d,0,1,0.0
+I can haz block?,0,9,0.0
+builder0x69,0,16511,0.0
+f1b-test.io,0,88,0.0
+Flashbots,0,40355,0.0
+0xa14e3b66992455885c965113e66dfae1727c68ba43accebc0e8b1c3f0dd76d1dbc6e39ef6daf1de8ea64fc456cb1ad23,0,3,0.0
+ethbuilder,0,6,0.0
 FC,0,3,0.0
-ethbuilder,0,5,0.0
+beaverbuild.org,0,105925,0.0
+smithbot.xyz,0,3,0.0
+Bob the builder,0,152,0.0
+nfactorial.xyz,0,140,0.0
+"If you build it, they will come.",0,3,0.0
+0x8f9ddd206c4c77aef5dfd8021150800e834fe301fd58504a8b3c887e7b1fcba64348ecfebbab700fa8245d925be909a1,0,2,0.0
+0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,0,7,0.0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,0,591,0.0
 0xababed49feee36266c984831a5fcd70a4001143fc37102986858ff626c62ff8c2c501ff5e72ef89e52f43fb59f10a710,0,3,0.0
-EigenPhi,0,3,0.0
+lightspeedbuilder.info,0,16,0.0
+EigenPhi,0,4,0.0
+ethfst.xyz,0,110,0.0
+antbuilder,0,15,0.0
