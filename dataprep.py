@@ -190,9 +190,9 @@ df_daily_share=[]
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 
 relay_manual_started_censoring = {"2022-09-15 00:00:00": "flashbots", 
-                                  "2022-09-15 00:00:00": "bloxroute (regulated)", 
-                                  "2022-09-15 00:00:00": "eden", 
-                                  "2022-09-15 00:00:00": "blocknative", 
+                                  "2022-09-16 00:00:00": "bloxroute (regulated)", 
+                                  "2022-09-17 00:00:00": "eden", 
+                                  "2022-09-18 00:00:00": "blocknative", 
                                   "2023-12-18 00:00:00": "bloxroute (max profit)"}
 
 for entity in ["validator", "relay", "builder"]:
