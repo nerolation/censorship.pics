@@ -189,6 +189,12 @@ df.to_parquet(DATA + "tornado_blocks.parquet", index=False)
 df_daily_share=[]
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 
+relay_manual_started_censoring = {"2022-09-15 00:00:00": "flashbots", 
+                                  "2022-09-15 00:00:00": "bloxroute (regulated)", 
+                                  "2022-09-15 00:00:00": "eden", 
+                                  "2022-09-15 00:00:00": "blocknative", 
+                                  "2023-12-18 00:00:00": "bloxroute (max profit)"}
+
 for entity in ["validator", "relay", "builder"]:
     print(f"\n{entity}")
     df.sort_values(by=['timestamp', entity], inplace=True)
@@ -196,9 +202,14 @@ for entity in ["validator", "relay", "builder"]:
     data2 = []
     largest = df.groupby(entity)["slot"].count().sort_values(ascending=False).reset_index()[entity].tolist()[:30]
     _df = df[df[entity].isin(largest)].copy()
+    as_of_now_censoring = []
     for date in pd.date_range(_df['timestamp'].min().date(), _df['timestamp'].max().date()):
         
         print(date, end="\r")
+        if entity == "relay":
+            if str(date) in relay_manual_started_censoring.keys():
+                print(f"adding {relay_manual_started_censoring[str(date)]} to censoring entities as of {str(date)}")
+                as_of_now_censoring.append(relay_manual_started_censoring[str(date)])
         start_date = date - pd.Timedelta(days=29)
         mask = (_df['timestamp'] >= start_date) & (_df['timestamp'] <= date)
         mask2 = (_df['timestamp'] >= date - pd.Timedelta(days=1)) & (_df['timestamp'] <= date)
@@ -214,6 +225,8 @@ for entity in ["validator", "relay", "builder"]:
         a["percentage"] = b["touched_sanctioned_address"]/a["slot"]*100
         
         censoring = a.apply(lambda x: x[entity] if x["percentage"] < avg_incl/2 and x["slot"] > 100 else None, axis=1)
+        censoring = list(censoring.dropna())
+        censoring = list(set(censoring + as_of_now_censoring))
         df_filtered2["censoring"] = df_filtered2[entity].isin(censoring).astype(int)
         gg = df_filtered2.groupby("censoring")["slot"].count()
         #gg = df_filtered2.groupby("censoring")["counts"].sum()/df_filtered2.groupby("censoring")["counts"].sum().sum()*100
