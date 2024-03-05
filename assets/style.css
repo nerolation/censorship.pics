@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
 
+
+body {
+    margin: 0;
+}
+
 .even-smaller-text {
     font-size: 15px; /* Adjust the font size as needed */
 }

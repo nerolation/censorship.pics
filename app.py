@@ -201,7 +201,7 @@ def update_censorship_bars_layout(width=801):
         paper_bgcolor= "#f1f2f6",
         height=430,
         #title_font_size = font_size+5,
-        margin=dict(l=30, r=0, t=90, b=20),
+        margin=dict(l=30, r=0, t=90, b=0),
         xaxis1=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for first subplot
         xaxis2=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for second subplot
         xaxis3=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for third subplot
@@ -381,7 +381,7 @@ def bars_over_time_layout(width=801):
             )
     ]
     return dict(
-        margin=dict(l=20, r=20, t=120, b=0),
+        margin=dict(l=20, r=20, t=60, b=0),
         title=f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Validators</span>',
         font=dict(
             family="Courier New, monospace",
