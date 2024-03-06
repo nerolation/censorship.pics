@@ -11,6 +11,10 @@ import numpy as np
 from dash import Input, Output
 from plotly.subplots import make_subplots
 import random
+pd.set_option('mode.chained_assignment', None)
+
+
+DATA = "data/"
 
 QUERY = """
 SELECT {}
@@ -20,8 +24,8 @@ FROM {}
 
 def build_query(select, dataset, appendix=""):
     return QUERY.format(select, dataset, appendix)
-BLACK = "rgb(15, 20, 25)"
-BLACK_ALPHA = "rgba(15, 20, 25, {})"
+BLACK = "rgb(26, 25, 25)"
+BLACK_ALPHA = "rgba(26, 25, 25, {})"
 
 def clean_url(url):
     url = re.sub(r'https?://', '', url)
@@ -30,54 +34,75 @@ def clean_url(url):
     url = re.sub(r'(\.[a-zA-Z]{2,})/.*$', r'\1', url)
     return url
 
-def get_latest_slot_stats(df_censorship, df_entity, category):
-    df_cat = df_censorship[df_censorship["category"] == category]
-    _df = df_entity.merge(df_cat[["entity","censoring"]], how="left", left_on=category, right_on="entity")
-    _df = _df.fillna(0)
-    df = _df
-    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
-    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
-    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
-    agg_df.sort_values("censoring", inplace=True)
-    agg_df = agg_df[agg_df["timestamp"] != max(agg_df["timestamp"])]
-    latest_data = agg_df[agg_df['timestamp'] == agg_df['timestamp'].max()]
-    total_slots = latest_data['slot'].sum()
-    latest_data.loc[:,('percentage')] = (latest_data['slot'] / total_slots) * 100
+def get_latest_slot_stats_60d(_df_censorship, category):
+    df_censorship = _df_censorship.copy()
+    agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
+    agg_df['date'] = pd.to_datetime(agg_df['date'])
+    latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=60)]
+    latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
+    latest_data = latest_data.rename(columns={"Share_of_Blocks":"percentage"})
+    return latest_data
+
+def get_latest_slot_stats_30d(_df_censorship, category):
+    df_censorship = _df_censorship.copy()
+    agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
+    agg_df['date'] = pd.to_datetime(agg_df['date'])
+    latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=30)]
+    latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
+    latest_data = latest_data.rename(columns={"Share_of_Blocks":"percentage"})
+    return latest_data
+
+def get_latest_slot_stats_14d(_df_censorship, category):
+    df_censorship = _df_censorship.copy()
+    agg_df = df_censorship[df_censorship["date"] != max(df_censorship["date"])]
+    agg_df['date'] = pd.to_datetime(agg_df['date'])
+    latest_data = agg_df[agg_df['date'] > agg_df['date'].max() -  pd.Timedelta(days=14)]
+    latest_data = latest_data.groupby("censoring")["Share_of_Blocks"].mean().reset_index()
+    latest_data = latest_data.rename(columns={"Share_of_Blocks":"percentage"}) 
     return latest_data
     
   
     
 # Data preparation
 def prepare_data():
-    df_censorship = pd.read_csv("censorship_stats.csv").replace("Unknown", "Unknown/missed")
+    df_censorship = pd.read_csv(DATA + "censorship_stats.csv").replace("Unknown", "Unknown/missed")
     
-    df_relays_over_time = pd.read_csv("relays_over_time.csv")
-    df_builders_over_time = pd.read_csv("builders_over_time.csv")
-    df_validators_over_time = pd.read_csv("validators_over_time_censorship.csv")
-    df_relay = pd.read_csv("relay_stats.csv").sort_values("all_blocks", ascending=False)
-    df_builder = pd.read_csv("builder_stats.csv").sort_values("all_blocks", ascending=False)
-    df_validator = pd.read_csv("validator_stats.csv").sort_values("all_blocks", ascending=False)
+    #df_relays_over_time = pd.read_csv("relays_over_time.csv")
+    #df_builders_over_time = pd.read_csv("builders_over_time.csv")
+    #df_validators_over_time = pd.read_csv("validators_over_time_censorship.csv")
+    df_relay = pd.read_csv(DATA + "relay_stats.csv").sort_values("all_blocks", ascending=False)
+    df_builder = pd.read_csv(DATA + "builder_stats.csv").sort_values("all_blocks", ascending=False)
+    df_validator = pd.read_csv(DATA + "validator_stats.csv").sort_values("all_blocks", ascending=False)
     df_builder["builder"] = df_builder["builder"].apply(lambda x: x[0:10]+"..." if x.startswith("0x") else x)
     
     df_relay["all_block_share"] = df_relay["all_blocks"] / df_relay.all_blocks.sum()
     df_builder["all_block_share"] = df_builder["all_blocks"] / df_builder.all_blocks.sum()
     df_validator["all_block_share"] = df_validator["all_blocks"] / df_validator.all_blocks.sum()
+    df_validator = df_validator[df_validator["all_blocks"] > 50]
+    df_relay = df_relay[df_relay["all_blocks"] > 50]
+    df_builder = df_builder[df_builder["all_blocks"] > 50]
     
-    bars_over_time_validator = pd.read_csv("validator_censorship_share.csv").iloc[120:]
-    bars_over_time_relay = pd.read_csv("relay_censorship_share.csv").iloc[120:]
-    bars_over_time_builder = pd.read_csv("builder_censorship_share.csv").iloc[120:]
+    bars_over_time_validator = pd.read_csv(DATA + "validator_censorship_share.csv").iloc[120:]
+    bars_over_time_relay = pd.read_csv(DATA + "relay_censorship_share.csv").iloc[120:]
+    bars_over_time_builder = pd.read_csv(DATA + "builder_censorship_share.csv").iloc[120:]
     
     
-    dfs_over_time = [
-        (df_relays_over_time, "relay"),
-        (df_builders_over_time, "builder"),
-        (df_validators_over_time, "validator")
-    ]
-    latest_slots = []
-    for i, j in dfs_over_time:
-        latest_slots.append(get_latest_slot_stats(df_censorship, i, j))
+    #dfs_over_time = [
+    #    (df_relays_over_time, "relay"),
+    #    (df_builders_over_time, "builder"),
+    #    (df_validators_over_time, "validator")
+    #]
+    latest_slots_60d = []
+    latest_slots_30d = []
+    latest_slots_14d = []
+    for i, j in [(bars_over_time_relay,"relay"), (bars_over_time_builder,"builder"),  (bars_over_time_validator,"validator")]:
+        latest_slots_60d.append(get_latest_slot_stats_60d(i, j))
+        latest_slots_30d.append(get_latest_slot_stats_30d(i, j))
+        latest_slots_14d.append(get_latest_slot_stats_14d(i, j))
 
-    latest_data_relay, latest_data_builder, latest_data_validator = tuple(latest_slots)
+    latest_data_relay_60d, latest_data_builder_60d, latest_data_validator_60d = tuple(latest_slots_60d)
+    latest_data_relay_30d, latest_data_builder_30d, latest_data_validator_30d = tuple(latest_slots_30d)
+    latest_data_relay_14d, latest_data_builder_14d, latest_data_validator_14d = tuple(latest_slots_14d)
     
     
     def max_slot(slot):
@@ -85,12 +110,18 @@ def prepare_data():
     
     return (
         df_censorship,
-        df_relays_over_time,
-        df_builders_over_time,
-        df_validators_over_time,
-        latest_data_relay, 
-        latest_data_builder, 
-        latest_data_validator,
+        #df_relays_over_time,
+        #df_builders_over_time,
+        #df_validators_over_time,
+        latest_data_relay_60d,
+        latest_data_builder_60d,
+        latest_data_validator_60d,
+        latest_data_relay_30d,
+        latest_data_builder_30d,
+        latest_data_validator_30d,
+        latest_data_relay_14d,
+        latest_data_builder_14d,
+        latest_data_validator_14d,
         df_relay,
         df_builder,
         df_validator,
@@ -101,12 +132,18 @@ def prepare_data():
 ############ Load data
 
 (df_censorship, 
- df_relays_over_time, 
- df_builders_over_time, 
- df_validators_over_time,
- latest_data_relay, 
- latest_data_builder, 
- latest_data_validator,
+ #df_relays_over_time, 
+ #df_builders_over_time, 
+ #df_validators_over_time,
+ latest_data_relay_60d,
+ latest_data_builder_60d,
+ latest_data_validator_60d, 
+ latest_data_relay_30d,
+ latest_data_builder_30d,
+ latest_data_validator_30d,
+ latest_data_relay_14d,
+ latest_data_builder_14d,
+ latest_data_validator_14d,
  df_relay,
  df_builder,
  df_validator,
@@ -158,65 +195,81 @@ def update_censorship_bars_layout(width=801):
         
     return dict(
         barmode='stack',
-        title='',
-        plot_bgcolor="#ffffff",
-        height=650,
-        margin=dict(l=40, r=0, t=90, b=20),
+        #title=f'OFAC Compliance <span style="font-size:{font_size-4}> (last 30 days)</span>',
+        plot_bgcolor="#f1f2f6",
+        dragmode = False,
+        paper_bgcolor= "#f1f2f6",
+        height=430,
+        #title_font_size = font_size+5,
+        margin=dict(l=30, r=0, t=90, b=20),
         xaxis1=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for first subplot
         xaxis2=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for second subplot
         xaxis3=dict(showticklabels=False, fixedrange =True),  # Hide x-axis labels for third subplot
         yaxis1=dict(showticklabels=False, fixedrange =True),  # Hide y-axis labels for first subplot
         yaxis2=dict(showticklabels=False, fixedrange =True),  # Hide y-axis labels for second subplot
         yaxis3=dict(showticklabels=False, fixedrange =True),
-        showlegend=False,
+        showlegend=True,
+        legend=dict(
+            x=0,  # 1 means the far right of the plot
+            y=1.18,  # 1 means the top of the plot
+            traceorder="normal",
+            font=dict(size=font_size-2),
+            bgcolor="rgba(255,255,255,0)",
+            #orientation="h"
+        ),
         hoverlabel=dict(
             bgcolor="white",
             font_size=font_size,
-            font_family="Ubuntu Mono"
+            font_family="Ubuntu Mono, monospace"
         ),
-        shapes=[
-            # Red box for 'censoring'
-            dict(
-                type='rect',
-                x0=0.95,
-                x1=0.93-shape_delta_x,
-                y0=1.1+shape_delta_y*2,
-                y1=1.14+shape_delta_y,
-                xref='paper',
-                yref='paper',
-                fillcolor='#d07070',
-                line=dict(color='black', width=2),
-                opacity=1,
-            ),
-            # Green box for 'non-censoring'
-            dict(
-                type='rect',
-                x0=0.95,
-                x1=0.93-shape_delta_x,
-                y0=1.02+shape_delta_y*2,
-                y1=1.06+shape_delta_y,
-                xref='paper',
-                yref='paper',
-                fillcolor='#80bf80',
-                line=dict(color='black', width=2),
-                opacity=1,
-            )
-        ]
+        font=dict(
+            family="Ubuntu Mono, monospace",
+            #size=18,  # Set the font size here
+            color="#262525"
+        ),
+        #shapes=[
+        #    # Red box for 'censoring'
+        #    dict(
+        #        type='rect',
+        #        x0=100,
+        #        x1=100*(0.98-shape_delta_x),
+        #        y0=1.1+shape_delta_y,
+        #        y1=1.14,
+        #        xref='x3',
+        #        yref='paper',
+        #        fillcolor='#d07070',
+        #        line=dict(color='#262525', width=2),
+        #        opacity=1,
+        #    ),
+        #    # Green box for 'non-censoring'
+        #    dict(
+        #        type='rect',
+        #        x0=100,
+        #        x1=100*(0.98-shape_delta_x),
+        #        y0=1.02+shape_delta_y*3,
+        #        y1=1.06+shape_delta_y*2,
+        #        xref='x3',
+        #        yref='paper',
+        #        fillcolor='#80bf80',
+        #        line=dict(color='#262525', width=2),
+        #        opacity=1,
+        #    )
+        #]
     )
 
 def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validator):
 # Initialize subplot with 3 rows
     fig = make_subplots(rows=3, cols=1, shared_xaxes=True, subplot_titles=(
+        '<span style="font-size: 24px;font-weight:bold;">Validators</span>',
         '<span style="font-size: 24px;font-weight:bold;">Relays</span>', 
-        '<span style="font-size: 24px;font-weight:bold;">Builders</span>',
-        '<span style="font-size: 24px;font-weight:bold;">Validators</span>'
+        '<span style="font-size: 24px;font-weight:bold;">Builders</span>'
     ), vertical_spacing=0.15)
 
     annotations = []
 
     # Data and rows
-    data_rows = [(latest_data_relay, 'x'), (latest_data_builder, 'x2'), (latest_data_validator, 'x3')]
-
+    data_rows = [(latest_data_validator, 'x3'),(latest_data_relay, 'x'), (latest_data_builder, 'x2')]
+    showlegend = True
     for idx, (data, xref) in enumerate(data_rows):
         stack_position = 0
         for index, row in data.iterrows():
@@ -226,15 +279,20 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
                     y=[idx],
                     orientation='h',
                     name=row['censoring'],
+                    showlegend=showlegend,  # Use the showlegend variable here
+
                     marker=dict(
                         color='#d07070' if row['censoring'] == 'censoring' else '#80bf80',
-                        line=dict(color='black', width=2)
+                        line=dict(color='#262525', width=2)
                     )
                 ), row=idx + 1, col=1
             )
 
             if row["percentage"] > 10:
-                annotation_text = f'{row["percentage"]:.2f}%'
+                if row["percentage"] < 12:
+                    annotation_text = f'{row["percentage"]:.0f}%'
+                else:
+                    annotation_text = f'{row["percentage"]:.2f}%'
             else:
                 annotation_text = f""
 
@@ -257,36 +315,38 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
                     yref=f'y{idx + 1}',
                     text=f'<span style="font-weight:bold;">{annotation_text}</span>',
                     showarrow=False,
-                    font=dict(size=10, color="white"),
+                    font=dict(size=12, color="white"),
                     visible=False
                 )
             )
 
             stack_position += row['percentage']
+        showlegend = False
             
-    legend_annotations = [
-            # Text for 'censoring'
-            dict(
-                x=0.91,
-                y=1.15,
-                xref='paper',
-                yref='paper',
-                text='Censoring',
-                showarrow=False,
-                font=dict(size=18, color="black")
-            ),
-            # Text for 'non-censoring'
-            dict(
-                x=0.91,
-                y=1.07,
-                xref='paper',
-                yref='paper',
-                text='Non-Censoring',
-                showarrow=False,
-                font=dict(size=18, color="black")
-            )
-        ]
-    annotations.extend(legend_annotations)
+            
+    #legend_annotations = [  
+    #        # Text for 'non-censoring'
+    #        dict(
+    #            x=100*0.90,
+    #            y=1.09,
+    #            xref='x3',
+    #            yref='paper',
+    #            text='Non-Censoring',
+    #            showarrow=False,
+    #            font=dict(size=18, color="#262525")
+    #        ),
+    #        # Text for 'censoring'
+    #        dict(
+    #            x=100*0.92,
+    #            y=1.15,
+    #            xref='x3',
+    #            yref='paper',
+    #            text='Censoring',
+    #            showarrow=False,
+    #            font=dict(size=18, color="#262525")
+    #        )
+    #    ]
+    #annotations.extend(legend_annotations)
 
     fig['layout']['annotations'] += tuple(annotations)
 
@@ -297,7 +357,7 @@ def censorship_bars(latest_data_relay, latest_data_builder, latest_data_validato
     return fig
 
 
-def bars_over_time_layout(height, entity, width=801):
+def bars_over_time_layout(width=801):
     if width <= 800:
         font_size = 12
     else:
@@ -307,34 +367,46 @@ def bars_over_time_layout(height, entity, width=801):
              method="update",
              args=[
                  {"visible": [True, True, False, False, False, False]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Validators</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Validators</span>'}]
             ),
         dict(label=f"Relays",
              method="update",
              args=[{"visible": [False, False, True, True, False, False]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Relays</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Relays</span>'}]
             ),
         dict(label=f"Builders",
              method="update",
              args=[{"visible": [False, False, False, False, True, True]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Builders</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Builders</span>'}]
             )
     ]
     return dict(
-        margin=dict(l=20, r=20, t=80, b=0),
-        title='<span style="font-size: 24px;font-weight:bold;">Censorship - Validators</span>',
+        margin=dict(l=20, r=20, t=120, b=0),
+        title=f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Validators</span>',
         font=dict(
             family="Courier New, monospace",
-            size=18,  # Set the font size here
-            color="#000"
+            size=font_size-2,  # Set the font size here
+            color="#262525"
         ),
         hovermode="x unified",
-        height=height,
-        barmode='stack',
-        showlegend=False,
+        height=400,
+        yaxis_title="% of total slots",
+        
+        hoverlabel=dict(font=dict(color=BLACK, size=font_size)),
+        #barmode='stack',
+        showlegend=True,
         plot_bgcolor='white',
-        paper_bgcolor='white',
-        bargap=0,  
+        dragmode = False,
+        paper_bgcolor= "#f1f2f6",
+        legend=dict(
+            x=1,
+            font=dict(size=font_size-2),
+            xanchor='right',
+            y=1,
+            yanchor='top',
+            bgcolor='rgba(255, 255, 255, 0.7)'
+        ),
+        #bargap=-0.01,  
         updatemenus=[
             dict(
                 type="buttons",
@@ -342,7 +414,7 @@ def bars_over_time_layout(height, entity, width=801):
                 direction="right",
                 x=0.5,
                 xanchor="center",
-                y=1.1,
+                y=1.15,
                 yanchor="top",
                 buttons=buttons,
                 font=dict(size= font_size)
@@ -351,7 +423,7 @@ def bars_over_time_layout(height, entity, width=801):
         xaxis=dict(
             showgrid=True, 
             gridwidth=1, 
-            #gridcolor=BLACK_ALPHA.format(0.2),
+            gridcolor=BLACK_ALPHA.format(0.2),
             tickfont=dict(size=font_size),
             fixedrange =True,    
             type="date"
@@ -359,48 +431,62 @@ def bars_over_time_layout(height, entity, width=801):
         yaxis=dict(
             showgrid=True, 
             gridwidth=1, 
-            #gridcolor=BLACK_ALPHA.format(0.2),
+            gridcolor=BLACK_ALPHA.format(0.2),
             tickfont=dict(size=font_size),
-            title_font=dict(size=font_size+2), 
+            title_font=dict(size=font_size-2), 
             range=[0,100],
             fixedrange =True
         ),  
     )
+
+
 
 def bars_over_time(dfs, entities):
     fig = go.Figure()
     visible=True
     for df, entity in zip(dfs, entities):
         all_entities = df['censoring'].unique()
-        height = 450
+        height = 400
+        prev = None
+        prev_values = {}  # Store previous values here for hover template
 
-        for censor_type in all_entities[::-1]:
-            sub_df = df[df['censoring'] == censor_type]
+        for ix, censor_type in enumerate(all_entities[::-1]):
+            sub_df = df[df['censoring'] == censor_type].copy()  # Copy to avoid SettingWithCopyWarning
+            individual_values = sub_df['Share_of_Blocks'].copy()  # Store individual values
+
+            if ix == 0:
+                prev = individual_values
+            else:
+                sub_df['Share_of_Blocks'] += prev.values
+                prev = sub_df['Share_of_Blocks']
+
+            prev_values[censor_type] = individual_values  # Store the individual values
+
             fig.add_trace(
-                go.Bar(
+                go.Scatter(
                     x=sub_df['date'],
                     y=sub_df['Share_of_Blocks'],
                     name=censor_type,
+                    fill='tonexty',
+                    mode='lines',
+                    line_shape='hv',
                     marker=dict(
-                        color= "#FF0000" if censor_type == 'censoring' else "#008000"
-
+                        color="#FF0000" if censor_type == 'censoring' else "#008000",
+                       
                     ),
+                    fillpattern = dict(shape="\\") if censor_type == 'censoring' else None,
                     visible=visible,
-                    hovertemplate = "<b>%{fullData.name}:</b> %{y:.1f}%<extra></extra>"
-
+                    customdata=individual_values,  # Include custom data
+                    hovertemplate="<b>%{fullData.name}:</b> %{customdata:.1f}%<extra></extra>"
                 )
             )
         visible=False
-
-    layout = comparison_chart_layout(height, entity)
+    layout = bars_over_time_layout()
     fig.update_layout(**layout)
     return fig
 
-
-
-
 #########################################################
-fig1_len, fig2_len, fig3_len = [1]*3
+fig1_len, fig2_len, fig3_len = [2]*3
 def update_layout_censorship_over_last_month(width=801):
     if width <= 800:
         font_size = 12
@@ -408,37 +494,37 @@ def update_layout_censorship_over_last_month(width=801):
         font_size = 18
         
     buttons = [
-        dict(label="Relays",
+        dict(label="Validators",
              method="update",
              args=[
                  {"visible": [True for _ in range(fig1_len)] + [False for _ in range(fig2_len)] + [False for _ in range(fig3_len)]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Relays</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Validators (last month)</span>'}]
+            ),
+        dict(label="Relays",
+             method="update",
+             args=[{"visible": [False for _ in range(fig1_len)] + [True for _ in range(fig2_len)] + [False for _ in range(fig3_len)]},
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Relays (last month)</span>'}]
             ),
         dict(label="Builders",
              method="update",
-             args=[{"visible": [False for _ in range(fig1_len)] + [True for _ in range(fig2_len)] + [False for _ in range(fig3_len)]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Builders</span>'}]
-            ),
-        dict(label="Validators",
-             method="update",
              args=[{"visible": [False for _ in range(fig1_len)] + [False for _ in range(fig2_len)] + [True for _ in range(fig3_len)]},
-                   {"title": '<span style="font-size: 24px;font-weight:bold;">Censorship - Validators</span>'}]
+                   {"title": f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Builders (last month)</span>'}]
             )
     ]
 
     return dict(
         xaxis_tickangle=-45,
-        title='<span style="font-size: 24px;font-weight:bold;">Censorship - Relays</span>',
+        title=f'<span style="font-size: {font_size+2}px;font-weight:bold;">Censorship - Relays (last month)</span>',
         xaxis_title="",
         yaxis_title="% of total slots",
         #yaxis_range = [0,100],
         #legend_title="Relay Provider",
         hovermode = "x unified",
-        hoverlabel=dict(font=dict(color=BLACK, size=16)),
+        hoverlabel=dict(font=dict(color=BLACK, size=font_size)),
         #title_xanchor="left",
         #title_yanchor="auto",
-        
-        margin=dict(l=20, r=20, t=100, b=20),
+        dragmode = False,
+        margin=dict(l=20, r=20, t=120, b=20),
         font=dict(
             family="Courier New, monospace",
             size=font_size,  # Set the font size here
@@ -448,14 +534,15 @@ def update_layout_censorship_over_last_month(width=801):
             x=1,
             xanchor='right',
             y=1,
+            font=dict(size=font_size-2),
             yanchor='top',
             bgcolor='rgba(255, 255, 255, 0.7)'
         ),
-        paper_bgcolor='#eee',
+        paper_bgcolor= "#f1f2f6",
         plot_bgcolor='#ffffff',
         #yaxis=dict(fixedrange =True),
         #autosize=True, 
-        height=580,
+        height=500,
         #width=width,
         updatemenus=[
             dict(
@@ -464,7 +551,7 @@ def update_layout_censorship_over_last_month(width=801):
                 direction="right",
                 x=0.5,
                 xanchor="center",
-                y=1.1,
+                y=1.15,
                 yanchor="top",
                 buttons=buttons,
                 font=dict(size= font_size)
@@ -483,35 +570,30 @@ def update_layout_censorship_over_last_month(width=801):
             gridwidth=1, 
             gridcolor=BLACK_ALPHA.format(0.2),
             tickfont=dict(size=font_size),
-            title_font=dict(size=font_size+2), 
+            title_font=dict(size=font_size-2), 
             range=[0,100],
             fixedrange =True
         ),  
     )
 
 
-def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_builders_over_time, df_validators_over_time):
+def create_censorship_over_last_month(bars_over_time_relay, bars_over_time_builder, bars_over_time_validator):
     global fig1_len, fig2_len, fig3_len
-    df_relays_over_time = df_relays_over_time[
-        df_relays_over_time["timestamp"] > sorted(df_relays_over_time["timestamp"].unique())[-33]
+    
+    bars_over_time_relay = bars_over_time_relay[
+        bars_over_time_relay["date"] > sorted(bars_over_time_relay["date"].unique())[-33]
     ]
-    df_relays_over_time = df_relays_over_time[df_relays_over_time["timestamp"] != max(df_relays_over_time["timestamp"])]
-    df_cat = df_censoring[df_censoring["category"] == "relay"]
-    _df = df_relays_over_time.merge(df_cat[["entity","censoring"]], how="left", left_on="relay", right_on="entity")
-    _df = _df.fillna(0)
-    df = _df
-    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
-    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
-    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
-    agg_df.sort_values("censoring", inplace=True)
-    fig1 = px.area(agg_df, 
-                  x="timestamp", 
-                  y="slot", 
+    bars_over_time_relay["color"] = bars_over_time_relay["censoring"].apply(lambda x: "#FF0000" if x == "non-censoring" else "#008000")
+    bars_over_time_relay.sort_values("censoring", inplace=True)
+    
+    fig1 = px.area(bars_over_time_relay, 
+                  x="date", 
+                  y="Share_of_Blocks", 
                   color="censoring", 
                   line_group="censoring",
                   color_discrete_sequence = ["#FF0000", "#008000"],
                   title="Relays Over Time",
-                  labels={'slot':'Slot Count'},
+                  labels={'Share_of_Blocks':'Slot Count'},
                   groupnorm="percent",
                     pattern_shape="censoring", pattern_shape_map={"censoring":"\\", "non-censoring":""},
                   )
@@ -522,28 +604,23 @@ def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_buil
     # BUILDERS
 
    
-    df_builders_over_time = df_builders_over_time[df_builders_over_time["timestamp"] > sorted(df_builders_over_time["timestamp"].unique())[-33]]
-    df_builders_over_time = df_builders_over_time[df_builders_over_time["timestamp"] != max(df_builders_over_time["timestamp"])]
-
-    df_cat = df_censoring[df_censoring["category"] == "builder"]
-    _df = df_builders_over_time.merge(df_cat[["entity","censoring"]], how="left", left_on="builder", right_on="entity")
-    _df = _df.fillna(0)
-    df = _df
-
-    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
-    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
-    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
-    agg_df.sort_values("censoring", inplace=True)
-    fig2 = px.area(agg_df, 
-                  x="timestamp", 
-                  y="slot", 
+    bars_over_time_builder = bars_over_time_builder[
+        bars_over_time_builder["date"] > sorted(bars_over_time_builder["date"].unique())[-33]
+    ]
+    
+    
+    bars_over_time_builder["color"] = bars_over_time_builder["censoring"].apply(lambda x: "#FF0000" if x == "non-censoring" else "#008000")
+    bars_over_time_builder.sort_values("censoring", inplace=True)
+    fig2 = px.area(bars_over_time_builder, 
+                  x="date", 
+                  y="Share_of_Blocks", 
                   color="censoring", 
-                  #line_group="relay_censoring",
+                  line_group="censoring",
                   color_discrete_sequence = ["#FF0000", "#008000"],
                   title="Builders Over Time",
-                  labels={'slot':'Slot Count'},
+                  labels={'Share_of_Blocks':'Slot Count'},
                   groupnorm="percent" ,
-                  pattern_shape="censoring", pattern_shape_map={"censoring":"/", "non-censoring":""},
+                  pattern_shape="censoring", pattern_shape_map={"censoring":"\\", "non-censoring":""},
                   )
     for trace in fig2.data:
         trace.hovertemplate = "<b>%{fullData.name}:</b> %{y:.1f}%<extra></extra>"
@@ -551,27 +628,21 @@ def create_censorship_over_last_month(df_censoring, df_relays_over_time, df_buil
     ##################################7
     # VALIDATORS
 
-    df_validators_over_time = df_validators_over_time[df_validators_over_time["timestamp"] > sorted(df_validators_over_time["timestamp"].unique())[-32]]
-    df_validators_over_time = df_validators_over_time[df_validators_over_time["timestamp"] != max(df_validators_over_time["timestamp"])]
-
-    df_cat = df_censoring[df_censoring["category"] == "validator"]
-    _df = df_validators_over_time.merge(df_cat[["entity","censoring"]], how="left", left_on="validator", right_on="entity")
-    _df = _df.fillna(0)
-    df = _df
-    agg_df = df.groupby(["timestamp", "censoring"]).agg({"slot": "sum"}).reset_index()
-    agg_df["color"] = agg_df["censoring"].apply(lambda x: "#FF0000" if x == 1 else "#008000")
-    agg_df["censoring"] = agg_df["censoring"].apply(lambda x: "censoring" if x == 1 else "non-censoring")
-
-    agg_df.sort_values("censoring", inplace=True)
-    fig3 = px.area(agg_df, 
-                  x="timestamp", 
-                  y="slot", 
+    bars_over_time_validator = bars_over_time_validator[
+        bars_over_time_validator["date"] > sorted(bars_over_time_validator["date"].unique())[-33]
+    ]
+    bars_over_time_validator.sort_values("censoring", inplace=True)
+    bars_over_time_validator["color"] = bars_over_time_validator["censoring"].apply(lambda x: "#FF0000" if x == "non-censoring" else "#008000")
+    fig3 = px.area(bars_over_time_validator, 
+                  x="date", 
+                  y="Share_of_Blocks", 
                   color="censoring", 
                   #line_group="relay_censoring",
                   color_discrete_sequence = ["#FF0000", "#008000"],
                   title="Validators Over Time",
-                  labels={'slot':'Slot Count'},
-                  groupnorm="percent"  # Normalize the area for each relay as a percentage of the total
+                  labels={'Share_of_Blocks':'Slot Count'},
+                  groupnorm="percent",
+                  pattern_shape="censoring", pattern_shape_map={"censoring":"\\", "non-censoring":""},
                   )
 
     for trace in fig3.data:
@@ -618,7 +689,7 @@ def comparison_chart_layout(width=801, height=2400, names=None, y_positions=None
 #    visible_builder = [False]*validator_bar_count + [False]*relay_bar_count + [True]*builder_bar_count + [False]*validator_arrow_count + [False]*relay_arrow_count + [True]*builder_arrow_count
     return dict(
         #title="Overview of the last 30 days <span style='font-size:1.5vh;'>(Lido is split up in its node operators)</span>",
-        margin=dict(l=20, r=20, t=100, b=0),
+        margin=dict(l=20, r=20, t=0, b=0),
         xaxis=dict(
             showline=False,
             showticklabels=False,
@@ -640,10 +711,11 @@ def comparison_chart_layout(width=801, height=2400, names=None, y_positions=None
             font_family="Ubuntu Mono"
         ),
         height=height,
+        dragmode = False,
         barmode='stack',
         showlegend=False,
-        plot_bgcolor='white',
-        paper_bgcolor='white',
+        plot_bgcolor='#f1f2f6',
+        paper_bgcolor= "#f1f2f6",
         bargap=0.4,  # Adjust this value to set the gap between bars
         font=dict(
             family="Courier New, monospace",
@@ -707,13 +779,13 @@ def comparison_chart(entity):
 
     if entity == "validator":
         all_entities = (validator_names, y_positions_validator)
-        height=25*len(all_entities[0])
+        height=30*len(all_entities[0])
     if entity == "relay":
         all_entities = (relay_names, y_positions_relay)
-        height=25*len(all_entities[0])
+        height=30*len(all_entities[0])
     if entity == "builder":
         all_entities = (builder_names, y_positions_builder)
-        height=25*len(all_entities[0])
+        height=30*len(all_entities[0])
 
     for names, y_positions  in [
         all_entities
@@ -791,9 +863,9 @@ def comparison_chart(entity):
                     marker=dict(
                         symbol='triangle-down',
                         size=14,
-                        color='black'
+                        color='#262525'
                     ),
-                    hovertemplate=f"<b>{val:.2f}% non-censored blocks</b><extra></extra>",
+                    hovertemplate=f"<b>{val:.2f}% blocks with OFAC sanctioned content</b><extra></extra>",
                     hoverlabel=dict(
                         font=dict(color="white"),  # Increase size of hoverlabel
                         bgcolor=corresponding_bar_color  # Set hover label background color to match scaled_value
@@ -814,12 +886,18 @@ def comparison_chart(entity):
 # Figures
 def create_figures(
     df_censorship, 
-    df_relays_over_time, 
-    df_builders_over_time, 
-    df_validators_over_time,
-    latest_data_relay, 
-    latest_data_builder, 
-    latest_data_validator,
+    #df_relays_over_time, 
+    #df_builders_over_time, 
+    #df_validators_over_time,
+    latest_data_relay_60d,
+    latest_data_builder_60d,
+    latest_data_validator_60d,
+    latest_data_relay_30d,
+    latest_data_builder_30d,
+    latest_data_validator_30d,
+    latest_data_relay_14d,
+    latest_data_builder_14d,
+    latest_data_validator_14d,
     df_relay,
     df_builder,
     df_validator,
@@ -827,9 +905,11 @@ def create_figures(
     bars_over_time_relay,
     bars_over_time_builder
 ):
-    fig_bars = censorship_bars(latest_data_relay, latest_data_builder, latest_data_validator)
+    fig_bars_60d = censorship_bars(latest_data_relay_60d, latest_data_builder_60d, latest_data_validator_60d)
+    fig_bars_30d = censorship_bars(latest_data_relay_30d, latest_data_builder_30d, latest_data_validator_30d)
+    fig_bars_14d = censorship_bars(latest_data_relay_14d, latest_data_builder_14d, latest_data_validator_14d)
     fig_over_months = create_censorship_over_last_month(
-        df_censorship, df_relays_over_time, df_builders_over_time, df_validators_over_time
+        bars_over_time_validator, bars_over_time_relay, bars_over_time_builder
     )
     
     
@@ -838,27 +918,32 @@ def create_figures(
     fig_comp_rel = comparison_chart("relay")
     fig_comp_bui = comparison_chart("builder")
     
-    fig_bars_over_time_validator = bars_over_time(bars_over_time_validator, "validator")
-    fig_bars_over_time_relay = bars_over_time(bars_over_time_relay, "relay")
-    fig_bars_over_time_builder = bars_over_time(bars_over_time_builder, "builder")
+    fig_bars_over_time = bars_over_time(
+        [bars_over_time_validator, bars_over_time_relay, bars_over_time_builder], 
+        ["validator", "relay", "builder"]
+    )
     
     #fig_comparison = comparison_chart()
-    return (fig_bars, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui, fig_bars_over_time_validator
-            ,fig_bars_over_time_relay ,fig_bars_over_time_builder) # fig_comparison,
+    return (fig_bars_60d, fig_bars_30d, fig_bars_14d, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui, fig_bars_over_time) # fig_comparison,
 
 
 
 ############
 
-fig_bars, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui, 
-fig_bars_over_time_validator, fig_bars_over_time_relay, fig_bars_over_time_builder= create_figures(
+fig_bars_60d, fig_bars_30d, fig_bars_14d, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui,fig_bars_over_time= create_figures(
     df_censorship, 
-    df_relays_over_time, 
-    df_builders_over_time, 
-    df_validators_over_time,
-    latest_data_relay, 
-    latest_data_builder, 
-    latest_data_validator, 
+    #df_relays_over_time, 
+    #df_builders_over_time, 
+    #df_validators_over_time,
+    latest_data_relay_60d,
+    latest_data_builder_60d,
+    latest_data_validator_60d,
+    latest_data_relay_30d,
+    latest_data_builder_30d,
+    latest_data_validator_30d,
+    latest_data_relay_14d,
+    latest_data_builder_14d,
+    latest_data_validator_14d,
     df_relay,
     df_builder,
     df_validator,
@@ -874,6 +959,15 @@ app.index_string = '''
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NWK5CR17RH"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-NWK5CR17RH');
+        </script>
         <meta charset="UTF-8">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:site" content="@nero_ETH">
@@ -933,66 +1027,160 @@ app.layout = html.Div(
         dbc.Container(
         [
             # Title
-            dbc.Row(html.H1("Ethereum Censorship Dashboard", style={'textAlign': 'center','marginTop': '20px'}), className="mb-4"),
+            dbc.Row(html.H1("Ethereum Censorship Dashboard", style={'textAlign': 'center', 'marginTop': '20px', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}), className="mb-4"),
+            
             html.Div([
                 dbc.Row([
                     dbc.Col(
                         html.H5(
-                            ['Built with 🖤 by ', html.A('Toni Wahrstätter', href='https://twitter.com/nero_eth', target='_blank'), html.Br(), 'Underlying data from the past 30 days'],
-                            className="mb-4 even-smaller-text" # Apply the class
+                             ['Built with 🖤 by ', html.A('Toni Wahrstätter', href='https://twitter.com/nero_eth', target='_blank'), html.Br(), ''],
+                            className="mb-4 even-smaller-text", # Apply the class
+                            style={'color': '#262525', 'fontFamily': 'Ubuntu Mono, monospace'}
                         ),
                         width={"size": 6, "order": 1}
                     ),
                     dbc.Col(
                         html.H5(
-                            ['Check out ', html.A('tornado-warning.info', href='https://tornado-warning.info', target='_blank'), " for more stats"],
+                            ['Check out ', html.A('tornado-warning.info', href='https://tornado-warning.info', target='_blank'), ' for additional stats', html.Br(), f'Latest data timestamp: {bars_over_time_validator["date"].max()}'],
                             className="mb-4 even-smaller-text text-right",
-                            style={'textAlign': 'right', "marginRight": "2vw", "marginBottom": "0px", "paddingBottom": "0px"}
+                            style={'textAlign': 'right', "marginRight": "2vw", "marginBottom": "0px", "paddingBottom": "0px", 'color': '#262525', 'fontFamily': 'Ubuntu Mono, monospace'}
                         ),
                         width={"size": 6, "order": 2}
                     )
-                ], style={"marginBottom": "0px", "paddingBottom": "0px"}),
+                ], className="animated fadeInUp", style={"marginBottom": "0px", "paddingBottom": "0px", 'background-color': '#ecf0f1', 'fontFamily': 'Ubuntu Mono, monospace'}),
             ]),
             
+            html.Div([
+                dbc.Row([
+                    dbc.Col([
+                        html.H4("What for?", style={'textAlign': 'left', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace'}),
+                        dcc.Markdown("""
+**Censorship resistance** is one of the **core values of Ethereum**. Today, users can be censored at **different layers** of the stack. **Builders** can exclusively build blocks that don't contain certain transactions, **relays** can refuse relaying them, and **validators** can build local blocks that strictly exclude certain entities or only connect to censoring relays. Today, with almost 95% of MEV-Boost adoption, the network's minimum censorship is the **maximum** of all these layers. **Ultimately, validators can impact censorship. Local block building prevents from contributing to censorship through MEV-Boost.**
+""", style={'textAlign': 'left', 'color': '#262525', 'fontFamily': 'Ubuntu Mono, monospace'}),
+                    ], className="mb-2 even-even-smaller-text", md=6),
 
-            # Graphs
-            dbc.Row(dbc.Col(dcc.Graph(id='graph1', figure=fig_bars), md=12, className="mb-4")),
-            dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4")),
-            #dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_comp_val), md=12, className="mb-4")),
-
-           dbc.Row(
+                    dbc.Col([
+                        html.H4("Methodology", style={'textAlign': 'left', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace'}),
+                         dcc.Markdown("""**Entities** are labeled as 'censoring' if they **produce significantly low numbers** of blocks with OFAC-sanctioned transactions within a time window of 30 days, provided they have a sufficiently large block sample (>100) for evaluation. By comparing an entity's non-censored block rate with half of the average for the same time frame, a quite clear categorization can be achieved. For reporting realistic values, every transaction (incl. every trace) is analysed to determine if a block contains a OFAC-sanctionable offense or not. 
+                              """, style={'textAlign': 'left', 'color': '#262525','fontFamily': 'Ubuntu Mono, monospace'}),
+                    ], className="mb-2 even-even-smaller-text", md=6)
+                ])
+            ], className="mb-2 p-3 rounded", style={'background-color': '#ecf0f1'}),
+          
+            dbc.Row([html.H5("OFAC Compliance", style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})], className="customheader mb-0"),
+            dbc.Row(
                 dbc.Col(
                     [
-                        dbc.Button('Validators', id='btn-a', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black'}),
-                        dbc.Button('Relays', id='btn-b', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black'}),
-                        dbc.Button('Builders', id='btn-c', n_clicks=0, style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black'})
-
-                    ],
-                    width={"size": 6, "offset": 3}
+                        dbc.Button('60 days', id='btn-cc', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525'}),
+                        dbc.Button('30 days', id='btn-aa', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525'}),
+                        dbc.Button('14 days', id='btn-bb', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525'}),
+                        
+                       
+                    ],className="d-flex justify-content-end",
+                    style={"marginRight": "3vw"}
                 ),
-                className="mb-4"
+                style={"textAlign": "right !important"},
+                className="mb-4", id="buttons-first-fig"
             ),
-            dbc.Row(dbc.Col(html.Div(id="graph-container"))),
+            # Graphs with smooth transitions
+            #dbc.Row(dbc.Col(html.Div(id="graph-container2")), style={"paddingBottom": "20px"}),
+            dbc.Row(dbc.Col(id='graph1', md=12, className="mb-4")),
+            
+            #dbc.Row(dbc.Col(dcc.Graph(id='graph11', figure=fig_bars_60d), md=12, className="mb-4 animated fadeIn")),
+            #dbc.Row(dbc.Col(dcc.Graph(id='graph12', figure=fig_bars_30d), md=12, className="mb-4 animated fadeIn")),
+            #dbc.Row(dbc.Col(dcc.Graph(id='graph13', figure=fig_bars_14d), md=12, className="mb-4 animated fadeIn")),
+            dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_bars_over_time), md=12, className="mb-4 animated fadeIn")),
+            dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4 animated fadeIn")),
+            
+            dbc.Row([html.Div(id='header-text', children=[
+                html.H5([
+                    "Censorship-Meter - Relays",
+                    html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
+                ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
+                dbc.Tooltip(
+                    "The x-axis shows the percentage of blocks containing OFAC-sanctioned transactions by relays. It ranges from 0 to ~7%, but it is not linear.",
+                    target="info-tooltip",
+                    placement="right"
+                ),
+                html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})
+            ])]),
+                              
+            dbc.Row(
+                dbc.Col(
+                    [
+                        dbc.Button('Validators', id='btn-a', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525'}),
+                        dbc.Button('Relays', id='btn-b', n_clicks=0, className='mr-1', style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525'}),
+                        dbc.Button('Builders', id='btn-c', n_clicks=0, style={'fontFamily': 'Ubuntu Mono, monospace','backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525'})
+                    ],
+                    className="d-flex justify-content-end",
+                    style={"marginRight": "3vw"}
+                ),
+                className="mb-4", id="buttons-last-fig"
+            ),
+            dbc.Row(dbc.Col(html.Div(id="graph-container")), style={"paddingBottom": "20px"}),
             dbc.Row(dbc.Col(id='dynamic-graph', md=12, className="mb-4")),
             
-            
-
+            html.Div([
+                html.H4('Useful Links:', style={'color': '#262525','marginLeft':'10px'}),
+                html.Ul([
+                    html.Li([
+                        html.A('Dataset of OFAC sanction list', href='https://github.com/ultrasoundmoney/ofac-ethereum-addresses', target='_blank', style={'color': '#262525'}),
+                        html.Span(" Ultra Sound – Oct 23", style={'color': '#262525'})
+                    ]),
+                    html.Li([
+                        html.A('PBS censorship-resistance alternatives', href='https://notes.ethereum.org/@fradamt/H1TsYRfJc', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Francesco – Oct 2022", style={'color': '#262525'})
+                    ]),
+                    html.Li([
+                        html.A('Forward inclusion list', href='https://notes.ethereum.org/@fradamt/forward-inclusion-lists', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Francesco – Oct 2022", style={'color': '#262525'})
+                    ]),
+                    html.Li([
+                        html.A('Censorship Résistance & PBS', href='https://www.youtube.com/watch?v=XZJcZ05d-Wo', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Justin – Sept 2022", style={'color': '#262525'})
+                    ]),
+                    html.Li([
+                        html.A('How much can we constrain builders without bringing back heavy burdens to proposers?', href='https://ethresear.ch/t/how-much-can-we-constrain-builders-without-bringing-back-heavy-burdens-to-proposers/13808', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Vitalik – Oct 2022", style={'color': '#262525'})
+                    ]),
+                    html.Li([
+                        html.A('State of research: increasing censorship resistance of transactions under proposer/builder separation (PBS)', href='https://notes.ethereum.org/@vbuterin/pbs_censorship_resistance', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Vitalik – Jan 2022", style={'color': '#262525'})
+                    ]),
+                    html.Li([
+                        html.A('No free lunch – a new inclusion list design', href='https://ethresear.ch/t/no-free-lunch-a-new-inclusion-list-design/16389', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Vitalik and Mike – Aug 2023", style={'color': '#262525'})
+                    ]),
+                    html.Li([
+                        html.A('Cumulative, Non-Expiring Inclusion Lists', href='https://ethresear.ch/t/cumulative-non-expiring-inclusion-lists/16520', target='_blank', style={'color': '#262525'}),
+                        html.Span(" by Toni – Aug 2023", style={'color': '#262525'})
+                    ]),                    
+                ])
+            ], style={
+                'backgroundColor': '#f1f2f6',
+                'color': '#262525',
+                'textAlign': 'left',
+                'paddingTop': '30px',
+                
+            }),
 
             dbc.Row(dcc.Interval(id='window-size-trigger', interval=1000, n_intervals=0, max_intervals=1)),
-            dcc.Store(id='window-size-store',data={'width': 800})
+            dcc.Store(id='window-size-store', data={'width': 800})
         ],
         fluid=True,
-             style={"maxWidth": "960px"}
+        style={"maxWidth": "960px", 'background-color': '#f1f2f6'}
     )],
     id='main-div',
     style={
-                "display": "flex",
-                "flexDirection": "column",
-                "justifyContent": "center",
-                "alignItems": "center",
-                "minHight": "100vh"
-            }
+        "display": "flex",
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "alignItems": "center",
+        "minHeight": "100vh",
+        'background-color': '#f1f2f6'
+    }
 )
+
 
 
 # Callbacks
@@ -1007,7 +1195,7 @@ app.layout = html.Div(
 #
 #    window_width = window_size_data['width']
 #    return table_styles(window_width)
-    
+
     
 @app.callback(
     Output('main-div', 'style'),
@@ -1023,32 +1211,38 @@ def update_main_div_style_dynamic(window_size_data):
     else:
         return {}
 
-@app.callback(
-    Output('graph1', 'figure'),
-    Input('window-size-store', 'data')
-)
-def update_layout2(window_size_data):
-    if window_size_data is None:
-        raise dash.exceptions.PreventUpdate
-    width = window_size_data['width']
-    fig_bars.update_layout(**update_censorship_bars_layout(width))
-    if width <= 800:
-        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
-            if ix % 2 != 0 and "%" in i.text:
-                i.visible = True
-            elif "%" in i.text:
-                i.visible=False
-        for i in fig_bars.layout.annotations[-2:]:
-            i.font.size = 12
-    else:
-        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
-            if ix % 2 == 0 and "%" in i.text:
-                i.visible = True
-            elif "%" in i.text:
-                i.visible=False
-        for i in fig_bars.layout.annotations[-2:]:
-            i.font.size = 18
-    return fig_bars
+#@app.callback(
+#    Output('graph1', 'figure'),
+#    Input('window-size-store', 'data')
+#)
+#def update_layout3(window_size_data):
+#    if window_size_data is None:
+#        raise dash.exceptions.PreventUpdate
+#    width = window_size_data['width']
+#    fig_bars.update_layout(**update_censorship_bars_layout(width))
+#    for i, annotation in enumerate(fig_bars.layout.annotations):
+#        annotation_dict = annotation.to_plotly_json()
+#        if '24px' in annotation_dict['text']:
+#            annotation_dict['text'] = annotation_dict['text'].replace('24px', '14px')
+#            fig_bars.layout.annotations[i].update(annotation_dict)
+#    if width <= 800:
+#        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
+#            if ix % 2 != 0 and "%" in i.text:
+#                i.visible = True
+#            elif "%" in i.text:
+#                i.visible=False
+#        for i in fig_bars.layout.annotations[-2:]:
+#            i.font.size = 12
+#        fig_bars.layout.annotations[-1].y += 0.01
+#    else:
+#        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
+#            if ix % 2 == 0 and "%" in i.text:
+#                i.visible = True
+#            elif "%" in i.text:
+#                i.visible=False
+#        for i in fig_bars.layout.annotations[-2:]:
+#            i.font.size = 18
+#    return fig_bars
 
 
 @app.callback(
@@ -1064,6 +1258,20 @@ def update_layout1(window_size_data):
         for i in fig_over_months.layout.updatemenus:
             i.font.size = 10
     return fig_over_months
+
+@app.callback(
+    Output('graph3', 'figure'),
+    Input('window-size-store', 'data')
+)
+def update_layout2(window_size_data):
+    if window_size_data is None:
+        raise dash.exceptions.PreventUpdate
+    width = window_size_data['width']
+    fig_bars_over_time.update_layout(**bars_over_time_layout(width=width))
+    if width <= 800:
+        for i in fig_bars_over_time.layout.updatemenus:
+            i.font.size = 10
+    return fig_bars_over_time
 
 #@app.callback(
 #    Output('graph3', 'figure'),
@@ -1088,7 +1296,7 @@ def update_layout1(window_size_data):
         Input('btn-c', 'n_clicks')
     ]
 )
-def update_graph3(btn_a, btn_b, btn_c):
+def update_graph4(btn_a, btn_b, btn_c):
     changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 
     if 'btn-a' in changed_id:
@@ -1098,7 +1306,58 @@ def update_graph3(btn_a, btn_b, btn_c):
     elif 'btn-c' in changed_id:
         return dcc.Graph(id='graph', figure=fig_comp_bui)
 
-    return dcc.Graph(id='graph', figure=fig_comp_val) 
+    return dcc.Graph(id='graph', figure=fig_comp_rel) 
+
+@app.callback(
+    Output('graph1', 'children'),
+    [
+        Input('btn-cc', 'n_clicks'),
+        Input('btn-aa', 'n_clicks'),
+        Input('btn-bb', 'n_clicks'),
+        Input('window-size-store', 'data')
+    ]
+)
+def update_graph3(btn_a, btn_b,  btn_c, window_size_data):
+    if window_size_data is None:
+        raise dash.exceptions.PreventUpdate
+    width = window_size_data['width']
+    
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+    if 'btn-cc' in changed_id:
+        fig_bars = fig_bars_60d
+    elif 'btn-bb' in changed_id:
+        fig_bars = fig_bars_14d
+    else:
+        fig_bars = fig_bars_30d
+    
+    
+    fig_bars.update_layout(**update_censorship_bars_layout(width))
+    for i, annotation in enumerate(fig_bars.layout.annotations):
+        annotation_dict = annotation.to_plotly_json()
+        if '24px' in annotation_dict['text'] and width <= 800:
+            annotation_dict['text'] = annotation_dict['text'].replace('24px', '14px')
+            fig_bars.layout.annotations[i].update(annotation_dict)
+    if width <= 800:
+        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
+            if ix % 2 != 0 and "%" in i.text:
+                i.visible = True
+            elif "%" in i.text:
+                i.visible=False
+        for i in fig_bars.layout.annotations[-2:]:
+            i.font.size = 12
+        fig_bars.layout.annotations[-1].y += 0.01
+    else:
+        for ix, i in enumerate(fig_bars.layout.annotations[3:-2]):
+            if ix % 2 == 0 and "%" in i.text:
+                i.visible = True
+            elif "%" in i.text:
+                i.visible=False
+        for i in fig_bars.layout.annotations[-2:]:
+            i.font.size = 18
+    
+    
+
+    return dcc.Graph(id='graph123', figure=fig_bars) 
 
 
 
@@ -1108,15 +1367,21 @@ def update_graph3(btn_a, btn_b, btn_c):
      Output('btn-c', 'style')],
     [Input('btn-a', 'n_clicks'),
      Input('btn-b', 'n_clicks'),
-     Input('btn-c', 'n_clicks')],
-    prevent_initial_call=True
+     Input('btn-c', 'n_clicks'),
+     Input('window-size-store', 'data')],
+    prevent_initial_call=False
 )
-def update_button_style(n1, n2, n3):
+def update_button_style(n1, n2, n3, window_size_data):
+    width = window_size_data['width']
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     
-    default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': 'black'}
-    active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': 'black'}
+    if width <= 800:
+        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '9px'}
+        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '9px'}
+    else:
+        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '14px'}
+        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '14px'}
     
     if button_id == 'btn-a':
         return [active_style, default_style, default_style]
@@ -1125,9 +1390,92 @@ def update_button_style(n1, n2, n3):
     elif button_id == 'btn-c':
         return [default_style, default_style, active_style]
     else:
-        return [default_style, default_style, default_style]
+        return [default_style, active_style, default_style]
+    
+@app.callback(
+    [Output('btn-cc', 'style'),
+     Output('btn-bb', 'style'),
+    Output('btn-aa', 'style')],
+    [Input('btn-aa', 'n_clicks'),
+     Input('btn-bb', 'n_clicks'),
+     Input('btn-cc', 'n_clicks'),
+     Input('window-size-store', 'data')],
+    prevent_initial_call=False
+)
+def update_button_style2(n1, n2, n3, window_size_data):
+    width = window_size_data['width']
+    ctx = dash.callback_context
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    
+    if width <= 800:
+        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '9px'}
+        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '9px'}
+    else:
+        default_style = {'backgroundColor': 'white', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '14px'}
+        active_style = {'backgroundColor': '#ddd', 'border': '1px solid #eee', 'color': '#262525', 'fontSize': '14px'}
+    
+    if button_id == 'btn-cc':
+        return [active_style, default_style, default_style]
+    elif button_id == 'btn-bb':
+        return [default_style, active_style, default_style]
+    elif button_id == 'btn-aa':
+        return [default_style, default_style, active_style]
+    else:
+        return [default_style, default_style, active_style]
 
+@app.callback(
+    Output('header-text', 'children'),
+    [
+        Input('btn-a', 'n_clicks'),
+        Input('btn-b', 'n_clicks'),
+        Input('btn-c', 'n_clicks')
+    ]
+)
+def update_header(btn_a, btn_b, btn_c):
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+    
+    if 'btn-a' in changed_id:
+        return [
+            html.H5([
+                "Censorship-Meter - Validators",
+                html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
+            ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
+            dbc.Tooltip(
+                    "The x-axis shows the percentage of blocks containing OFAC-sanctioned transactions by validators. It ranges from 0 to 7%, but it is not linear. The upper-case entities are the split-up Lido Node Operators.",
+                    target="info-tooltip",
+                    placement="right"
+                ),
+            html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})
+        ]
+    elif "btn-c" in changed_id:
+        return [
+            html.H5([
+                    "Censorship-Meter - Builders",
+                    html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
+                ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
+                dbc.Tooltip(
+                    "The x-axis shows the percentage of blocks containing OFAC-sanctioned transactions by builders. It ranges from 0 to 7%, but it is not linear.",
+                    target="info-tooltip",
+                    placement="right"
+                ),
+                html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})
+        ]
+    else:
+        return [
+           html.H5([
+                    "Censorship-Meter - Relays",
+                    html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
+                ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
+                dbc.Tooltip(
+                    "The x-axis shows the percentage of blocks containing OFAC-sanctioned transactions by relays. It ranges from 0 to 7%, but it is not linear.",
+                    target="info-tooltip",
+                    placement="right"
+                ),
+                html.H6(" (last 30 days)", style={'textAlign': 'left','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})
+        ]
+        
 
+    
 
 if __name__ == '__main__':
     #app.run_server(debug=True)

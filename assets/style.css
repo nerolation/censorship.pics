@@ -1,14 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+
+
+body {
+    margin: 0;
+}
+
 .even-smaller-text {
-    font-size: 18px; /* Adjust the font size as needed */
+    font-size: 15px; /* Adjust the font size as needed */
+}
+.even-even-smaller-text {
+    font-size: 12px; /* Adjust the font size as needed */
 }
 @media screen and (max-width: 800px) {
     .smaller-text {
-        font-size: 12px; /* Adjust the font size as needed */
+        font-size: 11px; /* Adjust the font size as needed */
     }
     .even-smaller-text {
-        font-size: 10px; /* Adjust the font size as needed */
+        font-size: 8px; /* Adjust the font size as needed */
+    }
+    .even-even-smaller-text {
+        font-size: 8px; /* Adjust the font size as needed */
     }
 }
 .right-align {
     text-align: right;
+}
+
+.custom-button {
+  background-color: white;
+  border: 1px solid #eee;
+  color: black;
+    
+}
+
+.custom-button:active {
+  background-color: #ddd;
+}
+
+/* For responsiveness */
+@media (max-width: 768px) {
+    .custom-button {
+        margin-bottom: 10px;
+    }
+}
+
+.legendtoggle {
+   display: none;
 }
