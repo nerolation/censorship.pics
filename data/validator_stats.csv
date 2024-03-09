@@ -1,84 +1,505 @@
 validator,non_censored_blocks,all_blocks,share
-mintdice.com,3,32,9.375
-teku team,2,35,5.714285714285714
-rockx,17,498,3.413654618473896
-stafi,1,30,3.3333333333333335
-Develp GmbH,1,30,3.3333333333333335
-Prysmatic Labs,66,2140,3.08411214953271
-prysm team,1,34,2.941176470588235
-ChainSafe,73,2528,2.8876582278481013
-Stakin,73,2563,2.848224736636754
-sigma prime team,1,36,2.7777777777777777
-P2P.ORG - P2P Validator,46,1955,2.3529411764705883
-RockawayX Infra,41,1951,2.1014864172219374
-Blockscape,43,2068,2.079303675048356
-infstones,9,443,2.0316027088036117
-p2p.org,17,865,1.9653179190751446
-Staking Facilities,40,2069,1.9333011116481391
-cake defi,3,167,1.7964071856287425
-Allnodes,63,3517,1.791299402900199
-lido,17,955,1.780104712041885
-BridgeTower,38,2183,1.7407237746220796
-Kukis Global,44,2533,1.7370706671930518
-HashQuark,52,3189,1.6306052053935403
-frax finance,41,2671,1.5350056158742045
-DSRV,58,3818,1.5191199580932426
-Attestant (BVI) Limited,62,4132,1.5004840271055178
-Stakely,60,4262,1.4077897700610043
-everstake pool,1,74,1.3513513513513513
-coinbase,131,9694,1.3513513513513513
-bitcoin suisse,62,4788,1.2949039264828737
-Chorus One,40,3116,1.2836970474967908
-SkillZ,43,3386,1.2699350265800353
-Simply Staking,43,3428,1.2543757292882147
-binance,167,13378,1.2483181342502616
-bitfinex,2,161,1.2422360248447204
-stakefish,320,25893,1.2358552504537905
-stakehound,6,489,1.2269938650306749
-Ebunker,41,3369,1.2169783318492133
-rocketpool,62,5206,1.1909335382251247
-staked.us,62,5338,1.1614837017609592
-CryptoManufaktur,25,2190,1.141552511415525
-abyss finance,71,6755,1.0510732790525537
-Sigma Prime,43,4110,1.0462287104622872
-Everstake,42,4039,1.0398613518197575
-ChainLayer,40,3890,1.0282776349614395
-ConsenSys Codefi,38,3871,0.9816584861792819
-Nethermind,44,4496,0.9786476868327402
-stkr,3,330,0.9090909090909091
-RockLogic GmbH,34,3861,0.8806008806008805
-swell,24,2735,0.8775137111517367
-RockX,35,4158,0.8417508417508417
-okx,56,6945,0.8063354931605472
-A41,26,3490,0.7449856733524355
-stakewise,5,693,0.7215007215007215
-Numic,22,3387,0.6495423678771775
-SenseiNode,10,1750,0.5714285714285714
-figment,13,7071,0.18384952623391315
-Figment,3,2061,0.1455604075691412
-Blockdaemon,2,2008,0.099601593625498
-wex exchange,0,172,0.0
-tokenpocket,0,28,0.0
-tetranode,0,1,0.0
+vitho.eth,1,1,100.0
+twix.eth,1,1,100.0
+newwanger.eth,1,1,100.0
+hepokatti.eth,1,1,100.0
+grunt.eth,1,1,100.0
+ctrl-alt.eth,1,1,100.0
+cboyack.eth,1,1,100.0
+bdavey.eth,1,1,100.0
+astrostakers.eth,1,1,100.0
+graph-node-1-cp0x-hosted-by-ryabina.eth,1,2,50.0
+showaid.eth,3,7,42.857142857142854
+verylongaddress.eth,1,3,33.33333333333333
+careerin.eth,1,4,25.0
+trist.eth,1,5,20.0
+joycedental.eth,1,5,20.0
+fsjal.eth,1,6,16.666666666666664
+writter.eth,1,7,14.285714285714285
+lindy.eth,2,14,14.285714285714285
+andermatt.eth,2,15,13.333333333333334
+MintDice.com,3,29,10.344827586206897
+gunfighter.eth,1,10,10.0
+damstake.eth,1,11,9.090909090909092
+ibeli.eth,1,12,8.333333333333332
+Bitget,2,24,8.333333333333332
+robertsiwik.eth,1,13,7.6923076923076925
+StaFi,2,27,7.4074074074074066
+Teku Team,2,35,5.714285714285714
+EPotter,2,49,4.081632653061225
+Poloniex,9,235,3.829787234042553
+pottash.eth,1,27,3.7037037037037033
+peleg.eth,1,29,3.4482758620689653
+Develp GmbH,1,29,3.4482758620689653
+honoraryape.eth,2,61,3.278688524590164
+Prysmatic Labs,72,2196,3.278688524590164
+Prysm Team,1,34,2.941176470588235
+ChainSafe,76,2585,2.9400386847195357
+Stakin,76,2687,2.828433196873837
+Nimbus Team,1,36,2.7777777777777777
+Sigma Prime Team,1,37,2.7027027027027026
+P2P.ORG - P2P Validator,53,2043,2.594224180127264
+stakefish,115,5119,2.246532525883962
+Bake,5,224,2.232142857142857
+RockawayX Infra,43,2012,2.137176938369781
+Blockscape,45,2127,2.1156558533145273
+Allnodes,74,3724,1.9871106337271751
+imToken,10,519,1.9267822736030826
+Kukis Global,50,2661,1.8789928598271326
+Staking Facilities,38,2093,1.815575728619207
+Daniel Wang,23,1296,1.7746913580246912
+Lido,45,2550,1.7647058823529411
+P2P.org,16,914,1.75054704595186
+HashQuark,56,3340,1.6766467065868262
+BridgeTower,38,2296,1.6550522648083623
+ether.fi,96,5847,1.6418676244227808
+Stakely,69,4435,1.5558060879368658
+arthapala.eth,2,131,1.5267175572519083
+Bitcoin Suisse,79,5179,1.5253910021239623
+DSRV,60,3978,1.5082956259426847
+Attestant (BVI) Limited,63,4189,1.503938887562664
+CoinSpot,16,1078,1.4842300556586272
+Chorus One,47,3480,1.3505747126436782
+Frax Finance,38,2847,1.3347383210396908
+binance,188,14272,1.3172645739910314
+SkillZ,47,3568,1.3172645739910314
+Tranchess,1,76,1.3157894736842104
+Ebunker,47,3593,1.3080990815474534
+coinbase,309,25148,1.2287259424208683
+Kiln,188,15448,1.2169860176074572
+Bitfinex,2,165,1.2121212121212122
+Nethermind,57,4716,1.2086513994910941
+StakeHound,6,497,1.2072434607645874
+Consensys,11,917,1.1995637949836424
+was.eth,1,84,1.1904761904761905
+Simply Staking,42,3560,1.1797752808988764
+ChainLayer,46,3999,1.1502875718929733
+CryptoManufaktur,26,2265,1.1479028697571745
+rocketpool,97,8464,1.146030245746692
+Mantle,57,4993,1.1415982375325457
+Sigma Prime,50,4416,1.1322463768115942
+Staked.us,66,5860,1.1262798634812288
+Swell,33,2997,1.1011011011011012
+Coinbase,244,22459,1.0864241506745624
+RockX,53,4879,1.0862881738061079
+RockLogic GmbH,41,4036,1.0158572844400395
+Everstake,48,4742,1.0122311261071277
+ConsenSys Codefi,39,4046,0.9639149777558081
+Stakewise,8,835,0.9580838323353293
+Liquid Collective,5,525,0.9523809523809524
+A41,30,3664,0.8187772925764192
+OKX,60,7558,0.793860809738026
+Stkr (Ankr),3,403,0.7444168734491315
+Numic,22,3668,0.5997818974918212
+SenseiNode,10,1829,0.5467468562055768
+Binance US (Kiln),3,649,0.46224961479198773
+Upbit,17,4224,0.4024621212121212
+Celsius,4,1943,0.2058672156459084
+Figment,17,10954,0.1551944495161585
+Blockdaemon,5,3961,0.12623074981065388
+zyrb.eth,0,3,0.0
+zlatohlavek.eth,0,1,0.0
+zeusolympian.eth,0,2,0.0
+zenginoglu.eth,0,2,0.0
+zefredo.eth,0,1,0.0
+zebrains.eth,0,2,0.0
+zbron.eth,0,1,0.0
+yuut.eth,0,2,0.0
+yensacupuncture.bitcoin,0,3,0.0
+xp1.eth,0,5,0.0
+xelor.eth,0,2,0.0
+x1.ilcato.eth,0,16,0.0
+wu.danielkao.eth,0,3,0.0
+wisewolfholo.eth,0,2,0.0
+willchan.eth,0,1,0.0
+whitbeck.eth,0,10,0.0
+wesurvivedthemerge.eth,0,7,0.0
+weekev.eth,0,2,0.0
+wankmaggot.eth,0,1,0.0
+wangdong.eth,0,9,0.0
+voska.eth,0,1,0.0
+vitriol.eth,0,5,0.0
+verdaccio.eth,0,2,0.0
+vedants.eth,0,1,0.0
+vapem.eth,0,3,0.0
+upsum.eth,0,1,0.0
+ultrasoundmonkey.eth,0,1,0.0
+u96.eth,0,1,0.0
+twitterhandle.eth,0,4,0.0
+troyshu.eth,0,2,0.0
+thunberg.eth,0,2,0.0
+thinking.eth,0,4,0.0
+themarcus.eth,0,1,0.0
+thecoldwallet.eth,0,3,0.0
+tfelix.eth,0,3,0.0
+teague.eth,0,2,0.0
+tasslehoff.eth,0,1,0.0
+tablemountain.eth,0,3,0.0
+synergycrypto.eth,0,3,0.0
+superphiz.eth,0,1,0.0
+sunbird.eth,0,1,0.0
+sugarbounce.eth,0,3,0.0
+sturmh.eth,0,6,0.0
+stratuscyber.eth,0,1,0.0
+stevereed.eth,0,2,0.0
 stereum.net,0,7,0.0
-stakewise solos,0,30,0.0
-staked.finance,0,7,0.0
-sharedstake,0,23,0.0
-node dao,0,151,0.0
-nimbus team,0,35,0.0
+stakewalker.eth,0,2,0.0
+stakesaurus.eth,0,2,0.0
+staked.finance,0,6,0.0
+stake2.atg.eth,0,1,0.0
+stake.tomx.eth,0,5,0.0
+sprc-brothers.eth,0,2,0.0
+speed.eth,0,13,0.0
+spacetractor.eth,0,2,0.0
+sourg0d.eth,0,1,0.0
+smokeythemonkey.eth,0,1,0.0
+smitha.eth,0,4,0.0
+smidge.eth,0,4,0.0
+smeker.eth,0,3,0.0
+smartin.eth,0,1,0.0
+slais.eth,0,2,0.0
+skarbiec.eth,0,1,0.0
+ska314.eth,0,2,0.0
+sjhumphrey.eth,0,1,0.0
+simeth.eth,0,1,0.0
+siegenthaler.eth,0,1,0.0
+shivamgupta.eth,0,1,0.0
+sherryw.eth,0,2,0.0
+sglee.eth,0,1,0.0
+setnof.eth,0,2,0.0
+servicem8.eth,0,1,0.0
+sendmoodz.eth,0,1,0.0
+seamonkey.eth,0,1,0.0
+scg.eth,0,17,0.0
+sathaxe.eth,0,1,0.0
+safe.manneken-pis.eth,0,1,0.0
+rumpf.eth,0,2,0.0
+row.eth,0,1,0.0
+roryburcham.eth,0,2,0.0
+ronit.eth,0,4,0.0
+richiew.eth,0,1,0.0
+richguypaul.eth,0,3,0.0
+reward-vault.eth,0,1,0.0
+reapz.eth,0,1,0.0
+readies.eth,0,1,0.0
+razumoff.eth,0,1,0.0
+rauljordan.eth,0,1,0.0
+raekye.eth,0,1,0.0
+radwanski.eth,0,8,0.0
+racemax.eth,0,1,0.0
+punk6883.eth,0,5,0.0
+puigsech.eth,0,2,0.0
+ptxptx: Eth2 Depositor,0,3,0.0
+proofofsoy.eth,0,7,0.0
+privato.eth,0,3,0.0
+porom.eth,0,2,0.0
+pogiboy.eth,0,1,0.0
+pluch.eth,0,2,0.0
+pk910.eth,0,2,0.0
+pigou.eth,0,1,0.0
+phildavis.eth,0,3,0.0
+pharos.eth,0,1,0.0
+pfitzenmeier.eth,0,1,0.0
+petetin.eth,0,2,0.0
+permafrost.eth,0,8,0.0
+pepes.eth,0,2,0.0
+payson.eth,0,1,0.0
+payfly.eth,0,1,0.0
+patrickr.eth,0,2,0.0
+pate.eth,0,3,0.0
+passabilities.eth,0,2,0.0
+olympus.eth,0,3,0.0
+okonomi.eth,0,11,0.0
+okavango.eth,0,1,0.0
+ogenev.eth,0,1,0.0
+nries.eth,0,2,0.0
+nomis.eth,0,1,0.0
+njknight.eth,0,10,0.0
+nitinpatil.eth,0,1,0.0
+nirro.eth,0,1,0.0
+nicoleta.eth,0,1,0.0
+nick.eth,0,1,0.0
 neukind.com,0,4,0.0
-missed,0,1028,0.0
-kucoin,0,287,0.0
-kraken,0,5074,0.0
-harbour,0,114,0.0
-ethereum on arm,0,2,0.0
-eden network,0,1,0.0
-cryptostake.com,0,44,0.0
-blox staking,0,8,0.0
-blockdaemon.com,0,1,0.0
-bitstamp,0,360,0.0
-bitpie,0,69,0.0
-bifrost,0,3,0.0
-ParaFi Technologies LLC,0,2299,0.0
-Launchnodes,0,537,0.0
-Gateway.fm AS,0,94,0.0
+netolli.eth,0,2,0.0
+neoos.eth,0,1,0.0
+nectarsac.eth,0,1,0.0
+ncitron.eth,0,1,0.0
+nbm.eth,0,1,0.0
+nathanquarles.eth,0,1,0.0
+mystakingwallet.eth,0,2,0.0
+mylogin.eth,0,6,0.0
+my-eth-vault.eth,0,1,0.0
+mwegehaupt.eth,0,2,0.0
+msaganski.eth,0,3,0.0
+mrwordthy.eth,0,1,0.0
+mrbotcoin.sismo.eth,0,2,0.0
+mrbates.eth,0,8,0.0
+mr101.eth,0,1,0.0
+moodysalem.eth,0,2,0.0
+moataz.eth,0,1,0.0
+mkkoll.eth,0,1,0.0
+missed,0,1112,0.0
+mirasol.eth,0,10,0.0
+minmus.eth,0,3,0.0
+minimaal.eth,0,1,0.0
+millio.eth,0,2,0.0
+milli0.eth,0,1,0.0
+milewski.eth,0,1,0.0
+michaelward.eth,0,26,0.0
+metanomics.eth,0,1,0.0
+mcescher.eth,0,2,0.0
+mazzilli.eth,0,2,0.0
+mattyreed.eth,0,2,0.0
+mas.eth,0,3,0.0
+martinkou.eth,0,3,0.0
+marcchabot.zil,0,1,0.0
+malachite🟢️.eth,0,3,0.0
+malachite🟢.eth,0,3,0.0
+makis.eth,0,1,0.0
+maesche.eth,0,4,0.0
+maddhater.eth,0,1,0.0
+luketrader.eth,0,1,0.0
+luiscalcada.eth,0,1,0.0
+ludvig.eth,0,1,0.0
+lordmeme.eth,0,4,0.0
+lololp.eth,0,2,0.0
+livingston.eth,0,3,0.0
+liamt.eth,0,1,0.0
+leoglisic.eth,0,1,0.0
+leochen.eth,0,3,0.0
+lenhardt.eth,0,4,0.0
+ledger.etherbase.eth,0,1,0.0
+lazlokovacs.eth,0,4,0.0
+lapatita.eth,0,2,0.0
+l.v1safe.eth,0,15,0.0
+kwood.eth,0,7,0.0
+kryptokicks.eth,0,1,0.0
+kosta.eth,0,2,0.0
+korkus.eth,0,1,0.0
+kindatired.eth,0,2,0.0
+kevinrichardson.eth,0,1,0.0
+katto.eth,0,8,0.0
+kar-ma.eth,0,2,0.0
+kalakris.eth,0,13,0.0
+kain.eth,0,1,0.0
+kaier.eth,0,3,0.0
+kaelo.eth,0,2,0.0
+jwcrowe.eth,0,1,0.0
+jspaceman.eth,0,5,0.0
+joshjohnson.eth,0,1,0.0
+jonboy.eth,0,2,0.0
+johnlynn.eth,0,2,0.0
+johnc.eth,0,3,0.0
+johannesheizmann.eth,0,1,0.0
+jnguyen.eth,0,5,0.0
+jeremie.eth,0,3,0.0
+jdetychey.eth,0,1,0.0
+jcomfort.eth,0,2,0.0
+jazayeri.eth,0,2,0.0
+jasperplatz.eth,0,1,0.0
+jasoncai.eth,0,1,0.0
+jaqris.eth,0,2,0.0
+jamescbury.eth,0,1,0.0
+ixtanoa.eth,0,3,0.0
+investoregg.eth,0,1,0.0
+intercepter.eth,0,2,0.0
+inovas.eth,0,2,0.0
+inolen.eth,0,2,0.0
+immortel.eth,0,1,0.0
+igisandros.eth,0,5,0.0
+ice.spectrehaunt.eth,0,2,0.0
+ice-box.eth,0,1,0.0
+hyphacapital.eth,0,5,0.0
+humbolt.eth,0,1,0.0
+hmmwv.eth,0,1,0.0
+highriseworld.eth,0,1,0.0
+herrlich.eth,0,2,0.0
+heliosphere.eth,0,1,0.0
+harrigan.eth,0,1,0.0
+harchy.eth,0,2,0.0
+hahndavid.eth,0,3,0.0
+h0lding.eth,0,1,0.0
+h.privato.eth,0,1,0.0
+gunninginc.eth,0,4,0.0
+gumcuzzler.eth,0,2,0.0
+guccilorian.eth,0,43,0.0
+groo2.eth,0,1,0.0
+grimnir.eth,0,1,0.0
+greid.eth,0,1,0.0
+greedland.eth,0,25,0.0
+godavego.eth,0,25,0.0
+gnothi-seauton.eth,0,7,0.0
+gloopy.eth,0,1,0.0
+ghostwheel.eth,0,3,0.0
+genartvault.eth,0,2,0.0
+gdon.eth,0,1,0.0
+gamell.eth,0,2,0.0
+gameishard.eth,0,2,0.0
+galenj.eth,0,3,0.0
+fudhodler.eth,0,2,0.0
+freedom55.eth,0,13,0.0
+fredyu.eth,0,2,0.0
+for.eth,0,61,0.0
+flowglow.eth,0,1,0.0
+flipsidecrypto1.eth,0,3,0.0
+flanby.eth,0,2,0.0
+firewoodoven.eth,0,1,0.0
+fireduck.eth,0,1,0.0
+fengqi.eth,0,4,0.0
+fanek.eth,0,5,0.0
+famcv.eth,0,2,0.0
+evilpotatoguy.eth,0,3,0.0
+ethview.eth,0,1,0.0
+ethstaker.eth,0,2,0.0
+esmebaizel.eth,0,2,0.0
+errantventure.eth,0,2,0.0
+epstrom.eth,0,38,0.0
+epiphyte.eth,0,1,0.0
+epaul.eth,0,1,0.0
+emergencyrecovery.eth,0,1,0.0
+elliotcohen.eth,0,1,0.0
+efault.eth,0,4,0.0
+edrews.eth,0,2,0.0
+edmiikk.eth,0,8,0.0
+dymaxiontechnology.eth,0,10,0.0
+dubbo.eth,0,1,0.0
+dsommer.eth,0,9,0.0
+drinkywinky.eth,0,1,0.0
+dougcastoldi.eth,0,7,0.0
+dinglin.eth,0,11,0.0
+dharris289.eth,0,1,0.0
+delegate.val128.eth,0,2,0.0
+dekeract.eth,0,7,0.0
+degreenetwork.eth,0,1,0.0
+defison.eth,0,1,0.0
+defirebellion.eth,0,1,0.0
+defidroid.eth,0,2,0.0
+deeks.eth,0,1,0.0
+dcposch.eth,0,3,0.0
+davieli.eth,0,1,0.0
+davidtuber.eth,0,4,0.0
+daveydoo.eth,0,26,0.0
+datawarehouse.eth,0,1,0.0
+danielwang.eth,0,13,0.0
+danhsiu.eth,0,1,0.0
+d1m0ndhvnd.eth,0,1,0.0
+curtisc.eth,0,4,0.0
+currentoor.eth,0,2,0.0
+cryptostake.com,0,46,0.0
+crypex.eth,0,1,0.0
+crimzon.eth,0,1,0.0
+cosmicloud.eth,0,3,0.0
+cornhusker.eth,0,1,0.0
+conurtrol.eth,0,137,0.0
+combinations.eth,0,7,0.0
+colorcoin.eth,0,7,0.0
+collis.eth,0,3,0.0
+collaboard.eth,0,6,0.0
+colfax.eth,0,1,0.0
+coinspiracy.eth,0,32,0.0
+coey.eth,0,1,0.0
+co2dao.eth,0,1,0.0
+clownworld.eth,0,2,0.0
+cloudofdarkness.eth,0,3,0.0
+clneagu.eth,0,11,0.0
+citigroupbank.eth,0,1,0.0
+churchinaustin.eth,0,16,0.0
+chosunone.eth,0,1,0.0
+charliehess.eth,0,1,0.0
+celes.eth,0,2,0.0
+captain.eth,0,2,0.0
+canbolat.eth,0,2,0.0
+c14.eth,0,1,0.0
+bubbies.eth,0,1,0.0
+brianahern.eth,0,3,0.0
+brampriem.eth,0,1,0.0
+bradcobb.eth,0,3,0.0
+bootyloop.eth,0,1,0.0
+bok.eth,0,2,0.0
+blomberg.eth,0,1,0.0
+blockedge.eth,0,1,0.0
+blackmesa.eth,0,2,0.0
+bizzler.eth,0,2,0.0
+biupil.eth,0,1,0.0
+bitshameddesk.eth,0,132,0.0
+birge.eth,0,7,0.0
+binarybangers.eth,0,1,0.0
+bienen.eth,0,6,0.0
+bhanson.eth,0,4,0.0
+bewater.blockchain,0,1,0.0
+benmichaelis.eth,0,6,0.0
+benjaminchodroff.eth,0,3,0.0
+benjamincameronbaldwin.eth,0,2,0.0
+bekin.eth,0,2,0.0
+beermonst.eth,0,2,0.0
+beareatfish.eth,0,1,0.0
+bayc3385.eth,0,2,0.0
+baorui.eth,0,1,0.0
+banteg.eth,0,2,0.0
+badgas.eth,0,3,0.0
+b18c.eth,0,2,0.0
+avuja.eth,0,4,0.0
+avastake.eth,0,5,0.0
+atitso.eth,0,1,0.0
+at1as.eth,0,1,0.0
+aspheris.eth,0,4,0.0
+apple.james83.eth,0,1,0.0
+anthonymandra.wallet,0,3,0.0
+anomanderrake.eth,0,2,0.0
+angelovski.eth,0,2,0.0
+androcab.eth,0,2,0.0
+amiga500.eth,0,39,0.0
+amaq: Eth2 Depositor,0,3,0.0
+amane.eth,0,2,0.0
+amandra.eth,0,3,0.0
+alistake.eth,0,1,0.0
+alisheikh.eth,0,1,0.0
+alexphelps.eth,0,3,0.0
+akirodic.eth,0,5,0.0
+akaifox.eth,0,3,0.0
+agus.eth,0,1,0.0
+afei.eth,0,3,0.0
+admajoremdeigloriam.eth,0,1,0.0
+a5stake.eth,0,5,0.0
+WEX Exchange,0,179,0.0
+Tetranode,0,1,0.0
+Taylor Gerring,0,9,0.0
+StakeWise Solos,0,76,0.0
+StakeWise,0,76,0.0
+SharedStake,0,27,0.0
+Revolut,0,309,0.0
+Redacted Pirex,0,41,0.0
+ParaFi Technologies LLC,0,2395,0.0
+Node DAO,0,160,0.0
+Mercado Bitcoin,0,104,0.0
+MC: Eth2 Depositor,0,2,0.0
+Launchnodes,0,549,0.0
+KuCoin,0,310,0.0
+Kraken,0,5387,0.0
+Jesse Rinaldi,0,1,0.0
+Harbour,0,120,0.0
+Gateway.fm AS,0,101,0.0
+Flipside,0,3,0.0
+Everstake Pool,0,74,0.0
+Compound Governance,0,1,0.0
+Colin Robinson,0,1,0.0
+Blox Staking,0,10,0.0
+Bitstamp,0,379,0.0
+Bitpie,0,73,0.0
+Bitpanda (Kiln),0,130,0.0
+BitGo,0,119,0.0
+Bifrost,0,9,0.0
+BTC-e,0,51,0.0
+Anpan,0,1,0.0
+9744.eth,0,1,0.0
+95948.eth,0,6,0.0
+86061611630.eth,0,13,0.0
+7189.eth,0,1,0.0
+69696.eth,0,1,0.0
+563412.eth,0,2,0.0
+47validators.eth,0,12,0.0
+3f93.eth,0,1,0.0
+2568.eth,0,1,0.0
+1-ether.eth,0,6,0.0
+0dot1.eth,0,3,0.0
+04221.eth,0,8,0.0
