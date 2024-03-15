@@ -1,4 +1,12 @@
 entity,category,tc_blocks30,all_blocks30,censoring
+ultrasound,relay,2394,100315,0
+manifold,relay,52,512,0
+agnostic Gnosis,relay,1021,47879,0
+flashbots,relay,2,48546,1
+bloxroute (regulated),relay,1,48437,1
+bloxroute (max profit),relay,51,78642,1
+eden,relay,0,387,1
+aestus,relay,466,11003,0
 zyrb.eth,validator,0,2,1
 zlatohlavek.eth,validator,0,1,1
 zhengyabin.eth,validator,0,3,1
@@ -511,14 +519,6 @@ A41,validator,42,3964,0
 0dot1.eth,validator,0,3,1
 0age.eth,validator,0,1,1
 04221.eth,validator,2,8,0
-ultrasound,relay,2394,100315,0
-manifold,relay,52,512,0
-agnostic Gnosis,relay,1021,47879,0
-flashbots,relay,2,48546,1
-bloxroute (regulated),relay,1,48437,1
-bloxroute (max profit),relay,51,78642,1
-eden,relay,0,387,1
-aestus,relay,466,11003,0
 FC,builder,0,1,1
 https://blockbeelder.com ð,builder,14,975,0
 @penguinbuild.org,builder,258,2533,0
