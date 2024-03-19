@@ -1,40 +1,41 @@
 builder,non_censored_blocks,all_blocks,share
 0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,2,3,66.66666666666666
-Manifold,16,58,27.586206896551722
-@penguinbuild.org,297,2831,10.490992582126458
-payload.de,5,50,10.0
-lokibuilder.xyz,152,1597,9.517845961177207
-jetbldr.xyz,963,12773,7.539340796993659
-pandabuilder.io,9,142,6.338028169014084
-rpc.tbuilder.xyz,308,5194,5.929919137466308
-Titan Builder,2620,85816,3.0530437214505453
-Geth Go,5,234,2.1367521367521367
+Manifold,17,60,28.333333333333332
+@penguinbuild.org,305,2862,10.656883298392732
+lokibuilder.xyz,149,1610,9.254658385093167
+payload.de,3,33,9.090909090909092
+jetbldr.xyz,1006,12812,7.852013737121448
+pandabuilder.io,9,134,6.7164179104477615
+rpc.tbuilder.xyz,313,5162,6.063541263076327
+Titan Builder,2862,85465,3.348739249985374
+Geth Go,6,242,2.479338842975207
 merkle Block (bundles.merkle.io),1,58,1.7241379310344827
-https://blockbeelder.com ð,14,903,1.550387596899225
-Bob the builder,1,165,0.6060606060606061
-BuildAI (https://buildai.net),2,979,0.20429009193054137
-Flashbots,0,10525,0.0
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,0,343,0.0
-0x917f367b13581138427d04b3d266b6dc1351ab87d07deb64016ebc51d2a94ca423210fdece2b26527436365e1fdea28f,0,4,0.0
-EigenPhi,0,90,0.0
-f1b.io,0,7079,0.0
-https://eth-builder.com,0,108,0.0
-rsync-builder.xyz,0,55430,0.0
-https://edennetwork.io,0,331,0.0
-FC,0,1,0.0
+https://blockbeelder.com ð,14,895,1.564245810055866
+Bob the builder,1,162,0.6172839506172839
+BuildAI (https://buildai.net),2,996,0.2008032128514056
 ExperimentX,0,6,0.0
-Gambit Labs (https://gmbit.co),0,999,0.0
-Ty For The Block,0,52,0.0
-beaverbuild.org,0,147430,0.0
+https://eth-builder.com,0,91,0.0
 0xb4ba21309677d87f3a461f598e3d7ada3f70855fb84821d1577432ab24822d9b09d8acfcc8768e5b53a33709a978bc98,0,1,0.0
-BloXroute,0,505,0.0
-nfactorial.xyz,0,47,0.0
+Gambit Labs (https://gmbit.co),0,955,0.0
+I can haz block?,0,369,0.0
+Builder+ www.btcs.com/builder,0,271,0.0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,0,342,0.0
+boba-builder.com,0,466,0.0
+beaverbuild.org,0,148916,0.0
+0xa3ad1da9373ae97c21274629668d5b585addc0dfd1b323f0651159df409603f7b0c1fa90237164f817301b6a5733a220,0,2,0.0
+rsync-builder.xyz,0,55966,0.0
+antbuilder,0,130,0.0
+0x917f367b13581138427d04b3d266b6dc1351ab87d07deb64016ebc51d2a94ca423210fdece2b26527436365e1fdea28f,0,4,0.0
+https://edennetwork.io,0,345,0.0
+Flashbots,0,10391,0.0
+EigenPhi,0,95,0.0
+f1b.io,0,6720,0.0
+Ty For The Block,0,49,0.0
+nfactorial.xyz,0,45,0.0
 "If you build it, they will come.",0,2,0.0
-antbuilder,0,127,0.0
-boba-builder.com,0,436,0.0
-penguinbuild.org,0,1125,0.0
-Builder+ www.btcs.com/builder,0,265,0.0
-smithbot.xyz,0,6,0.0
-I can haz block?,0,373,0.0
-builder0x69,0,3526,0.0
+BloXroute,0,516,0.0
+penguinbuild.org,0,1061,0.0
 lightspeedbuilder.info,0,25,0.0
+builder0x69,0,3634,0.0
+FC,0,1,0.0
+smithbot.xyz,0,6,0.0
