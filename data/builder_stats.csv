@@ -1,32 +1,33 @@
 builder,non_censored_blocks,all_blocks,share
-Manifold,14,28,50.0
-jetbldr.xyz,392,4517,8.678326322780606
-lokibuilder.xyz,111,1509,7.3558648111332
-@penguinbuild.org,328,5192,6.317411402157165
-smithbot.xyz,2,39,5.128205128205128
+Manifold,14,39,35.8974358974359
+jetbldr.xyz,374,4389,8.521303258145362
+lokibuilder.xyz,102,1439,7.088255733148019
+@penguinbuild.org,327,5232,6.25
+rpc.tbuilder.xyz,4,80,5.0
 0x15,2,45,4.444444444444445
-Titan Builder,3859,113553,3.3984130758324307
-rpc.tbuilder.xyz,4,149,2.684563758389262
-Ty For The Block,9,343,2.623906705539359
-Geth Go,5,251,1.9920318725099602
-Bob the builder,8,514,1.556420233463035
-BuildAI (https://buildai.net),8,1306,0.6125574272588056
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,0,269,0.0
-pandabuilder.io,0,4,0.0
-EigenPhi,0,84,0.0
-Flashbots,0,6529,0.0
-I can haz block?,0,253,0.0
-BloXroute,0,259,0.0
-Shared/Default,0,2,0.0
-0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,0,4,0.0
-0x25,0,15,0.0
-https://blockbeelder.com ð,0,50,0.0
-Builder+ www.btcs.com/builder,0,611,0.0
-https://edennetwork.io,0,75,0.0
-Gambit Labs (https://gmbit.co),0,1202,0.0
-builder0x69,0,569,0.0
+Titan Builder,3852,114026,3.3781769070212055
+smithbot.xyz,1,38,2.631578947368421
+Ty For The Block,9,344,2.616279069767442
+Geth Go,5,256,1.953125
+Bob the builder,8,544,1.4705882352941175
+BuildAI (https://buildai.net),8,1280,0.625
 ExperimentX,0,3,0.0
-beaverbuild.org,0,155458,0.0
-boba-builder.com,0,692,0.0
+pandabuilder.io,0,1,0.0
+I can haz block?,0,257,0.0
+Builder+ www.btcs.com/builder,0,595,0.0
 antbuilder,0,8,0.0
-rsync-builder.xyz,0,68065,0.0
+builder0x69,0,590,0.0
+0x25,0,16,0.0
+0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,0,4,0.0
+Flashbots,0,6569,0.0
+EigenPhi,0,73,0.0
+Shared/Default,0,2,0.0
+https://blockbeelder.com ð,0,41,0.0
+boba-builder.com,0,682,0.0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,0,258,0.0
+Flashbots SGX,0,6,0.0
+BloXroute,0,253,0.0
+rsync-builder.xyz,0,69215,0.0
+Gambit Labs (https://gmbit.co),0,1140,0.0
+beaverbuild.org,0,156280,0.0
+https://edennetwork.io,0,75,0.0
