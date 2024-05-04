@@ -1,36 +1,37 @@
 builder,non_censored_blocks,all_blocks,share
-Manifold,15,54,27.77777777777778
-jetbldr.xyz,379,4577,8.28053310028403
-lokibuilder.xyz,102,1334,7.646176911544228
-@penguinbuild.org,325,5267,6.1704955382570725
-smithbot.xyz,1,20,5.0
+Manifold,16,64,25.0
+jetbldr.xyz,367,4630,7.926565874730021
+lokibuilder.xyz,93,1338,6.950672645739911
+@penguinbuild.org,49,740,6.621621621621622
+Flashbots TDX,283,4517,6.265220278946202
+smithbot.xyz,1,19,5.263157894736842
 0x15,2,45,4.444444444444445
-Ty For The Block,12,351,3.418803418803419
-Titan Builder,3839,115392,3.326920410427066
-Geth Go,6,257,2.3346303501945527
-Bob the builder,8,552,1.4492753623188406
-BuildAI (https://buildai.net),3,1266,0.23696682464454977
-rsync-builder.xyz,0,72007,0.0
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,0,248,0.0
-beaverbuild.org,0,154058,0.0
-https://edennetwork.io,0,75,0.0
-pandabuilder.io,0,1,0.0
-https://blockbeelder.com ð,0,35,0.0
-0x8d333ca548a12676c93dc12cbe650fdfd62284b85f0a60cf68fb33ece035aea18fc1df0057cbe085db0dc593c47b8f4a,0,1,0.0
+Titan Builder,3869,117779,3.284965910731115
+Ty For The Block,9,345,2.608695652173913
+Geth Go,6,263,2.2813688212927756
+Bob the builder,8,585,1.3675213675213675
+BuildAI (https://buildai.net),3,1260,0.2380952380952381
+Gambit Labs (https://gmbit.co),0,978,0.0
+BloXroute,0,241,0.0
+EigenPhi,0,52,0.0
+Flashbots,0,6480,0.0
+builder0x69,0,627,0.0
+0x25,0,24,0.0
 0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,0,4,0.0
+https://edennetwork.io,0,72,0.0
+rsync-builder.xyz,0,73055,0.0
+I can haz block?,0,239,0.0
 payload.de,0,4,0.0
-0xb02273dfa1a2dcebf8137932d168700905c491de43db57087bdeda438d7742fbe4ed414be5f40eb2ff4e3a31db0c6162,0,3,0.0
-Builder+ www.btcs.com/builder,0,598,0.0
-Flashbots,0,6545,0.0
-antbuilder,0,8,0.0
-I can haz block?,0,248,0.0
-0x25,0,19,0.0
-boba-builder.com,0,655,0.0
+Flashbots SGX,0,8,0.0
+https://blockbeelder.com ð,0,35,0.0
+pandabuilder.io,0,1,0.0
+boba-builder.com,0,656,0.0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,0,243,0.0
+beaverbuild.org,0,152262,0.0
 Shared/Default,0,2,0.0
-BloXroute,0,242,0.0
-Gambit Labs (https://gmbit.co),0,969,0.0
-builder0x69,0,615,0.0
-rpc.tbuilder.xyz,0,79,0.0
+antbuilder,0,8,0.0
+0xb02273dfa1a2dcebf8137932d168700905c491de43db57087bdeda438d7742fbe4ed414be5f40eb2ff4e3a31db0c6162,0,3,0.0
+Builder+ www.btcs.com/builder,0,595,0.0
+rpc.tbuilder.xyz,0,35,0.0
+0x8d333ca548a12676c93dc12cbe650fdfd62284b85f0a60cf68fb33ece035aea18fc1df0057cbe085db0dc593c47b8f4a,0,2,0.0
 ExperimentX,0,3,0.0
-EigenPhi,0,54,0.0
-Flashbots SGX,0,6,0.0
