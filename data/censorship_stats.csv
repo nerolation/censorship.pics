@@ -1,4 +1,13 @@
 entity,category,tc_blocks30,all_blocks30,censoring
+eden,relay,0,38,1
+agnostic Gnosis,relay,1785,53014,0
+flashbots,relay,0,28094,1
+bloxroute (regulated),relay,4,66731,1
+manifold,relay,80,997,0
+titan,relay,735,13184,0
+ultrasound,relay,2892,103147,0
+aestus,relay,1154,13114,0
+bloxroute (max profit),relay,5,88830,1
 0xb02273dfa1a2dcebf8137932d168700905c491de43db57087bdeda438d7742fbe4ed414be5f40eb2ff4e3a31db0c6162,builder,0,2,1
 boba-builder.com,builder,0,561,1
 Ty For The Block,builder,6,172,0
@@ -514,12 +523,3 @@ A41,validator,58,4400,0
 10ofdisks.eth,validator,0,1,1
 1-ether.eth,validator,0,1,1
 04221.eth,validator,1,5,0
-eden,relay,0,38,1
-agnostic Gnosis,relay,1785,53014,0
-flashbots,relay,0,28094,1
-bloxroute (regulated),relay,4,66731,1
-manifold,relay,80,997,0
-titan,relay,735,13184,0
-ultrasound,relay,2892,103147,0
-aestus,relay,1154,13114,0
-bloxroute (max profit),relay,5,88830,1
