@@ -473,15 +473,6 @@ A41,validator,32,4702,1
 1-ether.eth,validator,0,3,1
 0dot1.eth,validator,0,1,1
 04221.eth,validator,1,4,0
-agnostic Gnosis,relay,1341,54063,0
-titan,relay,450,10786,0
-aestus,relay,955,13066,0
-bloxroute (max profit),relay,2,92760,1
-ultrasound,relay,2449,114771,0
-eden,relay,0,41,1
-flashbots,relay,0,27873,1
-manifold,relay,60,730,0
-bloxroute (regulated),relay,1,75029,1
 https://blockbeelder.com ð,builder,0,521,1
 Ty For The Block,builder,5,166,0
 0xb5072a39dcd3f4f63044fa23651adde2d783cccd6ad1ca84aea29a84a7ebb8fd4d2b11dab1f672722e3ce1f5a65db288,builder,0,3,1
@@ -515,3 +506,12 @@ jetbldr.xyz,builder,418,3024,0
 https://edennetwork.io,builder,0,30,1
 smithbot.xyz,builder,0,3,1
 Builder+ www.btcs.com/builder,builder,0,54,1
+agnostic Gnosis,relay,1341,54063,0
+titan,relay,450,10786,0
+aestus,relay,955,13066,0
+bloxroute (max profit),relay,2,92760,1
+ultrasound,relay,2449,114771,0
+eden,relay,0,41,1
+flashbots,relay,0,27873,1
+manifold,relay,60,730,0
+bloxroute (regulated),relay,1,75029,1
