@@ -1,4 +1,46 @@
 entity,category,tc_blocks30,all_blocks30,censoring
+manifold,relay,57,691,0
+aestus,relay,898,12248,0
+titan,relay,391,10641,0
+flashbots,relay,0,27059,1
+bloxroute (max profit),relay,2,93254,1
+ultrasound,relay,2430,116213,0
+eden,relay,0,41,1
+agnostic Gnosis,relay,1293,53900,0
+bloxroute (regulated),relay,1,75899,1
+Shared/Default,builder,0,64,1
+https://edennetwork.io,builder,0,30,1
+rpc.fullblock.space,builder,0,8,1
+0x25,builder,0,6,1
+https://blockbeelder.com ð,builder,0,431,1
+EigenPhi,builder,0,24,1
+Builder+ www.btcs.com/builder,builder,0,87,1
+Ty For The Block,builder,7,193,0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,165,1
+I can haz block?,builder,0,91,1
+lokibuilder.xyz,builder,116,1555,0
+PantherBot,builder,0,3,1
+0xb5072a39dcd3f4f63044fa23651adde2d783cccd6ad1ca84aea29a84a7ebb8fd4d2b11dab1f672722e3ce1f5a65db288,builder,0,3,1
+BloXroute,builder,0,41,1
+Ùgethgo1.20.14 linux,builder,24,393,0
+@penguinbuild.org,builder,142,1335,0
+rsync-builder.xyz,builder,0,64769,1
+beaverbuild.org,builder,3,164119,1
+BuildAI (https://buildai.net),builder,0,454,1
+jetbldr.xyz,builder,435,2891,0
+payload.de,builder,6,52,0
+Flashbots Imposter,builder,0,1082,1
+Flashbots SGX,builder,0,1654,1
+smithbot.xyz,builder,0,3,1
+Manifold,builder,12,72,0
+builder0x69,builder,0,496,1
+blocksmith.org,builder,5,72,0
+Bob the builder,builder,3,549,1
+Geth Go,builder,0,1,1
+Gambit Labs (https://gmbit.co),builder,0,156,1
+Titan Builder,builder,4319,139968,0
+boba-builder.com,builder,0,374,1
+Flashbots,builder,0,8805,1
 👻👻👻👻👻👻.eth,validator,0,1,1
 🇪🇺756.eth,validator,0,3,1
 zyrb.eth,validator,0,4,1
@@ -463,45 +505,3 @@ A41,validator,27,4662,1
 1-ether.eth,validator,0,3,1
 0dot1.eth,validator,0,1,1
 04221.eth,validator,1,4,0
-Shared/Default,builder,0,64,1
-https://edennetwork.io,builder,0,30,1
-rpc.fullblock.space,builder,0,8,1
-0x25,builder,0,6,1
-https://blockbeelder.com ð,builder,0,431,1
-EigenPhi,builder,0,24,1
-Builder+ www.btcs.com/builder,builder,0,87,1
-Ty For The Block,builder,7,193,0
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,165,1
-I can haz block?,builder,0,91,1
-lokibuilder.xyz,builder,116,1555,0
-PantherBot,builder,0,3,1
-0xb5072a39dcd3f4f63044fa23651adde2d783cccd6ad1ca84aea29a84a7ebb8fd4d2b11dab1f672722e3ce1f5a65db288,builder,0,3,1
-BloXroute,builder,0,41,1
-Ùgethgo1.20.14 linux,builder,24,393,0
-@penguinbuild.org,builder,142,1335,0
-rsync-builder.xyz,builder,0,64769,1
-beaverbuild.org,builder,3,164119,1
-BuildAI (https://buildai.net),builder,0,454,1
-jetbldr.xyz,builder,435,2891,0
-payload.de,builder,6,52,0
-Flashbots Imposter,builder,0,1082,1
-Flashbots SGX,builder,0,1654,1
-smithbot.xyz,builder,0,3,1
-Manifold,builder,12,72,0
-builder0x69,builder,0,496,1
-blocksmith.org,builder,5,72,0
-Bob the builder,builder,3,549,1
-Geth Go,builder,0,1,1
-Gambit Labs (https://gmbit.co),builder,0,156,1
-Titan Builder,builder,4319,139968,0
-boba-builder.com,builder,0,374,1
-Flashbots,builder,0,8805,1
-manifold,relay,57,691,0
-aestus,relay,898,12248,0
-titan,relay,391,10641,0
-flashbots,relay,0,27059,1
-bloxroute (max profit),relay,2,93254,1
-ultrasound,relay,2430,116213,0
-eden,relay,0,41,1
-agnostic Gnosis,relay,1293,53900,0
-bloxroute (regulated),relay,1,75899,1
