@@ -222,7 +222,6 @@ for entity in ["validator", "relay", "builder"]:
         a = a.reset_index()
         b = b.reset_index()
         a["percentage"] = b["touched_sanctioned_address"]/a["slot"]*100
-        print(a)
         censoring = a.apply(lambda x: x[entity] if x["percentage"] < avg_incl/4 and x["slot"] > 100 else None, axis=1)
         censoring = list(censoring.dropna())
         censoring = list(set(censoring + as_of_now_censoring))
