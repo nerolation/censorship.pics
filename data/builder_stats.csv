@@ -1,36 +1,35 @@
 builder,non_censored_blocks,all_blocks,share
 payload.de,9,10,90.0
-Manifold,14,32,43.75
+Manifold,16,32,50.0
 0x25,3,17,17.647058823529413
-jetbldr.xyz,82,577,14.211438474870016
-pandabuilder.io,7,70,10.0
-lokibuilder.xyz,17,312,5.448717948717949
-Ùgethgo1.20.14 linux,10,225,4.444444444444445
-@penguinbuild.org,11,339,3.2448377581120944
-Titan Builder,3587,195268,1.8369625335436426
-Bob the builder,5,506,0.9881422924901186
-beaverbuild.org,908,184590,0.49190096971666936
-0xad645a99eb5c574dc29ddbb414ce35d0b5c02ad4aa662c24bd906299e8284a5abf5b6bce9845ed338751cc17ac801bb4,0,2,0.0
-builder0x69,0,185,0.0
-boba-builder.com,0,302,0.0
-Flashbots,0,1843,0.0
-Geth Go,0,4,0.0
-Shared/Default,0,12,0.0
-0x807b00cc542a2f24202638bef5ec2e0e729ed1759d3f87158350e75ce010d9ccb746bcde4205c505bff6b3deeda59982,0,2,0.0
-I can haz block?,0,33,0.0
-"MevRefund - 1, Bad guys - 0",0,11,0.0
-0xb7c53e04bf3c88cdb38bf7a2bc8d591a2c2d01a04ab9f3dfb96254512303bf42b7c1dfbbd56f361747ec0f5cc5556560,0,2,0.0
-0x807a00919db875280147cc98ef29d49a4ff3ab533b4c33df21d6c189ce4df0fd9446114835d7d2d44fbe4e7aa0a1df4c,0,4,0.0
-Builder+ www.btcs.com/builder,0,443,0.0
-Flashbots SGX,0,915,0.0
-Flashbots Imposter,0,1415,0.0
-BuildAI (https://buildai.net),0,201,0.0
-https://blockbeelder.com ð,0,325,0.0
-rsync-builder.xyz,0,10193,0.0
-0x808b0035e892b3e47eb8b4b3e6f7116313c6d1378abfde48c6311f687f93f6fe241f270f2acf32e3927adc21c46b3a1e,0,1,0.0
+jetbldr.xyz,78,575,13.56521739130435
+pandabuilder.io,7,73,9.58904109589041
+lokibuilder.xyz,15,305,4.918032786885246
+Ùgethgo1.20.14 linux,10,214,4.672897196261682
+@penguinbuild.org,11,341,3.225806451612903
+Titan Builder,3509,194508,1.8040389084253605
+Bob the builder,5,515,0.9708737864077669
+beaverbuild.org,869,185728,0.4678885251550655
+I can haz block?,0,36,0.0
 Gambit Labs (https://gmbit.co),0,34,0.0
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,0,98,0.0
-smithbot.xyz,0,5,0.0
-Ty For The Block,0,64,0.0
+Builder+ www.btcs.com/builder,0,468,0.0
+0xad645a99eb5c574dc29ddbb414ce35d0b5c02ad4aa662c24bd906299e8284a5abf5b6bce9845ed338751cc17ac801bb4,0,2,0.0
+boba-builder.com,0,304,0.0
+0x808b0035e892b3e47eb8b4b3e6f7116313c6d1378abfde48c6311f687f93f6fe241f270f2acf32e3927adc21c46b3a1e,0,1,0.0
+0x807b00cc542a2f24202638bef5ec2e0e729ed1759d3f87158350e75ce010d9ccb746bcde4205c505bff6b3deeda59982,0,2,0.0
+https://blockbeelder.com ð,0,319,0.0
+BuildAI (https://buildai.net),0,194,0.0
+smithbot.xyz,0,6,0.0
+Flashbots Imposter,0,1434,0.0
 BloXroute,0,370,0.0
+Geth Go,0,4,0.0
+builder0x69,0,180,0.0
 KURWA,0,9,0.0
+Shared/Default,0,12,0.0
+0x807a00919db875280147cc98ef29d49a4ff3ab533b4c33df21d6c189ce4df0fd9446114835d7d2d44fbe4e7aa0a1df4c,0,4,0.0
+Ty For The Block,0,58,0.0
+"MevRefund - 1, Bad guys - 0",0,11,0.0
+rsync-builder.xyz,0,10134,0.0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,0,99,0.0
+Flashbots SGX,0,894,0.0
+Flashbots,0,1802,0.0
