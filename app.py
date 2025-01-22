@@ -65,7 +65,7 @@ def get_latest_slot_stats_14d(_df_censorship, category):
     
 # Data preparation
 def prepare_data():
-    df_censorship = pd.read_csv(DATA + "censorship_stats.csv").replace("Unknown", "Unknown/missed")
+    #df_censorship = pd.read_csv(DATA + "censorship_stats.csv").replace("Unknown", "Unknown/missed")
     
     #df_relays_over_time = pd.read_csv("relays_over_time.csv")
     #df_builders_over_time = pd.read_csv("builders_over_time.csv")
@@ -109,7 +109,7 @@ def prepare_data():
         return int(slot.split("[")[1].split("]")[0])
     
     return (
-        df_censorship,
+        #df_censorship,
         #df_relays_over_time,
         #df_builders_over_time,
         #df_validators_over_time,
@@ -131,7 +131,8 @@ def prepare_data():
     )
 ############ Load data
 
-(df_censorship, 
+(
+    #df_censorship, 
  #df_relays_over_time, 
  #df_builders_over_time, 
  #df_validators_over_time,
@@ -885,7 +886,7 @@ def comparison_chart(entity):
 
 # Figures
 def create_figures(
-    df_censorship, 
+    #df_censorship, 
     #df_relays_over_time, 
     #df_builders_over_time, 
     #df_validators_over_time,
@@ -905,9 +906,9 @@ def create_figures(
     bars_over_time_relay,
     bars_over_time_builder
 ):
-    fig_bars_60d = censorship_bars(latest_data_relay_60d, latest_data_builder_60d, latest_data_validator_60d)
-    fig_bars_30d = censorship_bars(latest_data_relay_30d, latest_data_builder_30d, latest_data_validator_30d)
-    fig_bars_14d = censorship_bars(latest_data_relay_14d, latest_data_builder_14d, latest_data_validator_14d)
+    #fig_bars_60d = censorship_bars(latest_data_relay_60d, latest_data_builder_60d, latest_data_validator_60d)
+    #fig_bars_30d = censorship_bars(latest_data_relay_30d, latest_data_builder_30d, latest_data_validator_30d)
+    #fig_bars_14d = censorship_bars(latest_data_relay_14d, latest_data_builder_14d, latest_data_validator_14d)
     fig_over_months = create_censorship_over_last_month(
         bars_over_time_validator, bars_over_time_relay, bars_over_time_builder
     )
@@ -924,14 +925,16 @@ def create_figures(
     )
     
     #fig_comparison = comparison_chart()
-    return (fig_bars_60d, fig_bars_30d, fig_bars_14d, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui, fig_bars_over_time) # fig_comparison,
+    return (#fig_bars_60d, fig_bars_30d, fig_bars_14d, 
+            fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui, fig_bars_over_time) # fig_comparison,
 
 
 
 ############
 
-fig_bars_60d, fig_bars_30d, fig_bars_14d, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui,fig_bars_over_time= create_figures(
-    df_censorship, 
+#fig_bars_60d, fig_bars_30d, fig_bars_14d, 
+fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui,fig_bars_over_time= create_figures(
+    #df_censorship, 
     #df_relays_over_time, 
     #df_builders_over_time, 
     #df_validators_over_time,

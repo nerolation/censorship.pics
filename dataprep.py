@@ -194,7 +194,9 @@ relay_manual_started_censoring = {"2022-09-15 00:00:00": "flashbots",
                                   "2022-09-18 00:00:00": "blocknative", 
                                   "2023-12-18 00:00:00": "bloxroute (max profit)"}
 
+NO_CENSORSHIP_AS_OF = "2025-01-22 00:00:00"
 for entity in ["validator", "relay", "builder"]:
+    CS = True
     print(f"\n{entity}")
     df.sort_values(by=['timestamp', entity], inplace=True)
     data = []
@@ -203,6 +205,8 @@ for entity in ["validator", "relay", "builder"]:
     _df = df[df[entity].isin(largest)].copy()
     as_of_now_censoring = []
     for date in pd.date_range(_df['timestamp'].min().date(), _df['timestamp'].max().date()):
+        if date == NO_CENSORSHIP_AS_OF:
+            CS = True #False
         
         print(date, end="\r")
         if entity == "relay":
@@ -225,6 +229,8 @@ for entity in ["validator", "relay", "builder"]:
         censoring = a.apply(lambda x: x[entity] if x["percentage"] < avg_incl/4 and x["slot"] > 100 else None, axis=1)
         censoring = list(censoring.dropna())
         censoring = list(set(censoring + as_of_now_censoring))
+        if not CS:
+            censoring = list()
         df_filtered2["censoring"] = df_filtered2[entity].isin(censoring).astype(int)
         gg = df_filtered2.groupby("censoring")["slot"].count()
         #gg = df_filtered2.groupby("censoring")["counts"].sum()/df_filtered2.groupby("censoring")["counts"].sum().sum()*100
@@ -249,30 +255,30 @@ for entity in ["validator", "relay", "builder"]:
 
 
 
-query = """
-SELECT *, IF(tc_blocks30/all_blocks30 < 0.0090, 1, 0) censoring FROM (
-
-SELECT A.relay as entity, "relay" as category, IFNULL(tc_blocks30, 0) tc_blocks30, all_blocks30 from
-(SELECT relay, blocks as all_blocks30 FROM `ethereum-data-nero.eth.9_tornado_relay_stats` where frame = "all_blocks_30d"
-) A LEFT JOIN (
-  SELECT relay, blocks as tc_blocks30 FROM `ethereum-data-nero.eth.9_tornado_relay_stats` where frame = "30d"
-) B on A.relay = B.relay
-UNION ALL
-SELECT A.builder, "builder" as category, IFNULL(tc_blocks30, 0) tc_blocks30, all_blocks30 from
-(SELECT builder, blocks as all_blocks30 FROM `ethereum-data-nero.eth.9_tornado_builder_stats` where frame = "all_blocks_30d"
-) A LEFT JOIN (
-  SELECT builder, blocks as tc_blocks30 FROM `ethereum-data-nero.eth.9_tornado_builder_stats` where frame = "30d"
-) B on A.builder = B.builder
-UNION ALL
-SELECT A.validator, "validator" as category, IFNULL(tc_blocks30, 0) tc_blocks30, all_blocks30 from
-(SELECT validator, blocks as all_blocks30 FROM `ethereum-data-nero.eth.9_tornado_validator_stats_censorship` where frame = "all_blocks_30d"
-) A LEFT JOIN (
-  SELECT validator, blocks as tc_blocks30 FROM `ethereum-data-nero.eth.9_tornado_validator_stats_censorship` where frame = "30d"
-) B on A.validator = B.validator)
-"""
-df_censoring = pd.read_gbq(query)
-
-df_censoring.to_csv(DATA + "censorship_stats.csv", index=False)
+#query = """
+#SELECT *, IF(tc_blocks30/all_blocks30 < 0.0090, 1, 0) censoring FROM (
+#
+#SELECT A.relay as entity, "relay" as category, IFNULL(tc_blocks30, 0) tc_blocks30, all_blocks30 from
+#(SELECT relay, blocks as all_blocks30 FROM `ethereum-data-nero.eth.9_tornado_relay_stats` where frame = "all_blocks_30d"
+#) A LEFT JOIN (
+#  SELECT relay, blocks as tc_blocks30 FROM `ethereum-data-nero.eth.9_tornado_relay_stats` where frame = "30d"
+#) B on A.relay = B.relay
+#UNION ALL
+#SELECT A.builder, "builder" as category, IFNULL(tc_blocks30, 0) tc_blocks30, all_blocks30 from
+#(SELECT builder, blocks as all_blocks30 FROM `ethereum-data-nero.eth.9_tornado_builder_stats` where frame = "all_blocks_30d"
+#) A LEFT JOIN (
+#  SELECT builder, blocks as tc_blocks30 FROM `ethereum-data-nero.eth.9_tornado_builder_stats` where frame = "30d"
+#) B on A.builder = B.builder
+#UNION ALL
+#SELECT A.validator, "validator" as category, IFNULL(tc_blocks30, 0) tc_blocks30, all_blocks30 from
+#(SELECT validator, blocks as all_blocks30 FROM `ethereum-data-nero.eth.9_tornado_validator_stats_censorship` where frame = "all_blocks_30d"
+#) A LEFT JOIN (
+#  SELECT validator, blocks as tc_blocks30 FROM `ethereum-data-nero.eth.9_tornado_validator_stats_censorship` where frame = "30d"
+#) B on A.validator = B.validator)
+#"""
+#df_censoring = pd.read_gbq(query)
+#
+#df_censoring.to_csv(DATA + "censorship_stats.csv", index=False)
 
 #DS = "ethereum-data-nero.eth.3_relays_over_time"
 #query = build_query("timestamp, relay, slot", DS, "ORDER BY slot DESC")
