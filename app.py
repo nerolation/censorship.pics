@@ -65,7 +65,7 @@ def get_latest_slot_stats_14d(_df_censorship, category):
     
 # Data preparation
 def prepare_data():
-    #df_censorship = pd.read_csv(DATA + "censorship_stats.csv").replace("Unknown", "Unknown/missed")
+    df_censorship = pd.read_csv(DATA + "censorship_stats.csv").replace("Unknown", "Unknown/missed")
     
     #df_relays_over_time = pd.read_csv("relays_over_time.csv")
     #df_builders_over_time = pd.read_csv("builders_over_time.csv")
@@ -109,7 +109,7 @@ def prepare_data():
         return int(slot.split("[")[1].split("]")[0])
     
     return (
-        #df_censorship,
+        df_censorship,
         #df_relays_over_time,
         #df_builders_over_time,
         #df_validators_over_time,
@@ -132,7 +132,7 @@ def prepare_data():
 ############ Load data
 
 (
-    #df_censorship, 
+    df_censorship, 
  #df_relays_over_time, 
  #df_builders_over_time, 
  #df_validators_over_time,
@@ -886,7 +886,7 @@ def comparison_chart(entity):
 
 # Figures
 def create_figures(
-    #df_censorship, 
+    df_censorship, 
     #df_relays_over_time, 
     #df_builders_over_time, 
     #df_validators_over_time,
@@ -934,7 +934,7 @@ def create_figures(
 
 #fig_bars_60d, fig_bars_30d, fig_bars_14d, 
 fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui,fig_bars_over_time= create_figures(
-    #df_censorship, 
+    df_censorship, 
     #df_relays_over_time, 
     #df_builders_over_time, 
     #df_validators_over_time,
