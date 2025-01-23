@@ -1088,9 +1088,9 @@ app.layout = html.Div(
             #dbc.Row(dbc.Col(html.Div(id="graph-container2")), style={"paddingBottom": "20px"}),
             dbc.Row(dbc.Col(id='graph1', md=12, className="mb-4")),
             
-            dbc.Row(dbc.Col(dcc.Graph(id='graph11', figure=fig_bars_60d), md=12, className="mb-4 animated fadeIn")),
-            dbc.Row(dbc.Col(dcc.Graph(id='graph12', figure=fig_bars_30d), md=12, className="mb-4 animated fadeIn")),
-            dbc.Row(dbc.Col(dcc.Graph(id='graph13', figure=fig_bars_14d), md=12, className="mb-4 animated fadeIn")),
+            #dbc.Row(dbc.Col(dcc.Graph(id='graph11', figure=fig_bars_60d), md=12, className="mb-4 animated fadeIn")),
+            #dbc.Row(dbc.Col(dcc.Graph(id='graph12', figure=fig_bars_30d), md=12, className="mb-4 animated fadeIn")),
+            #dbc.Row(dbc.Col(dcc.Graph(id='graph13', figure=fig_bars_14d), md=12, className="mb-4 animated fadeIn")),
             dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_bars_over_time), md=12, className="mb-4 animated fadeIn")),
             dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4 animated fadeIn")),
             
