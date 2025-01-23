@@ -1,4 +1,36 @@
 entity,category,tc_blocks30,all_blocks30,censoring
+BuilderNet (Beaver),builder,14,565,0
+I can haz block?,builder,0,27,1
+@penguinbuild.org,builder,0,6,1
+beaverbuild.org,builder,347,105625,1
+builder0x69,builder,0,23,1
+Ùgethgo1.20.14 linux,builder,7,78,0
+0xb44c8b28ba55a119737c72c9d3737f65fb67460dd2842c42864543b2e98f932cbea851b5943b994324c28a0451bdc841,builder,0,1,1
+0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,builder,0,1,1
+BuilderNet (Flashbots),builder,0,1133,1
+BloXroute,builder,0,20,1
+iobuilder,builder,0,4,1
+Titan Builder,builder,6061,104356,0
+0x45,builder,0,10,1
+lokibuilder.xyz,builder,43,108,0
+boba-builder.com,builder,4,57,0
+BuildAI (https://buildai.net),builder,10,181,0
+https://blockbeelder.com ð,builder,0,124,1
+rsync-builder.xyz,builder,0,5386,1
+Gambit Labs (https://gmbit.co),builder,0,17,1
+Ty For The Block,builder,2,38,0
+smithbot.xyz,builder,0,21,1
+â¡ð¤,builder,0,3,1
+Builder+ www.btcs.com/builder,builder,0,182,1
+jetbldr.xyz,builder,1,22,0
+Bob the builder,builder,0,140,1
+Manifold,builder,11,15,0
+0xa774a3aef54d9a8b1cb1ac932d2418dd30d0a6a4e34b70889fb97d50999a3403926a194b9b7aecaff5ddcbe15f5c84b1,builder,0,3,1
+BuilderNet (Nethermind),builder,120,943,0
+0xb7c58dd47bdedacf6a5ed9c36e65cfafa2749a644f4748e70bdc038273f7f9a9aa5a81ad53146c0ffe59c63fd053d8bf,builder,0,2,1
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,115,1
+Shared/Default,builder,0,9,1
+0x25,builder,0,1,1
 🙅🏻‍♀️.eth,validator,0,4,1
 🙅🏻‍♀.eth,validator,0,4,1
 zkblockbe.eth,validator,0,1,1
@@ -410,38 +442,6 @@ A41,validator,60,4306,0
 3f93.eth,validator,0,13,1
 1rvin.eth,validator,0,4,1
 04221.eth,validator,0,5,1
-BuilderNet (Beaver),builder,14,565,0
-I can haz block?,builder,0,27,1
-@penguinbuild.org,builder,0,6,1
-beaverbuild.org,builder,347,105625,1
-builder0x69,builder,0,23,1
-Ùgethgo1.20.14 linux,builder,7,78,0
-0xb44c8b28ba55a119737c72c9d3737f65fb67460dd2842c42864543b2e98f932cbea851b5943b994324c28a0451bdc841,builder,0,1,1
-0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,builder,0,1,1
-BuilderNet (Flashbots),builder,0,1133,1
-BloXroute,builder,0,20,1
-iobuilder,builder,0,4,1
-Titan Builder,builder,6061,104356,0
-0x45,builder,0,10,1
-lokibuilder.xyz,builder,43,108,0
-boba-builder.com,builder,4,57,0
-BuildAI (https://buildai.net),builder,10,181,0
-https://blockbeelder.com ð,builder,0,124,1
-rsync-builder.xyz,builder,0,5386,1
-Gambit Labs (https://gmbit.co),builder,0,17,1
-Ty For The Block,builder,2,38,0
-smithbot.xyz,builder,0,21,1
-â¡ð¤,builder,0,3,1
-Builder+ www.btcs.com/builder,builder,0,182,1
-jetbldr.xyz,builder,1,22,0
-Bob the builder,builder,0,140,1
-Manifold,builder,11,15,0
-0xa774a3aef54d9a8b1cb1ac932d2418dd30d0a6a4e34b70889fb97d50999a3403926a194b9b7aecaff5ddcbe15f5c84b1,builder,0,3,1
-BuilderNet (Nethermind),builder,120,943,0
-0xb7c58dd47bdedacf6a5ed9c36e65cfafa2749a644f4748e70bdc038273f7f9a9aa5a81ad53146c0ffe59c63fd053d8bf,builder,0,2,1
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,115,1
-Shared/Default,builder,0,9,1
-0x25,builder,0,1,1
 ultrasound,relay,4200,141454,0
 agnostic Gnosis,relay,932,20521,0
 aestus,relay,186,6146,0

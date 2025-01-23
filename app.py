@@ -906,9 +906,9 @@ def create_figures(
     bars_over_time_relay,
     bars_over_time_builder
 ):
-    #fig_bars_60d = censorship_bars(latest_data_relay_60d, latest_data_builder_60d, latest_data_validator_60d)
-    #fig_bars_30d = censorship_bars(latest_data_relay_30d, latest_data_builder_30d, latest_data_validator_30d)
-    #fig_bars_14d = censorship_bars(latest_data_relay_14d, latest_data_builder_14d, latest_data_validator_14d)
+    fig_bars_60d = censorship_bars(latest_data_relay_60d, latest_data_builder_60d, latest_data_validator_60d)
+    fig_bars_30d = censorship_bars(latest_data_relay_30d, latest_data_builder_30d, latest_data_validator_30d)
+    fig_bars_14d = censorship_bars(latest_data_relay_14d, latest_data_builder_14d, latest_data_validator_14d)
     fig_over_months = create_censorship_over_last_month(
         bars_over_time_validator, bars_over_time_relay, bars_over_time_builder
     )
@@ -925,15 +925,14 @@ def create_figures(
     )
     
     #fig_comparison = comparison_chart()
-    return (#fig_bars_60d, fig_bars_30d, fig_bars_14d, 
+    return (fig_bars_60d, fig_bars_30d, fig_bars_14d, 
             fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui, fig_bars_over_time) # fig_comparison,
 
 
 
 ############
 
-#fig_bars_60d, fig_bars_30d, fig_bars_14d, 
-fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui,fig_bars_over_time= create_figures(
+fig_bars_60d, fig_bars_30d, fig_bars_14d, fig_over_months, fig_comp_val, fig_comp_rel, fig_comp_bui,fig_bars_over_time= create_figures(
     df_censorship, 
     #df_relays_over_time, 
     #df_builders_over_time, 
@@ -1089,9 +1088,9 @@ app.layout = html.Div(
             #dbc.Row(dbc.Col(html.Div(id="graph-container2")), style={"paddingBottom": "20px"}),
             dbc.Row(dbc.Col(id='graph1', md=12, className="mb-4")),
             
-            #dbc.Row(dbc.Col(dcc.Graph(id='graph11', figure=fig_bars_60d), md=12, className="mb-4 animated fadeIn")),
-            #dbc.Row(dbc.Col(dcc.Graph(id='graph12', figure=fig_bars_30d), md=12, className="mb-4 animated fadeIn")),
-            #dbc.Row(dbc.Col(dcc.Graph(id='graph13', figure=fig_bars_14d), md=12, className="mb-4 animated fadeIn")),
+            dbc.Row(dbc.Col(dcc.Graph(id='graph11', figure=fig_bars_60d), md=12, className="mb-4 animated fadeIn")),
+            dbc.Row(dbc.Col(dcc.Graph(id='graph12', figure=fig_bars_30d), md=12, className="mb-4 animated fadeIn")),
+            dbc.Row(dbc.Col(dcc.Graph(id='graph13', figure=fig_bars_14d), md=12, className="mb-4 animated fadeIn")),
             dbc.Row(dbc.Col(dcc.Graph(id='graph3', figure=fig_bars_over_time), md=12, className="mb-4 animated fadeIn")),
             dbc.Row(dbc.Col(dcc.Graph(id='graph2', figure=fig_over_months), md=12, className="mb-4 animated fadeIn")),
             
