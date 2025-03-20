@@ -1,31 +1,33 @@
 builder,non_censored_blocks,all_blocks,share
+jetbldr.xyz,4,3,133.33333333333331
 mars,1,1,100.0
-jetbldr.xyz,4,4,100.0
 0x949f7dca0daa7b88f80c74f5c202ff5f3407029ddade8b0bc7750c39fabdb49d386acb69f69ef37502776c6bb3bef58c,1,1,100.0
-lokibuilder.xyz,69,88,78.4090909090909
-smithbot.xyz,9,30,30.0
+lokibuilder.xyz,31,67,46.26865671641791
+smithbot.xyz,9,31,29.03225806451613
 Manifold,2,7,28.57142857142857
-BuilderNet (Nethermind),377,1383,27.259580621836587
+BuilderNet (Nethermind),371,1381,26.864590876176685
 0x45,2,8,25.0
-boba-builder.com,24,117,20.51282051282051
-Ùgethgo1.20.14 linux,26,136,19.11764705882353
-BuildAI (https://buildai.net),34,201,16.91542288557214
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,22,180,12.222222222222221
-Ty For The Block,5,43,11.627906976744185
-BuilderNet (Beaver),145,1456,9.958791208791208
-Titan Builder,5617,80363,6.989534985005537
-beaverbuild.org,1397,93030,1.5016661292056326
-Builder+ www.btcs.com/builder,0,2592,0.0
-Shared/Default,0,2,0.0
-rsync-builder.xyz,0,26582,0.0
+Ùgethgo1.20.14 linux,26,133,19.548872180451127
+boba-builder.com,24,123,19.51219512195122
+BuildAI (https://buildai.net),34,200,17.0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,22,179,12.290502793296088
+BuilderNet (Beaver),155,1441,10.756419153365718
+Ty For The Block,3,41,7.317073170731707
+Titan Builder,5619,80675,6.964982956306167
+beaverbuild.org,1400,92394,1.515249908002684
+Bob the builder,0,218,0.0
+iobuilder,0,1,0.0
+https://blockbeelder.com ð,0,704,0.0
+0x94e8a3397f2faa7a0276e61eb60d16422e8ccb86d239a51a189afe11c8717d49e1cd0945c5ff3a9a28f8002e6d353920,0,1,0.0
+Builder+ www.btcs.com/builder,0,2564,0.0
+BuilderNet (Flashbots),0,678,0.0
 r(sync)builder,0,18,0.0
-0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,0,3,0.0
-Gambit Labs (https://gmbit.co),0,23,0.0
-BloXroute,0,51,0.0
-Bob the builder,0,219,0.0
 0x945277fd546c0213003d939c22e86b68b7cdec6349e0488a6deba69928d33784bac474b08f02e99ab4810adce5934fd9,0,1,0.0
-builder0x69,0,82,0.0
 I can haz block?,0,47,0.0
-https://blockbeelder.com ð,0,670,0.0
-BuilderNet (Flashbots),0,690,0.0
+BloXroute,0,51,0.0
+Shared/Default,0,2,0.0
+Gambit Labs (https://gmbit.co),0,23,0.0
+rsync-builder.xyz,0,26468,0.0
+0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,0,3,0.0
 "MevRefund - 1, Bad guys - 0",0,1,0.0
+builder0x69,0,83,0.0
