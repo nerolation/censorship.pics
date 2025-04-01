@@ -194,6 +194,8 @@ relay_manual_started_censoring = {"2022-09-15 00:00:00": "flashbots",
                                   "2022-09-18 00:00:00": "blocknative", 
                                   "2023-12-18 00:00:00": "bloxroute (max profit)"}
 
+relay_manual_stopped_censoring = "2025-03-21 00:00:00"
+
 NO_CENSORSHIP_AS_OF = "2025-01-22 00:00:00"
 for entity in ["validator", "relay", "builder"]:
     CS = True
@@ -213,6 +215,10 @@ for entity in ["validator", "relay", "builder"]:
             if str(date) in relay_manual_started_censoring.keys():
                 print(f"adding {relay_manual_started_censoring[str(date)]} to censoring entities as of {str(date)}")
                 as_of_now_censoring.append(relay_manual_started_censoring[str(date)])
+
+            if str(date) == relay_manual_stopped_censoring:
+                print(f"removing all relays from censoring entities as of {str(date)}")
+                as_of_now_censoring = []
         start_date = date - pd.Timedelta(days=29)
         mask = (_df['timestamp'] >= start_date) & (_df['timestamp'] <= date)
         mask2 = (_df['timestamp'] >= date - pd.Timedelta(days=1)) & (_df['timestamp'] <= date)
