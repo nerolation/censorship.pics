@@ -1,58 +1,9 @@
 entity,category,tc_blocks30,all_blocks30,censoring
-0x81202c1ffa531f84e73d7a20d98a0a2d5d51f999903bafa7bbd092dd5253678498d5ac2ce5412e446197344211591152,builder,0,1,1
-0x81a523ce895652c8d09a7d48c951ba1927ac91330693b43e83d2912c7c6cfe9dc37d92d0e69f81fbaae77a6c9db5715c,builder,1,1,0
-0x91c3a1c98372fcd21aab7a30e3bb8171d7f3cba9c966bbce8a9dfa0e374b29133d058bf76dbfb1209c477c12f1e9c450,builder,0,1,1
-0x866ebf88e7088e2e4dcac3edf2b8bfdf85de2ea077148901f4d624ce489434985bd44f0b79fe77980e33684564d4a879,builder,0,1,1
-0xa14d248e2239daba09db6413e6bd8e7a1804d6b2f9da74c9258d739ec9f5a07477f736d082ab12c15892156adbdfa1a3,builder,0,1,1
-0xaaf4171baa283eef0ba0bc0912726376af850acd67b596f44e1af2c23957c37e8a21ee213c46ad754ef570cc5929416f,builder,0,1,1
-0xa5402074c6f966be5032b7047dad681a4853e7a35ee7e8a7957aa3427112347ea28250a4e7fecab68580182d922b69d7,builder,0,1,1
-0xb653a244a8a488b88a825ce6e4c798c594046c01b2abea70bc52ce9bf18ff8e48d5694773effe83f5fab07f7c2b96e97,builder,0,1,1
-0xaa7c8820da32f528bbd578f664b4b8b7ee9b5747aad9e6c1e45dc0709381e948b1b56d87af686b0b802624c41b02af85,builder,0,1,1
-0xa67ffc3a01c2ffe82ffff103311381b79bdb03bbd825a1d4673a88ef1ba7559cd19afd799c782abb6b4b53f825fcf848,builder,0,1,1
-0x806541591e866ae5c782e83413225852a259c077b8dd1b4bfdd6dbc12af5900896ae1c8c3da9e52ca7f0ea48e523ff8f,builder,0,1,1
-0x91be7043f59bded99220334fc07d7e64a96692a99326d559402b02cf0dc2b7a1009216c7e4d789ecbb149fd458486879,builder,0,2,1
-GrizzlyBuilder,builder,0,2,1
-"MevRefund - 1, Bad guys - 0",builder,0,4,1
-mars,builder,0,7,1
-0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,builder,0,8,1
-Manifold,builder,4,8,0
-Shared/Default,builder,0,10,1
-Gambit Labs (https://gmbit.co),builder,0,12,1
-0x45,builder,1,16,0
-smithbot.xyz,builder,5,17,0
-BloXroute,builder,7,47,0
-â¨ Quasar â¨,builder,0,64,1
-Ty For The Block,builder,6,66,0
-I can haz block?,builder,1,100,0
-builder0x69,builder,0,101,1
-Ùgethgo1.20.14 linux,builder,14,107,0
-boba-builder.com,builder,20,121,0
-â¨ Quasar (quasar.win) â¨,builder,16,131,0
-Eureka Builder,builder,6,144,0
-BuildAI (https://buildai.net),builder,24,199,0
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,2,208,0
-iobuilder,builder,26,638,0
-https://blockbeelder.com ð,builder,0,794,1
-Bob the builder,builder,0,807,1
-BuilderNet (Nethermind),builder,135,1258,0
-BuilderNet (Flashbots),builder,168,1356,0
-BuilderNet (Beaver),builder,357,1537,0
-Builder+ www.btcs.com/builder,builder,0,2202,1
-rsync-builder.xyz,builder,0,14769,1
-Titan Builder,builder,6757,90650,0
-beaverbuild.org,builder,6342,98163,0
-manifold,relay,4,14,0
-titan,relay,1686,48965,0
-bloxroute (max profit),relay,2821,105704,0
-ultrasound,relay,5776,129940,0
-aestus,relay,197,6744,0
-flashbots,relay,295,14698,0
-bloxroute (regulated),relay,2501,91435,0
-agnostic Gnosis,relay,518,9488,0
 🙅🏻‍♀️.eth,validator,0,1,1
 🙅🏻‍♀.eth,validator,0,1,1
 zlatohlavek.eth,validator,0,1,1
 zekey.eth,validator,1,3,0
+zbron.eth,validator,0,1,1
 yuut.eth,validator,0,1,1
 yallow.eth,validator,0,4,1
 xp1.eth,validator,0,2,1
@@ -60,95 +11,98 @@ xelor.eth,validator,0,1,1
 wzhao.eth,validator,0,5,1
 writter.eth,validator,1,5,0
 wex exchange,validator,12,168,0
-wesurvivedthemerge.eth,validator,0,4,1
+wesurvivedthemerge.eth,validator,0,5,1
 wennroad.eth,validator,0,2,1
 weekev.eth,validator,0,2,1
 webberz.eth,validator,0,1,1
 wavebeing.eth,validator,0,4,1
-was.eth,validator,4,57,0
-vitriol.eth,validator,0,4,1
+was.eth,validator,4,61,0
+vitriol.eth,validator,0,3,1
 verylongaddress.eth,validator,0,5,1
 vedants.eth,validator,0,1,1
 vasrelpor.eth,validator,0,4,1
 vapem.eth,validator,0,2,1
+valdivieso.eth,validator,0,1,1
 uprosetheloftythoughts.eth,validator,0,2,1
-upbit,validator,177,5131,0
+upbit,validator,185,5188,0
+u96.eth,validator,0,1,1
 typeyape.eth,validator,0,3,1
 trist.eth,validator,3,5,0
 trier.eth,validator,0,1,1
 tomgargiulo.eth,validator,0,3,1
 thecoldwallet.eth,validator,0,4,1
-thebluebook.eth,validator,0,2,1
+thebluebook.eth,validator,0,3,1
 tfelix.eth,validator,0,1,1
 terrytai.eth,validator,0,1,1
+temaki.eth,validator,0,1,1
 teku team,validator,2,32,0
 teague.eth,validator,0,2,1
 tasslehoff.eth,validator,0,4,1
 tanongsak.eth,validator,0,6,1
-tanner.eth,validator,0,3,1
+tanner.eth,validator,0,1,1
 tablemountain.eth,validator,0,2,1
-synergycrypto.eth,validator,0,20,1
-swell,validator,28,648,0
+synergycrypto.eth,validator,5,25,0
+swell,validator,29,640,0
 superphiz.eth,validator,0,4,1
 sunbird.eth,validator,0,1,1
 sturmh.eth,validator,0,6,1
-stkr (ankr),validator,5,176,0
-stakewise solos,validator,0,47,1
-stakewise,validator,0,74,1
-stakesaurus.eth,validator,0,1,1
-stakehound,validator,11,620,0
-stakefish,validator,222,5002,0
-staked.us,validator,162,5543,0
+stkr (ankr),validator,7,166,0
+stakewise solos,validator,0,41,1
+stakewise,validator,0,62,1
+stakehound,validator,11,598,0
+stakefish,validator,235,4993,0
+staked.us,validator,171,5595,0
 staked.finance,validator,0,3,1
 stake.tomx.eth,validator,0,7,1
 stake.atg.eth,validator,0,1,1
 stake-frites.eth,validator,0,1,1
-stafi,validator,3,36,0
+stafi,validator,3,40,0
 spyglassventures.eth,validator,0,1,1
 sprc-brothers.eth,validator,0,6,1
 spicetrader.eth,validator,0,1,1
 spacetractor.eth,validator,0,1,1
 sockeye.eth,validator,0,2,1
-smidge.eth,validator,0,7,1
+snowpea.eth,validator,0,1,1
+smidge.eth,validator,0,8,1
 smartin.eth,validator,0,1,1
 sjhumphrey.eth,validator,0,3,1
 sigma prime team,validator,3,38,0
 showaid.eth,validator,1,3,0
 sherryw.eth,validator,0,2,1
-sharedstake,validator,0,20,1
+sharedstake,validator,0,17,1
 setnof.eth,validator,0,1,1
 semaj.eth,validator,0,2,1
 seamonkey.eth,validator,1,2,0
 scttl.eth,validator,0,1,1
 scg.eth,validator,0,9,1
 satine.eth,validator,0,1,1
-row.eth,validator,0,2,1
+row.eth,validator,0,1,1
 rotigga.eth,validator,0,2,1
 roryburcham.eth,validator,0,4,1
-ronit.eth,validator,0,11,1
-rockx,validator,23,339,0
-rocketpool,validator,186,6297,0
+ronit.eth,validator,0,12,1
+rockx,validator,26,334,0
+rocketpool,validator,186,6330,0
 rithi.eth,validator,0,1,1
 richtheg.eth,validator,0,3,1
 richguypaul.eth,validator,0,1,1
 rgenc.eth,validator,0,1,1
-revolut,validator,18,577,0
+revolut,validator,19,577,0
 revere.eth,validator,0,3,1
-renzo,validator,98,2955,0
-redacted pirex,validator,20,790,0
+renzo,validator,101,2921,0
+redacted pirex,validator,25,765,0
 raekye.eth,validator,0,1,1
 radwanski.eth,validator,0,10,1
 punk6883.eth,validator,0,2,1
-punk0x.eth,validator,0,5,1
+punk0x.eth,validator,0,2,1
 ptxptx: eth2 depositor,validator,0,2,1
 pseudote.eth,validator,0,3,1
-prysm team,validator,1,24,0
+prysm team,validator,1,26,0
 proofofsoy.eth,validator,0,5,1
 privato.eth,validator,0,1,1
 prestonvanloon.eth,validator,0,2,1
-pottash.eth,validator,1,12,0
+pottash.eth,validator,2,14,0
 porom.eth,validator,0,4,1
-poloniex,validator,8,292,0
+poloniex,validator,8,291,0
 pmayerh.eth,validator,1,1,0
 plantregistry.eth,validator,0,2,1
 pigfrown.eth,validator,0,1,1
@@ -156,18 +110,18 @@ pharos.eth,validator,0,1,1
 petclippy.umbra.eth,validator,0,1,1
 peruzzi.eth,validator,0,2,1
 permafrost.eth,validator,0,5,1
-pepes.eth,validator,0,3,1
+pepes.eth,validator,0,1,1
 penguingrenade.eth,validator,0,2,1
-peleg.eth,validator,1,32,0
-pate.eth,validator,0,4,1
+peleg.eth,validator,1,29,0
+pate.eth,validator,0,5,1
 passabilities.eth,validator,0,2,1
 pachacamac.eth,validator,0,1,1
-p2p.org,validator,143,4174,0
+p2p.org,validator,142,4158,0
 ollett.eth,validator,0,1,1
-okx,validator,279,6586,0
+okx,validator,282,6573,0
 okonomi.eth,validator,0,8,1
 nomis.eth,validator,0,6,1
-node dao,validator,9,135,0
+node dao,validator,9,142,0
 njknight.eth,validator,0,5,1
 nimbus team,validator,0,11,1
 neukind.com,validator,0,4,1
@@ -180,17 +134,17 @@ murat.eth,validator,0,2,1
 mrwordthy.eth,validator,0,1,1
 mrock.eth,validator,0,1,1
 moontrader.eth,validator,0,4,1
-moodysalem.eth,validator,0,7,1
+moodysalem.eth,validator,0,8,1
 momose.eth,validator,0,1,1
 moataz.eth,validator,2,5,0
 mkkoll.eth,validator,1,1,0
-missed,validator,0,813,1
+missed,validator,0,800,1
 mirasol.eth,validator,0,2,1
-mintdice.com,validator,3,47,0
-minimaal.eth,validator,0,1,1
+mintdice.com,validator,3,49,0
+minimaal.eth,validator,0,2,1
 michaelward.eth,validator,0,10,1
 meta.tortfeasor.eth,validator,0,2,1
-mercado bitcoin,validator,16,415,0
+mercado bitcoin,validator,16,414,0
 mcgukin.eth,validator,0,1,1
 mc: eth2 depositor,validator,0,2,1
 mauser,validator,0,1,1
@@ -198,26 +152,26 @@ masterbuilder.eth,validator,0,3,1
 mas.eth,validator,0,1,1
 marklevey.eth,validator,0,1,1
 marioxnyc.eth,validator,0,1,1
-mantle,validator,161,3913,0
+mantle,validator,167,3957,0
 mansour.eth,validator,0,4,1
 malachite🟢️.eth,validator,0,3,1
 malachite🟢.eth,validator,0,3,1
 ludvig.eth,validator,1,6,0
 lololp.eth,validator,0,2,1
 lludo.eth,validator,1,4,0
-liquid collective,validator,33,1213,0
-lido,validator,261,7238,0
+liquid collective,validator,37,1215,0
+lido,validator,273,7184,0
 ledger.etherbase.eth,validator,0,1,1
 lazlokovacs.eth,validator,0,2,1
-l3xclim.eth,validator,0,1,1
+l3xclim.eth,validator,0,2,1
 kucoin,validator,6,190,0
 kryptokicks.eth,validator,0,1,1
-kraken,validator,303,12527,0
+kraken,validator,338,12478,0
 knirck.eth,validator,0,2,1
 klivan.eth,validator,1,1,0
-kiln,validator,750,19967,0
-kelp dao,validator,42,1514,0
-katto.eth,validator,0,15,1
+kiln,validator,792,20006,0
+kelp dao,validator,41,1522,0
+katto.eth,validator,0,14,1
 kar-ma.eth,validator,0,1,1
 kain.eth,validator,0,2,1
 jwcrowe.eth,validator,0,1,1
@@ -225,6 +179,7 @@ jspaceman.eth,validator,0,4,1
 joycedental.eth,validator,0,5,1
 jonboy.eth,validator,0,7,1
 johnlynn.eth,validator,0,3,1
+johannesheizmann.eth,validator,0,2,1
 jeshli.eth,validator,0,1,1
 jeremie.eth,validator,1,2,0
 jasonthane.eth,validator,0,1,1
@@ -232,7 +187,7 @@ jaskier.eth,validator,0,4,1
 inovas.eth,validator,0,1,1
 infinityportal.eth,validator,0,1,1
 inferno114.eth,validator,1,1,0
-imtoken,validator,42,1309,0
+imtoken,validator,42,1319,0
 iicc.eth,validator,0,1,1
 igisandros.eth,validator,0,2,1
 ice.spectrehaunt.eth,validator,0,1,1
@@ -240,19 +195,19 @@ ibeli.eth,validator,1,6,0
 hylick.eth,validator,0,2,1
 hubereustice.eth,validator,0,2,1
 hord,validator,4,35,0
-honoraryape.eth,validator,2,66,0
+honoraryape.eth,validator,2,63,0
 honestwork.eth,validator,0,3,1
 highflyer.eth,validator,0,1,1
 harchy.eth,validator,0,3,1
 hanatour.eth,validator,0,1,1
 h0lding.eth,validator,0,1,1
 gunninginc.eth,validator,0,1,1
-gunfighter.eth,validator,0,12,1
-guccilorian.eth,validator,0,40,1
+gunfighter.eth,validator,0,13,1
+guccilorian.eth,validator,0,38,1
 grunt.eth,validator,0,6,1
 groo2.eth,validator,0,5,1
 griet.eth,validator,0,1,1
-greid.eth,validator,0,4,1
+greid.eth,validator,0,3,1
 greedland.eth,validator,1,23,0
 gov.ramana.eth,validator,0,1,1
 godavego.eth,validator,0,11,1
@@ -263,24 +218,24 @@ geleeroyale.eth,validator,0,3,1
 gameishard.eth,validator,0,1,1
 galenj.eth,validator,0,8,1
 gajit.eth,validator,0,2,1
-fsjal.eth,validator,0,4,1
+fsjal.eth,validator,0,3,1
 freedom55.eth,validator,0,18,1
-frax finance,validator,34,838,0
+frax finance,validator,34,834,0
 frankp.eth,validator,0,1,1
 for.eth,validator,2,40,0
 flowglow.eth,validator,0,4,1
 fireduck.eth,validator,0,2,1
-figment,validator,311,13195,0
+figment,validator,334,13203,0
 ferengi.eth,validator,0,3,1
-everstake pool,validator,3,95,0
-everstake,validator,294,8529,0
+everstake pool,validator,3,97,0
+everstake,validator,292,8580,0
 ethercash.eth,validator,0,7,1
-ether.fi,validator,1143,33723,0
+ether.fi,validator,1211,33724,0
 errantventure.eth,validator,0,3,1
 ericnagel.eth,validator,0,5,1
 erebels.eth,validator,0,1,1
 epstrom.eth,validator,3,25,0
-epotter,validator,0,2,1
+epotter,validator,0,1,1
 epaul.eth,validator,0,1,1
 emint.eth,validator,0,1,1
 eigenpie,validator,0,5,1
@@ -291,7 +246,7 @@ ebunker,validator,0,47,1
 dymaxiontechnology.eth,validator,1,3,0
 dutchie.eth,validator,0,1,1
 dubbo.eth,validator,0,1,1
-dsommer.eth,validator,0,2,1
+dsommer.eth,validator,0,3,1
 dougcastoldi.eth,validator,0,5,1
 dinglin.eth,validator,1,6,0
 dfern.eth,validator,0,2,1
@@ -300,35 +255,35 @@ defilogic.eth,validator,0,2,1
 davieli.eth,validator,0,3,1
 davidvreed.eth,validator,4,4,0
 davidtuber.eth,validator,1,1,0
-daveydoo.eth,validator,1,8,0
+daveydoo.eth,validator,1,9,0
 datawarehouse.eth,validator,0,2,1
 darthmike.eth,validator,0,1,1
-danielh.eth,validator,0,1,1
+danielh.eth,validator,0,2,1
 danhsiu.eth,validator,0,3,1
 d0ck3r.eth,validator,0,1,1
 curtisc.eth,validator,0,1,1
 currentoor.eth,validator,0,1,1
-cumberland,validator,32,1168,0
+cumberland,validator,33,1137,0
 ctrl-alt.eth,validator,0,6,1
-cryptostake.com,validator,2,43,0
+cryptostake.com,validator,2,44,0
 cryptodubs.eth,validator,1,2,0
-consensys,validator,88,1948,0
+consensys,validator,97,1933,0
 compound governance,validator,0,2,1
 combinations.eth,validator,0,5,1
 collaboard.eth,validator,1,10,0
-coinspot,validator,22,746,0
+coinspot,validator,23,754,0
 coinspiracy.eth,validator,0,19,1
-coinbase,validator,870,21984,0
+coinbase,validator,919,21981,0
 clownworld.eth,validator,0,1,1
 civalot.eth,validator,0,1,1
 cigarface.eth,validator,0,1,1
 chrisw.eth,validator,0,1,1
 chosunone.eth,validator,0,1,1
-chorus one,validator,5,51,0
+chorus one,validator,5,50,0
 chillfam.eth,validator,0,2,1
-celsius,validator,100,4169,0
+celsius,validator,110,4165,0
 cartcollector.eth,validator,0,1,1
-careerin.eth,validator,1,2,0
+careerin.eth,validator,0,1,1
 calibrium.eth,validator,0,1,1
 byronyoung.eth,validator,0,1,1
 brotherfromanothermother.eth,validator,0,1,1
@@ -337,29 +292,28 @@ brntoken.eth,validator,0,1,1
 brik.eth,validator,0,1,1
 brigs: eth2 depositor,validator,0,1,1
 brigs.eth,validator,0,1,1
-brianlester.eth,validator,0,1,1
 brianfitzgerald.eth,validator,0,1,1
-brianahern.eth,validator,0,3,1
+brianahern.eth,validator,0,5,1
 bpopa.eth,validator,0,1,1
 bmuscat.eth,validator,0,1,1
-blox staking,validator,1,13,0
+blox staking,validator,1,11,0
 blockedge.eth,validator,0,2,1
-blockdaemon,validator,96,4099,0
-bitstamp,validator,58,1695,0
-bitshameddesk.eth,validator,2,142,0
+blockdaemon,validator,106,4096,0
+bitstamp,validator,61,1667,0
+bitshameddesk.eth,validator,2,143,0
 bitpie,validator,0,43,1
-bitgo,validator,4,132,0
-bitget,validator,6,150,0
-bitfinex,validator,23,737,0
+bitgo,validator,4,130,0
+bitget,validator,6,152,0
+bitfinex,validator,26,756,0
 bitcoinlouie.eth,validator,0,1,1
-bitcoin suisse,validator,169,3522,0
+bitcoin suisse,validator,180,3523,0
 birge.eth,validator,0,2,1
 bingley.eth,validator,0,4,1
-binarybangers.eth,validator,0,12,1
-binance,validator,1268,33612,0
+binarybangers.eth,validator,0,10,1
+binance,validator,1303,33535,0
 bigwall.eth,validator,0,1,1
 bifrost,validator,0,5,1
-bienen.eth,validator,1,5,0
+bienen.eth,validator,1,3,0
 bhent.eth,validator,0,1,1
 benmichaelis.eth,validator,0,7,1
 benjaminchodroff.eth,validator,0,10,1
@@ -368,16 +322,16 @@ beermonst.eth,validator,0,3,1
 beerbaron.eth,validator,0,1,1
 beareatfish.eth,validator,0,1,1
 baorui.eth,validator,0,3,1
-banteg.eth,validator,0,2,1
+banteg.eth,validator,0,3,1
 balin.eth,validator,0,2,1
 badgas.eth,validator,0,4,1
 b18c.eth,validator,0,1,1
 avuja.eth,validator,0,1,1
-avastake.eth,validator,0,3,1
+avastake.eth,validator,0,4,1
 aspheris.eth,validator,0,3,1
 angelovski.eth,validator,0,1,1
 andermatt.eth,validator,2,11,0
-amiga500.eth,validator,2,48,0
+amiga500.eth,validator,2,49,0
 alistake.eth,validator,0,1,1
 alexphelps.eth,validator,1,1,0
 aksoy.eth,validator,0,1,1
@@ -386,46 +340,96 @@ akaifox.eth,validator,0,1,1
 afei.eth,validator,0,9,1
 aeonic.eth,validator,0,1,1
 adybaev.eth,validator,0,1,1
-Staking Facilities,validator,63,1621,0
-Stakin,validator,93,1865,0
-Stakely,validator,118,3101,0
-SkillZ,validator,145,3566,0
-Simply Staking,validator,100,3097,0
-Sigma Prime,validator,76,1694,0
-SenseiNode,validator,67,2307,0
-RockawayX Infra,validator,80,1795,0
-RockX,validator,105,3079,0
-RockLogic GmbH,validator,77,3136,0
-Prysmatic Labs,validator,114,3060,0
-ParaFi Technologies LLC,validator,101,3070,0
-P2P.ORG - P2P Validator,validator,75,1765,0
-Nethermind,validator,114,3007,0
-Launchnodes,validator,136,3024,0
-Kukis Global,validator,89,2423,0
-InfStones,validator,103,3467,0
-HashQuark,validator,122,3054,0
-Gateway.fm AS,validator,87,1549,0
-Figment,validator,87,3044,0
-Everstake,validator,133,3150,0
-Ebunker,validator,93,2896,0
-Develp GmbH,validator,90,2302,0
-DSRV,validator,132,3237,0
-CryptoManufaktur,validator,87,2279,0
-ConsenSys Codefi,validator,126,3422,0
-Chorus One,validator,106,2570,0
-ChainSafe,validator,86,1646,0
-ChainLayer,validator,120,3087,0
-BridgeTower,validator,85,1668,0
-Blockscape,validator,72,1513,0
-Blockdaemon,validator,47,2066,0
-Attestant (BVI) Limited,validator,98,1823,0
-Allnodes,validator,113,3680,0
-A41,validator,111,3553,0
+Staking Facilities,validator,67,1608,0
+Stakin,validator,91,1849,0
+Stakely,validator,124,3086,0
+SkillZ,validator,157,3578,0
+Simply Staking,validator,103,3100,0
+Sigma Prime,validator,70,1704,0
+SenseiNode,validator,80,2339,0
+RockawayX Infra,validator,81,1806,0
+RockX,validator,117,3103,0
+RockLogic GmbH,validator,76,3102,0
+Prysmatic Labs,validator,122,3061,0
+ParaFi Technologies LLC,validator,112,3045,0
+P2P.ORG - P2P Validator,validator,79,1820,0
+Nethermind,validator,127,3011,0
+Launchnodes,validator,141,2989,0
+Kukis Global,validator,99,2392,0
+InfStones,validator,107,3456,0
+HashQuark,validator,127,3022,0
+Gateway.fm AS,validator,87,1557,0
+Figment,validator,89,3010,0
+Everstake,validator,139,3176,0
+Ebunker,validator,91,2868,0
+Develp GmbH,validator,92,2258,0
+DSRV,validator,131,3241,0
+CryptoManufaktur,validator,92,2307,0
+ConsenSys Codefi,validator,129,3406,0
+Chorus One,validator,110,2588,0
+ChainSafe,validator,83,1651,0
+ChainLayer,validator,124,3116,0
+BridgeTower,validator,86,1676,0
+Blockscape,validator,74,1499,0
+Blockdaemon,validator,49,2056,0
+Attestant (BVI) Limited,validator,101,1827,0
+Allnodes,validator,114,3659,0
+A41,validator,117,3561,0
 95948.eth,validator,0,4,1
 86061611630.eth,validator,0,9,1
-47validators.eth,validator,1,8,0
+47validators.eth,validator,1,7,0
 3f93.eth,validator,0,3,1
 2170.eth,validator,0,1,1
 0dot1.eth,validator,0,1,1
 0age.eth,validator,0,1,1
 04221.eth,validator,0,2,1
+agnostic Gnosis,relay,513,9175,0
+ultrasound,relay,5937,129895,0
+titan,relay,1711,48852,0
+bloxroute (regulated),relay,2714,91540,0
+manifold,relay,4,14,0
+flashbots,relay,324,14871,0
+bloxroute (max profit),relay,3043,105710,0
+aestus,relay,199,6582,0
+â¨ Quasar (quasar.win) â¨,builder,20,161,0
+0xa67ffc3a01c2ffe82ffff103311381b79bdb03bbd825a1d4673a88ef1ba7559cd19afd799c782abb6b4b53f825fcf848,builder,0,1,1
+0x81202c1ffa531f84e73d7a20d98a0a2d5d51f999903bafa7bbd092dd5253678498d5ac2ce5412e446197344211591152,builder,0,1,1
+BuilderNet (Nethermind),builder,137,1269,0
+0x81a523ce895652c8d09a7d48c951ba1927ac91330693b43e83d2912c7c6cfe9dc37d92d0e69f81fbaae77a6c9db5715c,builder,1,1,0
+GrizzlyBuilder,builder,0,2,1
+beaverbuild.org,builder,6689,97658,0
+Eureka Builder,builder,10,176,0
+iobuilder,builder,28,684,0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,2,205,0
+Builder+ www.btcs.com/builder,builder,0,2159,1
+0x806541591e866ae5c782e83413225852a259c077b8dd1b4bfdd6dbc12af5900896ae1c8c3da9e52ca7f0ea48e523ff8f,builder,0,1,1
+BuilderNet (Flashbots),builder,171,1387,0
+Ùgethgo1.20.14 linux,builder,14,101,0
+https://blockbeelder.com ð,builder,0,812,1
+builder0x69,builder,0,102,1
+smithbot.xyz,builder,2,17,0
+â¨ Quasar â¨,builder,0,64,1
+0xaaf4171baa283eef0ba0bc0912726376af850acd67b596f44e1af2c23957c37e8a21ee213c46ad754ef570cc5929416f,builder,0,1,1
+0xaa7c8820da32f528bbd578f664b4b8b7ee9b5747aad9e6c1e45dc0709381e948b1b56d87af686b0b802624c41b02af85,builder,0,1,1
+0xa14d248e2239daba09db6413e6bd8e7a1804d6b2f9da74c9258d739ec9f5a07477f736d082ab12c15892156adbdfa1a3,builder,0,1,1
+0x45,builder,1,18,0
+Titan Builder,builder,7062,91552,0
+0x866ebf88e7088e2e4dcac3edf2b8bfdf85de2ea077148901f4d624ce489434985bd44f0b79fe77980e33684564d4a879,builder,0,1,1
+Gambit Labs (https://gmbit.co),builder,0,12,1
+I can haz block?,builder,1,98,0
+BuildAI (https://buildai.net),builder,27,199,0
+mars,builder,0,11,1
+0xa5402074c6f966be5032b7047dad681a4853e7a35ee7e8a7957aa3427112347ea28250a4e7fecab68580182d922b69d7,builder,0,1,1
+Shared/Default,builder,0,10,1
+rsync-builder.xyz,builder,0,14438,1
+BloXroute,builder,7,46,0
+boba-builder.com,builder,20,118,0
+0xb653a244a8a488b88a825ce6e4c798c594046c01b2abea70bc52ce9bf18ff8e48d5694773effe83f5fab07f7c2b96e97,builder,0,1,1
+BuilderNet (Beaver),builder,348,1526,0
+Manifold,builder,4,8,0
+0xa3e5b2fe1183312c0be6bbc498fd958a80dfea8f92c50e556a4d44deef39b63d409610e23411208e8c3a13a86dc6811f,builder,0,8,1
+Ty For The Block,builder,6,65,0
+0x91be7043f59bded99220334fc07d7e64a96692a99326d559402b02cf0dc2b7a1009216c7e4d789ecbb149fd458486879,builder,0,2,1
+0x91c3a1c98372fcd21aab7a30e3bb8171d7f3cba9c966bbce8a9dfa0e374b29133d058bf76dbfb1209c477c12f1e9c450,builder,0,1,1
+Bob the builder,builder,0,837,1
+"MevRefund - 1, Bad guys - 0",builder,0,4,1
