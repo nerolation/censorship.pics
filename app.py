@@ -196,7 +196,7 @@ def update_censorship_bars_layout(width=801):
         
     return dict(
         barmode='stack',
-        #title=f'OFAC Compliance <span style="font-size:{font_size-4}> (last 30 days)</span>',
+        #title=f'Censorship <span style="font-size:{font_size-4}> (last 30 days)</span>',
         plot_bgcolor="#f1f2f6",
         dragmode = False,
         paper_bgcolor= "#f1f2f6",
@@ -866,7 +866,7 @@ def comparison_chart(entity):
                         size=14,
                         color='#262525'
                     ),
-                    hovertemplate=f"<b>{val:.2f}% blocks with OFAC sanctioned content</b><extra></extra>",
+                    hovertemplate=f"<b>{val:.2f}% blocks with sanctioned content</b><extra></extra>",
                     hoverlabel=dict(
                         font=dict(color="white"),  # Increase size of hoverlabel
                         bgcolor=corresponding_bar_color  # Set hover label background color to match scaled_value
@@ -1063,13 +1063,13 @@ app.layout = html.Div(
 
                     dbc.Col([
                         html.H4("Methodology", style={'textAlign': 'left', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace'}),
-                         dcc.Markdown("""**Entities** are labeled as 'censoring' if they **produce significantly low numbers** of blocks with OFAC-sanctioned transactions within a time window of 30 days, provided they have a sufficiently large block sample (>100) for evaluation. By comparing an entity's non-censored block rate with half of the average for the same time frame, a quite clear categorization can be achieved. For reporting realistic values, every transaction (incl. every trace) is analysed to determine if a block contains a OFAC-sanctionable offense or not. 
+                         dcc.Markdown("""**Entities** are labeled as 'censoring' if they **produce significantly low numbers** of blocks with sanctioned transactions within a time window of 30 days, provided they have a sufficiently large block sample (>100) for evaluation. By comparing an entity's non-censored block rate with half of the average for the same time frame, a quite clear categorization can be achieved. For reporting realistic values, every transaction (incl. every trace) is analysed to determine if a block contains a sanctionable offense or not. 
                               """, style={'textAlign': 'left', 'color': '#262525','fontFamily': 'Ubuntu Mono, monospace'}),
                     ], className="mb-2 even-even-smaller-text", md=6)
                 ])
             ], className="mb-2 p-3 rounded", style={'background-color': '#ecf0f1'}),
           
-            dbc.Row([html.H5("OFAC Compliance", style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})], className="customheader mb-0"),
+            dbc.Row([html.H5("Compliance", style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'})], className="customheader mb-0"),
             dbc.Row(
                 dbc.Col(
                     [
@@ -1100,7 +1100,7 @@ app.layout = html.Div(
                     html.Span("ℹ️", id='info-tooltip', style={'marginLeft': '5px', 'cursor': 'pointer'})
                 ], style={'textAlign': 'left', 'marginTop': '1vh','marginLeft': '2%', 'color': '#2c3e50', 'fontFamily': 'Ubuntu Mono, monospace', 'fontWeight': 'bold'}),
                 dbc.Tooltip(
-                    "The x-axis shows the percentage of blocks containing OFAC-sanctioned transactions by relays. It ranges from 0 to ~7%, but it is not linear.",
+                    "The x-axis shows the percentage of blocks containing sanctioned transactions by relays. It ranges from 0 to ~7%, but it is not linear.",
                     target="info-tooltip",
                     placement="right"
                 ),
@@ -1126,7 +1126,7 @@ app.layout = html.Div(
                 html.H4('Useful Links:', style={'color': '#262525','marginLeft':'10px'}),
                 html.Ul([
                     html.Li([
-                        html.A('Dataset of OFAC sanction list', href='https://github.com/ultrasoundmoney/ofac-ethereum-addresses', target='_blank', style={'color': '#262525'}),
+                        html.A('Dataset of sanction list', href='https://github.com/ultrasoundmoney/ofac-ethereum-addresses', target='_blank', style={'color': '#262525'}),
                         html.Span(" Ultra Sound – Oct 23", style={'color': '#262525'})
                     ]),
                     html.Li([
