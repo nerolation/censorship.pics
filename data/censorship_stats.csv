@@ -1,113 +1,21 @@
 entity,category,tc_blocks30,all_blocks30,censoring
-aestus,relay,344,299,0
-titan,relay,741,1006,0
-bloxroute (max profit),relay,3377,2891,0
-flashbots,relay,475,363,0
-bloxroute (regulated),relay,2638,2201,0
-agnostic Gnosis,relay,418,266,0
-ultrasound,relay,5134,4271,0
-upbit,validator,123,22,0
-swell,validator,9,1,0
-stkr (ankr),validator,2,1,0
-stakehound,validator,8,1,0
-stakefish,validator,222,19,0
-staked.us,validator,196,33,0
-spacetractor.eth,validator,0,1,1
-rocketpool,validator,153,22,0
-revolut,validator,13,3,0
-renzo,validator,52,11,0
-redacted pirex,validator,32,8,0
-poloniex,validator,35,4,0
-peleg.eth,validator,1,1,0
-p2p.org,validator,229,16,0
-okx,validator,203,20,0
-missed,validator,0,5,1
-michaelward.eth,validator,0,1,1
-mercado bitcoin,validator,8,3,0
-mantle,validator,161,16,0
-lochuan.eth,validator,0,1,1
-liquid collective,validator,134,26,0
-lido,validator,224,40,0
-kucoin,validator,6,3,0
-kraken,validator,626,139,0
-kiln,validator,848,111,0
-kelp dao,validator,69,4,0
-imtoken,validator,23,2,0
-gunfighter.eth,validator,0,1,1
-figment,validator,512,106,0
-everstake,validator,331,62,0
-ether.fi,validator,935,157,0
-dougcastoldi.eth,validator,1,1,0
-daveydoo.eth,validator,0,1,1
-cumberland,validator,32,4,0
-consensys,validator,28,5,0
-coinspot,validator,21,2,0
-coinbase,validator,585,95,0
-celsius,validator,188,39,0
-brooklinen.eth,validator,0,2,1
-blockdaemon,validator,186,38,0
-bitstamp,validator,66,7,0
-bitshameddesk.eth,validator,4,1,0
-bitpie,validator,0,1,1
-bitget,validator,7,2,0
-bitfinex,validator,29,6,0
-bitcoin suisse,validator,90,22,0
-binance,validator,913,151,0
-amiga500.eth,validator,3,1,0
-amane.eth,validator,0,1,1
-Staking Facilities,validator,61,10,0
-Stakin,validator,49,12,0
-Stakely,validator,99,22,0
-SkillZ,validator,187,46,0
-Simply Staking,validator,74,15,0
-Sigma Prime,validator,33,7,0
-SenseiNode,validator,44,6,0
-RockawayX Infra,validator,65,12,0
-RockX,validator,99,7,0
-RockLogic GmbH,validator,70,10,0
-Prysmatic Labs,validator,68,13,0
-ParaFi Technologies LLC,validator,57,10,0
-P2P.ORG - P2P Validator,validator,122,15,0
-Numic,validator,14,4,0
-Nethermind,validator,58,7,0
-Launchnodes,validator,66,11,0
-Kukis Global,validator,63,10,0
-InfStones,validator,76,10,0
-HashQuark,validator,74,5,0
-Gateway.fm AS,validator,137,18,0
-Figment,validator,78,10,0
-Everstake,validator,99,25,0
-Ebunker,validator,70,16,0
-Develp GmbH,validator,65,8,0
-DSRV,validator,64,8,0
-CryptoManufaktur,validator,109,15,0
-ConsenSys Codefi,validator,64,13,0
-Chorus One,validator,131,8,0
-ChainSafe,validator,83,10,0
-ChainLayer,validator,69,9,0
-BridgeTower,validator,72,5,0
-Blockscape,validator,54,3,0
-Blockdaemon,validator,71,12,0
-Attestant (BVI) Limited,validator,43,7,0
-Allnodes,validator,76,7,0
-A41,validator,137,15,0
-47validators.eth,validator,0,1,1
-rsync-builder.xyz,builder,0,70,1
-iobuilder,builder,5,24,0
-https://blockbeelder.com ð,builder,4,3,0
-BuildAI (https://buildai.net),builder,0,2,1
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,18,1
-beaverbuild.org,builder,1031,340,0
-â¨ Quasar (quasar.win) â¨,builder,854,752,0
-Ùgethgo1.20.14 linux,builder,0,1,1
-BuilderNet (Flashbots),builder,2684,978,0
-BloXroute,builder,0,1,1
-Titan Builder,builder,4976,3751,0
-0x45,builder,0,1,1
-hello block,builder,0,1,1
-BuilderNet (Nethermind),builder,1760,1145,0
-Ty For The Block,builder,5,10,0
-0xb1f625cd087c3d96b7f95d5bb9f8f9309789871505636827f8310ca9ff0e5fbf7ee49c529616b99742604269df8845a4,builder,0,1,1
-Bob the builder,builder,0,36,1
-BuilderNet (Beaver),builder,1844,1202,0
-Builder+ www.btcs.com/builder,builder,140,155,0
+flashbots,relay,475,52,0
+bloxroute (regulated),relay,2638,366,0
+bloxroute (max profit),relay,3377,498,0
+aestus,relay,344,37,0
+ultrasound,relay,5134,697,0
+agnostic Gnosis,relay,418,44,0
+titan,relay,741,215,0
+â¨ Quasar (quasar.win) â¨,builder,854,149,0
+rsync-builder.xyz,builder,0,15,1
+beaverbuild.org,builder,1031,66,0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,6,1
+Ty For The Block,builder,5,2,0
+https://blockbeelder.com ð,builder,4,1,0
+iobuilder,builder,5,1,0
+BuilderNet (Nethermind),builder,1760,192,0
+BuilderNet (Flashbots),builder,2684,167,0
+Titan Builder,builder,4976,575,0
+Bob the builder,builder,0,12,1
+BuilderNet (Beaver),builder,1844,211,0
+Builder+ www.btcs.com/builder,builder,140,20,0
