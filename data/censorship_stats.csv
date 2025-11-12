@@ -1,37 +1,27 @@
 entity,category,tc_blocks30,all_blocks30,censoring
-titan,relay,992,17982,0
-aestus,relay,675,13070,0
-bloxroute (max profit),relay,3322,65548,0
-ultrasound,relay,4517,86744,0
-agnostic Gnosis,relay,632,11736,0
-bloxroute (regulated),relay,1751,35555,0
-flashbots,relay,545,10703,0
-BuilderNet (Flashbots),builder,2164,19899,0
-hello block,builder,0,1,1
-bananað,builder,0,34,1
-Titan Builder,builder,4575,79793,0
-Eureka (eurekabuilder.xyz) DP,builder,0,7,1
-rpc.turbobuilder.xyz,builder,1,13,0
-BuildAI (https://buildai.net),builder,0,55,1
-Eureka (eurekabuilder.xyz),builder,6,156,0
-Bob the builder,builder,0,498,1
-rsync-builder.xyz,builder,0,6098,1
-snailbuilder.sh,builder,5,32,0
-BuilderNet (Beaver),builder,1346,19772,0
-vaselinoviy shershav4ik,builder,0,8,1
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,90,1
-not duha,builder,0,33,1
-0xb72cae2fb3f91e7af0f2d6b2301f26c334f20d38a8b3f464f196d42dff5141f1f0aac489a3c0883a792b3e8be13d33b2,builder,0,1,1
-Ùgethgo1.20.14 linux,builder,1,35,0
-boba-builder.com,builder,2,37,0
-iobuilder,builder,28,784,0
-0x954e26a086a7101e500f93bfd1a78aab7c76eb8e2a8acc979e0f8426f0e7b216bdeabb0baf85bf542ff256b9b7dff0d2,builder,0,2,1
-beaverbuild.org,builder,553,5395,0
-BuilderNet (Nethermind),builder,1161,16549,0
-Builder+ www.btcs.com/builder,builder,377,3519,0
-DexPeer Builder,builder,0,2,1
-I can haz block?,builder,0,46,1
-â¨ Quasar (quasar.win) â¨,builder,2444,25236,0
-Ty For The Block,builder,4,40,0
-BloXroute,builder,1,12,0
+aestus,relay,675,12553,0
+bloxroute (regulated),relay,1751,33953,0
+flashbots,relay,545,10326,0
+bloxroute (max profit),relay,3322,62733,0
+ultrasound,relay,4517,82963,0
+titan,relay,1559,40636,0
+agnostic Gnosis,relay,632,11356,0
+Eureka (eurekabuilder.xyz),builder,6,157,0
+â¨ Quasar (quasar.win) â¨,builder,2665,25037,0
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,88,1
+I can haz block?,builder,0,45,1
+beaverbuild.org,builder,602,5341,0
 0x65,builder,0,14,1
+Ùgethgo1.20.14 linux,builder,1,35,0
+DexPeer Builder,builder,0,3,1
+0xb72cae2fb3f91e7af0f2d6b2301f26c334f20d38a8b3f464f196d42dff5141f1f0aac489a3c0883a792b3e8be13d33b2,builder,0,1,1
+BuildAI (https://buildai.net),builder,0,52,1
+hello block,builder,0,1,1
+rpc.turbobuilder.xyz,builder,1,12,0
+BuilderNet (Flashbots),builder,2371,20400,0
+BuilderNet (Nethermind),builder,1161,15884,0
+snailbuilder.sh,builder,5,32,0
+boba-builder.com,builder,2,37,0
+Eureka (eurekabuilder.xyz) DP,builder,0,7,1
+rsync-builder.xyz,builder,0,6341,1
+Titan Builder,builder,4620,88862,0
