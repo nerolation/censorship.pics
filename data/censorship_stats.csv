@@ -1,24 +1,25 @@
 entity,category,tc_blocks30,all_blocks30,censoring
-flashbots,relay,545,6203,0
-aestus,relay,675,7372,0
-bloxroute (regulated),relay,1751,18027,0
-ultrasound,relay,4517,49512,0
-titan,relay,1559,30454,0
-agnostic Gnosis,relay,632,7243,0
-bloxroute (max profit),relay,3322,34765,0
-Titan Builder,builder,4620,53302,0
-BuilderNet (Flashbots),builder,2371,13445,0
+aestus,relay,675,6915,0
+bloxroute (regulated),relay,1751,16872,0
+bloxroute (max profit),relay,3322,32410,0
+flashbots,relay,545,5861,0
+ultrasound,relay,4517,46512,0
+agnostic Gnosis,relay,632,6826,0
+titan,relay,1559,29236,0
+iobuilder,builder,28,390,0
+rsync-builder.xyz,builder,0,3183,1
+BuildAI (https://buildai.net),builder,0,33,1
+Bob the builder,builder,0,279,1
+Ty For The Block,builder,4,32,0
+BuilderNet (Beaver),builder,1346,9509,0
 0x65,builder,0,8,1
-Ty For The Block,builder,4,38,0
-Eureka (eurekabuilder.xyz) DP,builder,0,7,1
-rsync-builder.xyz,builder,0,3451,1
-0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,54,1
-BuildAI (https://buildai.net),builder,0,39,1
-â¨ Quasar (quasar.win) â¨,builder,2665,17069,0
-vaselinoviy shershav4ik,builder,0,5,1
+BuilderNet (Nethermind),builder,1161,8814,0
+bananað,builder,0,9,1
+BuilderNet (Flashbots),builder,2371,12822,0
 DexPeer Builder,builder,0,3,1
+â¨ Quasar (quasar.win) â¨,builder,2665,16212,0
+rpc.turbobuilder.xyz,builder,1,5,0
+Titan Builder,builder,4620,50198,0
+not duha,builder,0,6,1
+BloXroute,builder,1,6,0
 I can haz block?,builder,0,40,1
-Ùgethgo1.20.14 linux,builder,1,33,0
-boba-builder.com,builder,2,34,0
-beaverbuild.org,builder,602,3452,0
-Eureka (eurekabuilder.xyz),builder,6,110,0
