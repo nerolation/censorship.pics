@@ -1,25 +1,28 @@
 entity,category,tc_blocks30,all_blocks30,censoring
-aestus,relay,675,6915,0
-bloxroute (regulated),relay,1751,16872,0
-bloxroute (max profit),relay,3322,32410,0
-flashbots,relay,545,5861,0
-ultrasound,relay,4517,46512,0
-agnostic Gnosis,relay,632,6826,0
-titan,relay,1559,29236,0
-iobuilder,builder,28,390,0
-rsync-builder.xyz,builder,0,3183,1
-BuildAI (https://buildai.net),builder,0,33,1
-Bob the builder,builder,0,279,1
-Ty For The Block,builder,4,32,0
-BuilderNet (Beaver),builder,1346,9509,0
-0x65,builder,0,8,1
-BuilderNet (Nethermind),builder,1161,8814,0
-bananað,builder,0,9,1
-BuilderNet (Flashbots),builder,2371,12822,0
+aestus,relay,675,6502,0
+titan,relay,1559,29005,0
+bloxroute (max profit),relay,3322,30076,0
+agnostic Gnosis,relay,632,6451,0
+flashbots,relay,545,5510,0
+ultrasound,relay,4517,43350,0
+bloxroute (regulated),relay,1751,15797,0
 DexPeer Builder,builder,0,3,1
-â¨ Quasar (quasar.win) â¨,builder,2665,16212,0
+Ùgethgo1.20.14 linux,builder,1,31,0
+BuilderNet (Flashbots),builder,2371,12202,0
+Eureka (eurekabuilder.xyz),builder,6,89,0
+boba-builder.com,builder,2,34,0
+Eureka (eurekabuilder.xyz) DP,builder,0,7,1
+beaverbuild.org,builder,602,3297,0
+Ty For The Block,builder,4,30,0
+BloXroute,builder,1,5,0
+Titan Builder,builder,4620,47813,0
+vaselinoviy shershav4ik,builder,0,2,1
+snailbuilder.sh,builder,5,27,0
+not duha,builder,0,5,1
+0x65,builder,0,8,1
 rpc.turbobuilder.xyz,builder,1,5,0
-Titan Builder,builder,4620,50198,0
-not duha,builder,0,6,1
-BloXroute,builder,1,6,0
-I can haz block?,builder,0,40,1
+â¨ Quasar (quasar.win) â¨,builder,2665,15393,0
+BuilderNet (Beaver),builder,1346,8573,0
+rsync-builder.xyz,builder,0,2988,1
+Bob the builder,builder,0,244,1
+iobuilder,builder,28,347,0
