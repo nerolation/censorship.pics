@@ -1,28 +1,12 @@
 entity,category,tc_blocks30,all_blocks30,censoring
-aestus,relay,675,6502,0
-titan,relay,1559,29005,0
-bloxroute (max profit),relay,3322,30076,0
-agnostic Gnosis,relay,632,6451,0
-flashbots,relay,545,5510,0
-ultrasound,relay,4517,43350,0
-bloxroute (regulated),relay,1751,15797,0
-DexPeer Builder,builder,0,3,1
-Ùgethgo1.20.14 linux,builder,1,31,0
-BuilderNet (Flashbots),builder,2371,12202,0
-Eureka (eurekabuilder.xyz),builder,6,89,0
-boba-builder.com,builder,2,34,0
-Eureka (eurekabuilder.xyz) DP,builder,0,7,1
-beaverbuild.org,builder,602,3297,0
-Ty For The Block,builder,4,30,0
-BloXroute,builder,1,5,0
-Titan Builder,builder,4620,47813,0
-vaselinoviy shershav4ik,builder,0,2,1
-snailbuilder.sh,builder,5,27,0
-not duha,builder,0,5,1
-0x65,builder,0,8,1
-rpc.turbobuilder.xyz,builder,1,5,0
-â¨ Quasar (quasar.win) â¨,builder,2665,15393,0
-BuilderNet (Beaver),builder,1346,8573,0
-rsync-builder.xyz,builder,0,2988,1
-Bob the builder,builder,0,244,1
-iobuilder,builder,28,347,0
+bloxroute (max profit),relay,3322,27717,0
+agnostic Gnosis,relay,632,6062,0
+titan,relay,1559,27313,0
+bloxroute (regulated),relay,1751,14664,0
+aestus,relay,675,6052,0
+ultrasound,relay,4517,40347,0
+flashbots,relay,545,5179,0
+rpc.turbobuilder.xyz,builder,1,4,0
+Titan Builder,builder,4620,44456,0
+â¨ Quasar (quasar.win) â¨,builder,2665,14563,0
+I can haz block?,builder,0,37,1
