@@ -1,12 +1,22 @@
 entity,category,tc_blocks30,all_blocks30,censoring
-bloxroute (max profit),relay,3322,27717,0
 agnostic Gnosis,relay,632,6062,0
+ultrasound,relay,4517,40347,0
+aestus,relay,675,6052,0
+flashbots,relay,545,5179,0
 titan,relay,1559,27313,0
 bloxroute (regulated),relay,1751,14664,0
-aestus,relay,675,6052,0
-ultrasound,relay,4517,40347,0
-flashbots,relay,545,5179,0
+bloxroute (max profit),relay,3322,27717,0
+DexPeer Builder,builder,0,3,1
+0x83bee51799e65130296f5d60ce7d78119578db6045c3c3631980514abae0be0f9b65fe82eb0c9a79d6d99030112c874c,builder,0,48,1
+BuilderNet (Flashbots),builder,2371,11572,0
 rpc.turbobuilder.xyz,builder,1,4,0
-Titan Builder,builder,4620,44456,0
-â¨ Quasar (quasar.win) â¨,builder,2665,14563,0
+BuilderNet (Nethermind),builder,1161,7586,0
+BloXroute,builder,1,5,0
+bananað,builder,0,4,1
+iobuilder,builder,28,301,0
+0x65,builder,0,7,1
+Builder+ www.btcs.com/builder,builder,423,2637,0
+Ty For The Block,builder,4,30,0
 I can haz block?,builder,0,37,1
+rsync-builder.xyz,builder,0,2584,1
+Eureka (eurekabuilder.xyz),builder,6,79,0
